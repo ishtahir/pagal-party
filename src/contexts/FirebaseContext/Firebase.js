@@ -6,8 +6,6 @@ import { firebaseConfig } from './config';
 class Firebase {
   constructor() {
     this.app = app.initializeApp(firebaseConfig);
-    this.db = app.firestore();
-    this.auth = app.auth();
   }
 
   googleSignIn = async () => {
