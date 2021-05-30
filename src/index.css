@@ -33,6 +33,14 @@ body {
   align-items: center;
 }
 
+.center-x {
+  justify-content: center;
+}
+
+.center-y {
+  align-items: center;
+}
+
 .row {
   flex-direction: row;
 }
@@ -42,8 +50,8 @@ body {
 }
 
 .wrap {
-  height: 90vh;
-  width: 90vw;
+  height: 80vh;
+  width: 80vw;
   margin: 0 auto;
 }
 
@@ -108,6 +116,41 @@ body {
 .signout-btn:hover {
   background: var(--light);
   color: var(--dark);
+}
+
+/* gameroom */
+.gr {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.gr-join {
+  height: 30%;
+  margin: auto 0;
+  padding: 0 5rem;
+}
+
+.gr-text {
+  margin-bottom: 1.5rem;
+  background: #ddd;
+  padding: 1rem 1.5rem;
+  border-radius: 2rem;
+}
+
+.gr-player-name:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.vip::before,
+.vip::after {
+  content: 'VIP';
+  background: gold;
+  color: var(--dark);
+  padding: 0.2rem 1rem;
+  margin: 0 1rem;
+  border-radius: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 /* loading spinner */
