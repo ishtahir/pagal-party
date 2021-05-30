@@ -12,12 +12,12 @@ class Firebase {
 
   googleSignIn = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
+    firebase.auth().signInWithPopup(provider);
   };
 
   twitterSignIn = async () => {
     const provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
+    firebase.auth().signInWithPopup(provider);
   };
 }
 
