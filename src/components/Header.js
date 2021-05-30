@@ -9,7 +9,9 @@ const Header = () => {
   return (
     <header className='header flex center'>
       <h1 className='header-logo'>Playper</h1>
-      {user && <p className='header-name'>Welcome, {user.displayName}</p>}
+      {user && (
+        <p className='header-name'>Welcome, {user.email.split('@')[0]}</p>
+      )}
       <Signout />
     </header>
   );
