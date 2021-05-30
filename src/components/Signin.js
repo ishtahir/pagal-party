@@ -8,10 +8,8 @@ import googleImg from '../assets/google_button.png';
 import twitterImg from '../assets/twitter_button.png';
 
 const Signin = () => {
-  const firebase = useContext(FirebaseContext);
+  const { googleSignIn, twitterSignIn } = useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
-
-  const { googleSignIn, twitterSignIn } = firebase;
 
   return (
     <>
