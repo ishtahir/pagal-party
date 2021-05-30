@@ -18,7 +18,7 @@ const Signin = () => {
       {loading ? (
         <div className='loading'></div>
       ) : !user ? (
-        <div className='signin-wrap col'>
+        <div className='wrap col'>
           <h1 className='signin-title'>Welcome to Playper</h1>
           <div className='flex col center signin-img-wrap'>
             <img
