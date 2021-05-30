@@ -5,12 +5,18 @@ export const AuthContext = createContext(null);
 
 export const AuthContextProvider = (props) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    app.auth().onAuthStateChanged((userInfo) => setUser(userInfo));
+    app.auth().onAuthStateChanged((userInfo) => {
+      setUser(userInfo);
+      setLoading(false);
+    });
   }, []);
 
   return (
-    <AuthContext.Provider value={user}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, loading }}>
+      {props.children}
+    </AuthContext.Provider>
   );
 };
