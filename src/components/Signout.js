@@ -1,17 +1,20 @@
 import { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import app from 'firebase/app';
-
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
+import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 
 const Signout = () => {
   const { user } = useContext(AuthContext);
+  const { signOut, deleteFromCollection } = useContext(FirebaseContext);
 
   return user ? (
     <button
       className='btn signout-btn'
-      onClick={async () => await app.auth().signOut()}
+      onClick={async () => {
+        await deleteFromCollection('players', 'uid', user.uid);
+        await signOut();
+      }}
     >
       Sign out
     </button>
