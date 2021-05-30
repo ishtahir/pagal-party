@@ -1,21 +1,23 @@
-import app from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
+import 'firebase/firestore';
 
 import { firebaseConfig } from './config';
 
 class Firebase {
   constructor() {
-    this.app = app.initializeApp(firebaseConfig);
+    this.app = firebase.initializeApp(firebaseConfig);
+    this.db = firebase.firestore();
   }
 
   googleSignIn = async () => {
-    const provider = new app.auth.GoogleAuthProvider();
-    app.auth().signInWithRedirect(provider);
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
   };
 
   twitterSignIn = async () => {
-    const provider = new app.auth.TwitterAuthProvider();
-    app.auth().signInWithRedirect(provider);
+    const provider = new firebase.auth.TwitterAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
   };
 }
 
