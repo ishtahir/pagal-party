@@ -19,6 +19,18 @@ class Firebase {
     const provider = new firebase.auth.TwitterAuthProvider();
     firebase.auth().signInWithPopup(provider);
   };
+
+  signOut = () => {
+    firebase.auth().signOut();
+  };
+
+  deleteFromCollection = async (collection, key, val) => {
+    await this.db
+      .collection(collection)
+      .where(key, '==', val)
+      .get()
+      .then((snap) => snap.forEach((shot) => shot.ref.delete()));
+  };
 }
 
 export default Firebase;
