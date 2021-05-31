@@ -5,6 +5,9 @@
 :root {
   --light: #f5f5f5;
   --dark: #333;
+  --google: #4285f4;
+  --twitter: #1da1f2;
+  --facebook: #1877f2;
 }
 
 /* reset */
@@ -56,13 +59,16 @@ body {
   margin: 0 auto;
 }
 
+.container {
+  height: 100%;
+}
+
 .btn {
   background: var(--light);
   color: var(--dark);
   border: 1px solid var(--dark);
   border-radius: 2rem;
   padding: 0.8rem 1.6rem;
-  /* text-transform: uppercase; */
   outline: none;
   display: inline-block;
   cursor: pointer;
@@ -78,15 +84,75 @@ body {
   text-align: center;
 }
 
+.signin-btn {
+  border: 3px solid;
+  width: 31rem;
+  height: 6rem;
+  border-radius: 1rem;
+  cursor: pointer;
+  margin-bottom: 3rem;
+}
+
+.signin-btn-img {
+  width: 3rem;
+  margin: 1.5rem;
+}
+
+.signin-btn-text {
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 1rem;
+}
+
+.google-btn.signin-btn {
+  border-color: var(--google);
+}
+
+.google-btn .signin-btn-text {
+  color: var(--light);
+  background: var(--google);
+  padding: 1.5rem 3.7rem;
+  border-bottom-right-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
+}
+
+.twitter-btn.signin-btn {
+  border-color: var(--twitter);
+}
+
+.twitter-btn .signin-btn-img {
+  width: 4rem;
+  margin: 1rem;
+}
+
+.twitter-btn .signin-btn-text {
+  color: var(--light);
+  background: var(--twitter);
+  padding: 1.5rem 3.58rem;
+  border-bottom-right-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
+}
+
+.facebook-btn.signin-btn {
+  border-color: var(--facebook);
+}
+
+.facebook-btn .signin-btn-img {
+  width: 3.5rem;
+  margin: 1.25rem;
+}
+
+.facebook-btn .signin-btn-text {
+  color: var(--light);
+  background: var(--facebook);
+  padding: 1.6rem 2.59rem;
+  border-bottom-right-radius: 0.7rem;
+  border-top-right-radius: 0.7rem;
+}
+
 .signin-img-wrap {
   height: 100%;
   width: 100%;
-}
-
-.signin-img {
-  width: 30rem;
-  cursor: pointer;
-  margin: 1rem 0;
 }
 
 /* header */
@@ -123,6 +189,7 @@ body {
 .gr {
   border: 1px solid #ddd;
   border-radius: 5px;
+  overflow: scroll;
 }
 
 .gr-join {
@@ -140,6 +207,10 @@ body {
 
 .gr-player-name:not(:last-child) {
   margin-bottom: 1rem;
+}
+
+.gr-show-vip-btn {
+  margin: 3rem 0;
 }
 
 .vip::before,
@@ -170,18 +241,6 @@ body {
   text-align: center;
 }
 
-.yes.back,
-.no.back {
-  background: linear-gradient(#34b900, #58f587);
-  font-size: 4rem;
-}
-
-.yes.back::after,
-.no.back::after {
-  content: 'Ballot';
-  text-transform: uppercase;
-}
-
 .party.back {
   background: linear-gradient(#ffff00, #ffe600);
   font-size: 2.5rem;
@@ -209,7 +268,7 @@ body {
 
 .yes.front.selected,
 .no.front.selected {
-  border: 3px solid #ffbb00;
+  border: 5px solid #fdb519;
 }
 
 .yes.front {
@@ -219,7 +278,6 @@ body {
 
 .yes.front::after {
   content: 'Ja!';
-  position: absolute;
 }
 
 .no.front {
@@ -230,7 +288,6 @@ body {
 
 .no.front::after {
   content: 'Nein!';
-  position: absolute;
 }
 
 .party.front::before {
@@ -276,7 +333,7 @@ body {
 }
 
 .secret.front::before {
-  content: 'Your secret role';
+  content: 'secret role';
   position: absolute;
   top: 0;
   font-size: 1.8rem;
@@ -331,6 +388,79 @@ body {
   text-transform: uppercase;
 }
 
+/* vote */
+.vote {
+  justify-content: space-evenly;
+}
+.vote-results {
+  font-size: 30px;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+}
+
+.vote-gov {
+  font-weight: bold;
+  color: #ff3333;
+}
+
+.vote-chance {
+  color: #3333ff;
+}
+
+th {
+  width: 150px;
+}
+
+td {
+  text-align: center;
+}
+
+/* vip-menu */
+.vip-menu {
+  height: 100%;
+  justify-content: space-evenly;
+}
+
+.disabled-btn,
+.disabled-btn:hover {
+  cursor: not-allowed;
+  background: #ddd;
+  color: #333;
+  border: none;
+}
+
+.end-btn {
+  color: red;
+  border-color: red;
+}
+
+.end-btn:hover {
+  background: red;
+  color: var(--light);
+}
+
+/* gov  */
+.gov {
+  background: #333;
+  color: var(--light);
+  padding: 2rem 4rem;
+  border-radius: 2rem;
+  margin-bottom: 2rem;
+}
+
+.gov-text {
+  margin-bottom: 2rem;
+}
+
+.gov-select {
+  padding: 5px;
+  width: 180px;
+}
+
+.gov-select:not(:last-child) {
+  margin-bottom: 10px;
+}
+
 /* loading spinner */
 .loading:empty {
   position: absolute;
@@ -350,5 +480,13 @@ body {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media only screen and (max-device-width: 430px) and (pointer: coarse),
+  only screen and (max-width: 510px) {
+  .wrap {
+    width: 95vw;
+    height: 95vh;
   }
 }
