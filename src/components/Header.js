@@ -10,7 +10,9 @@ const Header = () => {
     <header className='header flex center'>
       <h1 className='header-logo'>Playper</h1>
       {user && (
-        <p className='header-name'>Welcome, {user.email.split('@')[0]}</p>
+        <p className='header-name'>
+          Welcome, {user.chosenName ? user.chosenName : user.displayName}
+        </p>
       )}
       <Signout />
     </header>
