@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Marko+One&display=swap');
 
 /* variables */
 :root {
@@ -151,6 +152,183 @@ body {
   border-radius: 2rem;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+/* cards styles */
+.card {
+  height: 25rem;
+  width: 19rem;
+  border: 1px solid #888;
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Marko One', serif;
+  position: relative;
+  cursor: pointer;
+  margin: 2rem;
+  text-align: center;
+}
+
+.yes.back,
+.no.back {
+  background: linear-gradient(#34b900, #58f587);
+  font-size: 4rem;
+}
+
+.yes.back::after,
+.no.back::after {
+  content: 'Ballot';
+  text-transform: uppercase;
+}
+
+.party.back {
+  background: linear-gradient(#ffff00, #ffe600);
+  font-size: 2.5rem;
+}
+
+.party.back::after {
+  content: 'Party Membership';
+  text-transform: uppercase;
+}
+
+.secret.back {
+  background: linear-gradient(#f5f5f5, #cfcfcf);
+  font-size: 4rem;
+}
+
+.secret.back::after {
+  content: 'Secret Role';
+  text-transform: uppercase;
+}
+
+.card.party.front,
+.card.secret.front {
+  align-items: flex-end;
+}
+
+.yes.front.selected,
+.no.front.selected {
+  border: 3px solid #ffbb00;
+}
+
+.yes.front {
+  background: #ffe5ca;
+  font-size: 6rem;
+}
+
+.yes.front::after {
+  content: 'Ja!';
+  position: absolute;
+}
+
+.no.front {
+  background: #333;
+  color: #ffe5ca;
+  font-size: 6rem;
+}
+
+.no.front::after {
+  content: 'Nein!';
+  position: absolute;
+}
+
+.party.front::before {
+  content: 'Party Membership';
+  position: absolute;
+  top: 0;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+  padding: 1rem 0 0.5rem 0;
+  color: #333;
+}
+
+.party.front.liberal {
+  background: url(../src/assets/liberal.svg), #fbff00;
+  background-repeat: no-repeat;
+  background-size: 12rem;
+  background-position: center;
+  font-size: 3rem;
+  color: #13e953;
+}
+
+.party.front.liberal::after {
+  content: 'Liberal';
+  text-transform: uppercase;
+}
+
+.party.front.fascist {
+  background: url(../src/assets/fascist.svg), #fbff00;
+  background-repeat: no-repeat;
+  background-size: 14rem;
+  background-position: center;
+  font-size: 3rem;
+  color: #ff7f00;
+}
+
+.party.front.fascist::after {
+  content: 'Fascist';
+  text-transform: uppercase;
+}
+
+.secret.front::before {
+  content: 'Your secret role';
+  position: absolute;
+  top: 0;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
+  font-weight: bold;
+  border-bottom: 2px solid #333;
+  padding: 1rem 0 0.5rem 0;
+  color: #333;
+}
+
+.secret.front.liberal {
+  background: url(../src/assets/seclib.svg), #ffe2e2;
+  background-repeat: no-repeat;
+  background-size: 12rem;
+  background-position: center;
+  font-size: 3rem;
+  color: #8f8f8f;
+}
+
+.secret.front.liberal::after {
+  content: 'Liberal';
+  text-transform: uppercase;
+}
+
+.secret.front.fascist {
+  background: url(../src/assets/secfas.svg), #ffe2e2;
+  background-repeat: no-repeat;
+  background-size: 12rem;
+  background-position: center;
+  font-size: 3rem;
+  color: #8f8f8f;
+}
+
+.secret.front.fascist::after {
+  content: 'Fascist';
+  text-transform: uppercase;
+}
+
+.secret.front.hitler {
+  background: url(../src/assets/sechitler.svg), #ffe2e2;
+  background-repeat: no-repeat;
+  background-size: 12rem;
+  background-position: center;
+  font-size: 3rem;
+  color: #000;
+}
+
+.secret.front.hitler::after {
+  content: 'Hitler';
+  text-transform: uppercase;
 }
 
 /* loading spinner */
