@@ -29,13 +29,18 @@ class Firebase {
     firebase.auth().signOut();
   };
 
+  // this will add a document to a collection where each key/value pair in the object is a field in the doc
+  addDocumentToCollection = async (collection, obj) => {
+    await this.db.collection(collection).add(obj);
+  };
+
   // this will delete one document in the collection where the field is equal to the value given
   deleteDocumentFromCollection = async (collection, field, value) => {
     await this.db
       .collection(collection)
       .where(field, '==', value)
       .get()
-      .then((snap) => snap.forEach((shot) => shot.ref.delete()));
+      .then((snap) => snap.forEach((doc) => doc.ref.delete()));
   };
 
   // this will delete the field given from every document in the collection given
@@ -50,6 +55,13 @@ class Firebase {
           });
         });
       });
+  };
+
+  deleteEntireCollection = async (collection) => {
+    await this.db
+      .collection(collection)
+      .get()
+      .then((snap) => snap.forEach((doc) => doc.ref.delete()));
   };
 
   // this will update a single field with the given value
