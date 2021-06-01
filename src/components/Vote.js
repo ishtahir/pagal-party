@@ -63,7 +63,7 @@ const Vote = ({ vip, prez, chance, name }) => {
         <br />
         Chancellor: <span className='vote-gov vote-chance'>{chance.name}</span>
       </p>
-      <div className='flex'>
+      <div className='flex vote-cards'>
         <div
           className={`card yes front ${selected === 'Yes' ? 'selected' : ''}`}
           id='yes-card'
@@ -92,7 +92,7 @@ const Vote = ({ vip, prez, chance, name }) => {
           Close Voting
         </button>
       )}
-      {entered && (
+      {entered ? (
         <table className='vote-results'>
           <thead>
             <tr>
@@ -107,8 +107,8 @@ const Vote = ({ vip, prez, chance, name }) => {
             </tr>
           </tbody>
         </table>
-      )}
-      {entered && (
+      ) : null}
+      {entered ? (
         <table className='vote-details'>
           <thead>
             <tr>
@@ -126,7 +126,7 @@ const Vote = ({ vip, prez, chance, name }) => {
               ))}
           </tbody>
         </table>
-      )}
+      ) : null}
     </div>
   );
 };
