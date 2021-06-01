@@ -24,23 +24,25 @@ const Signout = () => {
   const prez = gameSettings && gameSettings[0].president;
   const chance = gameSettings && gameSettings[0].chancellor;
 
-  const handleClick = async () => {
+  const handleClick = () => {
+    const { uid } = user;
+    deleteDocumentFromCollection('players', 'uid', uid);
+
     if (gameStarted) {
       const approved = window.confirm(
         '⛔️WARNING⛔️: By signing out, the current game will end for all players! Do you still want to proceed?'
       );
 
       if (approved) {
-        await updateSettings('gameStarted', false);
-        if (vote) await updateSettings('voteTime', false);
-        if (prez) await updateSettings('president', null);
-        if (chance) await updateSettings('chancellor', null);
-        await deleteFieldFromDocument('players', 'cards');
+        updateSettings('gameStarted', false);
+        if (vote) updateSettings('voteTime', false);
+        if (prez) updateSettings('president', null);
+        if (chance) updateSettings('chancellor', null);
+        deleteFieldFromDocument('players', 'cards');
       }
     }
 
-    await deleteDocumentFromCollection('players', 'uid', user.uid);
-    await signOut();
+    signOut();
   };
 
   return user ? (
