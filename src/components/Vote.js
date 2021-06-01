@@ -5,7 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
-const Vote = ({ vip, prez, chance, shortEmail }) => {
+const Vote = ({ vip, prez, chance }) => {
   const { db } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
 
@@ -19,11 +19,11 @@ const Vote = ({ vip, prez, chance, shortEmail }) => {
 
   const settingsRef = db.collection('settings');
 
-  const enterVote = async () => {
-    const { uid } = user;
-    await db.collection('votes').add({
+  const enterVote = () => {
+    const { uid, displayName } = user;
+    db.collection('votes').add({
       uid,
-      name: shortEmail(),
+      name: displayName,
       vote: selected,
       createdAt: new Date().toISOString(),
     });
@@ -40,8 +40,8 @@ const Vote = ({ vip, prez, chance, shortEmail }) => {
     return count;
   };
 
-  const closeVote = async () => {
-    await settingsRef.doc('3Fd2IrMcifnJjBYJfcJc').update({
+  const closeVote = () => {
+    settingsRef.doc('3Fd2IrMcifnJjBYJfcJc').update({
       voteTime: false,
       president: null,
       chancellor: null,
@@ -53,7 +53,7 @@ const Vote = ({ vip, prez, chance, shortEmail }) => {
   return (
     <div className='flex col center container vote'>
       <p>
-        You are voting for:
+        You are voting for
         <br />
         President: <span className='vote-gov vote-prez'>{prez.name}</span>
         <br />
@@ -83,7 +83,7 @@ const Vote = ({ vip, prez, chance, shortEmail }) => {
           Submit my Vote
         </button>
       )}
-      {vip.uid === user.uid && (
+      {vip && user && vip.uid === user.uid && (
         <button className='btn vote-end-btn' onClick={closeVote}>
           Close Voting
         </button>
@@ -115,7 +115,7 @@ const Vote = ({ vip, prez, chance, shortEmail }) => {
           <tbody>
             {votes &&
               votes.map((vote) => (
-                <tr>
+                <tr key={vote.id}>
                   <td>{vote.name}</td>
                   <td>{vote.vote}</td>
                 </tr>
