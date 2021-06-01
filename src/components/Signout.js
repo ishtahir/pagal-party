@@ -10,39 +10,37 @@ const Signout = () => {
   const { user } = useContext(AuthContext);
   const {
     db,
-    signOut,
+    signOutFromApp,
     deleteDocumentFromCollection,
-    updateSettings,
-    deleteFieldFromDocument,
+    // deleteFieldFromDocument,
+    // gameOver,
   } = useContext(FirebaseContext);
 
   const settingsRef = db.collection('settings');
   const [gameSettings] = useCollectionData(settingsRef, { idField: 'id' });
 
   const gameStarted = gameSettings && gameSettings[0].gameStarted;
-  const vote = gameSettings && gameSettings[0].voteTime;
-  const prez = gameSettings && gameSettings[0].president;
-  const chance = gameSettings && gameSettings[0].chancellor;
 
   const handleClick = () => {
     const { uid } = user;
-    deleteDocumentFromCollection('players', 'uid', uid);
 
     if (gameStarted) {
-      const approved = window.confirm(
-        '⛔️WARNING⛔️: By signing out, the current game will end for all players! Do you still want to proceed?'
-      );
-
-      if (approved) {
-        updateSettings('gameStarted', false);
-        if (vote) updateSettings('voteTime', false);
-        if (prez) updateSettings('president', null);
-        if (chance) updateSettings('chancellor', null);
-        deleteFieldFromDocument('players', 'cards');
-      }
+      // const approved = window.confirm(
+      //   '⛔️WARNING⛔️: By signing out, the current game will end for all players! Do you still want to proceed?'
+      // );
+      // console.log({ approved });
+      // if (approved) {
+      //   console.log('inside approved block');
+      //   gameOver();
+      //   deleteFieldFromDocument('players', 'cards');
+      //   deleteDocumentFromCollection('players', 'uid', uid);
+      //   signOutFromApp();
+      // }
+      alert('PLEASE NOTIFY THE VIP TO END THE GAME SO YOU CAN SIGN OUT!');
+    } else {
+      deleteDocumentFromCollection('players', 'uid', uid);
+      signOutFromApp();
     }
-
-    signOut();
   };
 
   return user ? (
