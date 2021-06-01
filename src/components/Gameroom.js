@@ -7,13 +7,14 @@ import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
 import { createHitler } from '../utils/functions';
 
+import Header from './Header';
 import Cards from './Cards';
 import Vote from './Vote';
 import VIPMenu from './VIPMenu';
 
 const Gameroom = () => {
   const { db, updateSettings } = useContext(FirebaseContext);
-  const { user, provider } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const playersRef = db.collection('players');
   const [players] = useCollectionData(playersRef.orderBy('createdAt'), {
@@ -31,18 +32,30 @@ const Gameroom = () => {
   const chance = gameSettings && gameSettings[0].chancellor;
 
   const [showVIPmenu, setShowVIPmenu] = useState(false);
+  const [chosenName, setChosenName] = useState('');
 
-  const shortEmail = () =>
-    provider === 'google' ? user.email.split('@')[0] : user.displayName;
+  const getName = () => {
+    if (user && players && players.length) {
+      const person = players.filter((player) => player.uid === user.uid)[0];
+      return person && person.name ? person.name : '';
+    }
+    return '';
+  };
 
   const addPlayer = async () => {
-    const { uid, photoURL } = user;
+    const { uid } = user;
+    const name = chosenName ? chosenName : user.displayName;
+
     await playersRef.add({
-      name: shortEmail(),
+      name,
       uid,
-      photoURL,
       createdAt: new Date().toISOString(),
     });
+  };
+
+  const playerJoined = (uid) => {
+    if (players)
+      return players.filter((player) => player.uid === uid).length === 1;
   };
 
   const startGame = async () => {
@@ -68,73 +81,87 @@ const Gameroom = () => {
   };
 
   return (
-    <div className='wrap flex col center-y gr'>
-      {!gameStarted ? (
-        <div className='gr-join flex col center'>
-          <p className='gr-text'>Players already joined:</p>
-          {players &&
-            players.length > 0 &&
-            players.map((player) => (
-              <p
-                key={player.uid}
-                className={
-                  vip && player.uid === vip.uid
-                    ? 'gr-player-name vip'
-                    : 'gr-player-name'
-                }
-              >
-                {player.name}
-              </p>
-            ))}
-          {players &&
-          players.length &&
-          players.filter((player) => user && player.uid === user.uid).length ===
-            0 ? (
-            <button className='btn' onClick={addPlayer}>
-              Join Game
-            </button>
-          ) : null}
-          {vip && user && vip.uid === user.uid && !gameStarted && (
-            <button className='btn start-btn' onClick={startGame}>
-              Start Game
-            </button>
-          )}
-        </div>
-      ) : (
-        <>
-          {vip && vip.uid === user.uid && (
-            <button
-              className='btn gr-show-vip-btn'
-              onClick={() => setShowVIPmenu(!showVIPmenu)}
-            >
-              {showVIPmenu ? 'Hide' : 'Show'} VIP Menu
-            </button>
-          )}
-          {vote && prez && chance ? (
-            <Vote
-              vip={vip}
-              prez={prez}
-              chance={chance}
-              shortEmail={shortEmail}
-            />
-          ) : (
-            <>
-              {vip && vip.uid === user.uid && showVIPmenu ? (
-                <VIPMenu players={players} setShowVIPmenu={setShowVIPmenu} />
-              ) : (
-                <Cards
-                  player={
-                    players &&
-                    players.length &&
-                    players.filter((player) => player.uid === user.uid)[0]
-                  }
+    <>
+      <Header name={getName()} />
+      <div className='wrap flex col center-y gr'>
+        {!gameStarted ? (
+          <div className='gr-join flex col center'>
+            {user && !playerJoined(user.uid) && (
+              <div className='flex center col input-wrap'>
+                <p>
+                  If you would like to choose your own name, type below and
+                  press 'Join Game'. Otherwise, the default name from your login
+                  will be used.
+                </p>
+                <input
+                  className='input'
+                  type='text'
+                  placeholder='Enter your name'
+                  value={chosenName}
+                  onChange={(e) => {
+                    setChosenName(e.target.value);
+                    if (user) user.chosenName = e.target.value;
+                  }}
                 />
-              )}
-            </>
-          )}
-        </>
-      )}
-    </div>
+              </div>
+            )}
+            <p className='gr-text'>Players already joined:</p>
+            {players &&
+              players.length &&
+              players.map((player) => (
+                <p
+                  key={player.uid}
+                  className={
+                    vip && player.uid === vip.uid
+                      ? 'gr-player-name vip'
+                      : 'gr-player-name'
+                  }
+                >
+                  {player.name}
+                </p>
+              ))}
+            {players && user && playerJoined(user.uid) ? null : (
+              <button className='btn' onClick={addPlayer}>
+                Join Game
+              </button>
+            )}
+            {vip && user && vip.uid === user.uid && !gameStarted && (
+              <button className='btn start-btn' onClick={startGame}>
+                Start Game
+              </button>
+            )}
+          </div>
+        ) : (
+          <>
+            {vip && vip.uid === user.uid && (
+              <button
+                className='btn gr-show-vip-btn'
+                onClick={() => setShowVIPmenu(!showVIPmenu)}
+              >
+                {showVIPmenu ? 'Hide' : 'Show'} VIP Menu
+              </button>
+            )}
+            {vote && prez && chance ? (
+              <Vote vip={vip} prez={prez} chance={chance} />
+            ) : (
+              <>
+                {vip && vip.uid === user.uid && showVIPmenu ? (
+                  <VIPMenu players={players} setShowVIPmenu={setShowVIPmenu} />
+                ) : (
+                  <Cards
+                    player={
+                      players &&
+                      players.length &&
+                      players.filter((player) => player.uid === user.uid)[0]
+                    }
+                  />
+                )}
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
