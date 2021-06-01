@@ -13,7 +13,8 @@ import Vote from './Vote';
 import VIPMenu from './VIPMenu';
 
 const Gameroom = () => {
-  const { db, updateSettings } = useContext(FirebaseContext);
+  const { db, updateSettings, addDocumentToCollection } =
+    useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
 
   const playersRef = db.collection('players');
@@ -37,20 +38,21 @@ const Gameroom = () => {
   const getName = () => {
     if (user && players && players.length) {
       const person = players.filter((player) => player.uid === user.uid)[0];
-      return person && person.name ? person.name : '';
+      return person && person.name;
     }
     return '';
   };
 
-  const addPlayer = async () => {
+  const addPlayer = () => {
     const { uid } = user;
     const name = chosenName ? chosenName : user.displayName;
-
-    await playersRef.add({
+    const player = {
       name,
       uid,
       createdAt: new Date().toISOString(),
-    });
+    };
+
+    addDocumentToCollection('players', player);
   };
 
   const playerJoined = (uid) => {
@@ -58,7 +60,7 @@ const Gameroom = () => {
       return players.filter((player) => player.uid === uid).length === 1;
   };
 
-  const startGame = async () => {
+  const startGame = () => {
     if (players.length < 5 || players.length > 10)
       return alert(
         `There can only be between 5 and 10 players. Currently there are ${players.length} players.`
@@ -76,7 +78,7 @@ const Gameroom = () => {
         .catch(console.error);
     }
     if (!gameStarted) {
-      await updateSettings('gameStarted', true);
+      updateSettings('gameStarted', true);
     }
   };
 
@@ -98,10 +100,7 @@ const Gameroom = () => {
                   type='text'
                   placeholder='Enter your name'
                   value={chosenName}
-                  onChange={(e) => {
-                    setChosenName(e.target.value);
-                    if (user) user.chosenName = e.target.value;
-                  }}
+                  onChange={(e) => setChosenName(e.target.value)}
                 />
               </div>
             )}
@@ -142,7 +141,7 @@ const Gameroom = () => {
               </button>
             )}
             {vote && prez && chance ? (
-              <Vote vip={vip} prez={prez} chance={chance} />
+              <Vote vip={vip} prez={prez} chance={chance} name={getName()} />
             ) : (
               <>
                 {vip && vip.uid === user.uid && showVIPmenu ? (
