@@ -5,30 +5,36 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
-const Vote = ({ vip, prez, chance }) => {
-  const { db } = useContext(FirebaseContext);
+const Vote = ({ vip, prez, chance, name }) => {
+  const {
+    db,
+    addDocumentToCollection,
+    updateSettings,
+    deleteEntireCollection,
+  } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
 
   const [selected, setSelected] = useState('Yes');
-  const [entered, setEntered] = useState(false);
 
   const votesRef = db.collection('votes');
   const [votes] = useCollectionData(votesRef.orderBy('createdAt'), {
     idField: 'id',
   });
 
-  const settingsRef = db.collection('settings');
+  const entered =
+    votes &&
+    votes.length &&
+    votes.filter((vote) => vote.uid === user.uid).length > 0;
 
   const enterVote = () => {
-    const { uid, displayName } = user;
-    db.collection('votes').add({
+    const { uid } = user;
+    const voteToAdd = {
       uid,
-      name: displayName,
+      name,
       vote: selected,
       createdAt: new Date().toISOString(),
-    });
-
-    setEntered(true);
+    };
+    addDocumentToCollection('votes', voteToAdd);
   };
 
   const countVotes = (arr, val) => {
@@ -41,13 +47,11 @@ const Vote = ({ vip, prez, chance }) => {
   };
 
   const closeVote = () => {
-    settingsRef.doc('3Fd2IrMcifnJjBYJfcJc').update({
-      voteTime: false,
-      president: null,
-      chancellor: null,
-    });
+    updateSettings('voteTime', false);
+    updateSettings('president', null);
+    updateSettings('chancellor', null);
 
-    votesRef.get().then((snap) => snap.forEach((shot) => shot.ref.delete()));
+    deleteEntireCollection('votes');
   };
 
   return (
