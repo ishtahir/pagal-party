@@ -132,16 +132,23 @@ const Gameroom = () => {
           </div>
         ) : (
           <>
-            {vip && vip.uid === user.uid && (
+            {vip && vip.uid === user.uid && !vote && (
               <button
-                className='btn gr-show-vip-btn'
+                className='btn gr-show-vip-btn m5-y'
                 onClick={() => setShowVIPmenu(!showVIPmenu)}
               >
                 {showVIPmenu ? 'Hide' : 'Show'} VIP Menu
               </button>
             )}
             {vote && prez && chance ? (
-              <Vote vip={vip} prez={prez} chance={chance} name={getName()} />
+              <Vote
+                vip={vip}
+                prez={prez}
+                chance={chance}
+                name={getName()}
+                isVip={vip && user && vip.uid === user.uid}
+                players={players.length}
+              />
             ) : (
               <>
                 {vip && vip.uid === user.uid && showVIPmenu ? (
@@ -153,6 +160,7 @@ const Gameroom = () => {
                       players.length &&
                       players.filter((player) => player.uid === user.uid)[0]
                     }
+                    isVip={vip && user && vip.uid === user.uid}
                   />
                 )}
               </>
