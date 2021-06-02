@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const Cards = ({ player }) => {
+const Cards = ({ player, isVip }) => {
   const [party, setParty] = useState('back');
   const [secret, setSecret] = useState('back');
 
@@ -19,7 +19,10 @@ const Cards = ({ player }) => {
   }, [party, secret]);
 
   const role = (card) => {
-    return card === 'party-card' ? player.cards.party : player.cards.secret;
+    if (player && player.hasOwnProperty('cards')) {
+      return card === 'party' ? player.cards.party : player.cards.secret;
+    }
+    return '';
   };
 
   const flip = (e) => {
@@ -27,7 +30,7 @@ const Cards = ({ player }) => {
 
     if (card === 'party-card') {
       if (party === 'back') {
-        setParty(`front ${role(card)}`);
+        setParty(role(card));
       }
     } else if (card === 'secret-card') {
       if (secret === 'back') {
@@ -35,20 +38,42 @@ const Cards = ({ player }) => {
           'ARE YOU SURE YOU WANT TO FLIP OVER YOUR SECRET ROLE?'
         );
         if (approve) {
-          setSecret(`front ${role(card)}`);
+          setSecret(role(card));
         }
       }
     }
   };
 
   return (
-    <div className='cards-board flex'>
-      <div className={`card party ${party}`} id='party-card' onClick={flip} />
-      <div
-        className={`card secret ${secret}`}
-        id='secret-card'
-        onClick={flip}
-      />
+    <div
+      className={
+        !isVip ? 'cards-board flex center m5-y' : 'cards-board flex center'
+      }
+    >
+      <div className='card-flip-wrap'>
+        <div
+          className={party === 'back' ? 'card-flip' : 'card-flip is-flipped'}
+        >
+          <div
+            className='card-face card party back'
+            id='party-card'
+            onClick={flip}
+          />
+          <div className={`card-face card party front ${role('party')}`} />
+        </div>
+      </div>
+      <div className='card-flip-wrap'>
+        <div
+          className={secret === 'back' ? 'card-flip' : 'card-flip is-flipped'}
+        >
+          <div
+            className='card-face card secret back'
+            id='secret-card'
+            onClick={flip}
+          />
+          <div className={`card-face card secret front ${role('secret')}`} />
+        </div>
+      </div>
     </div>
   );
 };
