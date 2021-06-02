@@ -1,16 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Marko+One&display=swap');
 
-/* variables */
+/****************************************************************
+VARIABLES
+****************************************************************/
 :root {
   --light: #f5f5f5;
   --dark: #333;
   --google: #4285f4;
   --twitter: #1da1f2;
   --facebook: #1877f2;
+  --start: #2afd69;
+  --end: #ff0000;
 }
 
-/* reset */
+/****************************************************************
+RESET
+****************************************************************/
 * {
   margin: 0;
   padding: 0;
@@ -27,7 +33,9 @@ body {
   background: url(assets/double-bubble-outline.png), var(--light);
 }
 
-/* utils */
+/****************************************************************
+UTILS
+****************************************************************/
 .flex {
   display: flex;
 }
@@ -62,6 +70,31 @@ body {
   height: 100%;
 }
 
+.m5 {
+  margin: 5rem;
+}
+
+.m5-x {
+  margin: 0 5rem;
+}
+
+.m5-y {
+  margin: 5rem 0;
+}
+
+.m5-t {
+  margin-top: 5rem;
+}
+.m5-b {
+  margin-bottom: 5rem;
+}
+.m5-l {
+  margin-left: 5rem;
+}
+.m5-r {
+  margin-right: 5rem;
+}
+
 .btn {
   background: var(--light);
   color: var(--dark);
@@ -78,23 +111,9 @@ body {
   color: var(--light);
 }
 
-.input-wrap {
-  margin-bottom: 2rem;
-}
-
-.input-wrap p {
-  width: 50%;
-}
-
-.input {
-  padding: 0.8rem 1.6rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--dark);
-  margin-right: 0.5rem;
-  margin-top: 2rem;
-}
-
-/* signin */
+/****************************************************************
+SIGNIN COMPONENT
+****************************************************************/
 .signin-title {
   text-align: center;
 }
@@ -169,13 +188,29 @@ body {
   height: 50vh;
 }
 
-/* header */
+/****************************************************************
+SIGNOUT COMPONENT
+****************************************************************/
+.signout-btn {
+  background: transparent;
+  margin-right: 2rem;
+  border-color: var(--dark);
+  color: var(--dark);
+}
+
+.signout-btn:hover {
+  background: var(--light);
+  color: var(--dark);
+}
+
+/****************************************************************
+HEADER COMPONENT
+****************************************************************/
 .header {
   justify-content: space-between;
-  background: linear-gradient(to right, #fc3939, #ff10ff);
-  color: #333;
+  background: linear-gradient(to right, #fc3939, #ff00ff);
+  color: var(--dark);
   padding: 1.5rem 0;
-  margin-bottom: 1.5rem;
 }
 
 .header-logo {
@@ -188,43 +223,59 @@ body {
   color: var(--light);
 }
 
-/* signout */
-.signout-btn {
-  background: transparent;
-  margin-right: 2rem;
-}
-
-.signout-btn:hover {
-  background: var(--light);
-  color: var(--dark);
-}
-
-/* gameroom */
+/****************************************************************
+GAMEROOM COMPONENT
+****************************************************************/
 .gr {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  overflow: scroll;
+  height: calc(100vh - 85px);
+  font-size: 2rem;
+  padding-bottom: 5rem;
 }
 
 .gr-join {
-  height: 30%;
-  margin: auto 0;
-  padding: 0 5rem;
+  margin-top: 5rem;
+  padding: 3rem 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 1rem;
+  width: 50%;
 }
 
 .gr-text {
-  margin-bottom: 1.5rem;
-  background: #ddd;
+  margin-bottom: 2rem;
+  background: rgb(245, 192, 192);
   padding: 1rem 1.5rem;
   border-radius: 2rem;
 }
 
-.gr-player-name:not(:last-child) {
-  margin-bottom: 1rem;
+.gr-player-name {
+  text-align: center;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 1rem;
 }
 
-.gr-show-vip-btn {
-  margin: 3rem 0;
+.gr-player-name:nth-child(odd) {
+  background: #e2e2e2;
+}
+
+.gr-player-name:nth-child(even) {
+  background: #a8a8a8;
+}
+
+.input-wrap {
+  margin-bottom: 2rem;
+}
+
+.input-wrap p {
+  width: 50%;
+}
+
+.input {
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--dark);
+  margin-right: 0.5rem;
+  margin-top: 2rem;
 }
 
 .vip::before,
@@ -239,10 +290,24 @@ body {
   font-weight: bold;
 }
 
-/* cards styles */
+.start-btn {
+  border-color: var(--start);
+  color: var(--start);
+  background: var(--dark);
+  margin-top: 3rem;
+}
+
+.start-btn:hover {
+  background: var(--start);
+  color: var(--dark);
+}
+
+/****************************************************************
+ROLE CARDS STYLES
+****************************************************************/
 .card {
-  height: 25rem;
-  width: 19rem;
+  width: 20rem;
+  height: 26rem;
   border: 1px solid #888;
   border-radius: 1rem;
   display: flex;
@@ -251,28 +316,7 @@ body {
   font-family: 'Marko One', serif;
   position: relative;
   cursor: pointer;
-  margin: 2rem;
   text-align: center;
-}
-
-.party.back {
-  background: linear-gradient(#ffff00, #ffe600);
-  font-size: 2.5rem;
-}
-
-.party.back::after {
-  content: 'Party Membership';
-  text-transform: uppercase;
-}
-
-.secret.back {
-  background: linear-gradient(#f5f5f5, #cfcfcf);
-  font-size: 4rem;
-}
-
-.secret.back::after {
-  content: 'Secret Role';
-  text-transform: uppercase;
 }
 
 .card.party.front,
@@ -280,32 +324,13 @@ body {
   align-items: flex-end;
 }
 
-.yes.front.selected,
-.no.front.selected {
-  border: 5px solid #fdb519;
+.party.front,
+.secret.front {
+  cursor: not-allowed;
 }
 
-.yes.front {
-  background: #ffe5ca;
-  font-size: 6rem;
-}
-
-.yes.front::after {
-  content: 'Ja!';
-}
-
-.no.front {
-  background: #333;
-  color: #ffe5ca;
-  font-size: 6rem;
-}
-
-.no.front::after {
-  content: 'Nein!';
-}
-
-.party.front::before {
-  content: 'Party Membership';
+.party.front::before,
+.secret.front::before {
   position: absolute;
   top: 0;
   font-size: 1.8rem;
@@ -316,6 +341,21 @@ body {
   border-bottom: 2px solid #333;
   padding: 1rem 0 0.5rem 0;
   color: #333;
+}
+
+/* PARTY MEMEBERSHIP CARD */
+.party.back {
+  background: linear-gradient(#ffff00, #ffe600);
+  font-size: 2.5rem;
+}
+
+.party.back::after {
+  content: 'Party Membership';
+  text-transform: uppercase;
+}
+
+.party.front::before {
+  content: 'Party Membership';
 }
 
 .party.front.liberal {
@@ -346,18 +386,19 @@ body {
   text-transform: uppercase;
 }
 
+/* SECRET ROLE CARD */
+.secret.back {
+  background: linear-gradient(#f5f5f5, #cfcfcf);
+  font-size: 4rem;
+}
+
+.secret.back::after {
+  content: 'Secret Role';
+  text-transform: uppercase;
+}
+
 .secret.front::before {
   content: 'secret role';
-  position: absolute;
-  top: 0;
-  font-size: 1.8rem;
-  text-transform: uppercase;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-    'Lucida Sans', Arial, sans-serif;
-  font-weight: bold;
-  border-bottom: 2px solid #333;
-  padding: 1rem 0 0.5rem 0;
-  color: #333;
 }
 
 .secret.front.liberal {
@@ -402,10 +443,83 @@ body {
   text-transform: uppercase;
 }
 
-/* vote */
+/* YES/NO CARDS */
+.yes.front.selected,
+.no.front.selected {
+  border: 5px solid #fdb519;
+}
+
+.yes.front {
+  background: #ffe5ca;
+  font-size: 6rem;
+}
+
+.yes.front::after {
+  content: 'Ja!';
+}
+
+.no.front {
+  background: #333;
+  color: #ffe5ca;
+  font-size: 6rem;
+}
+
+.no.front::after {
+  content: 'Nein!';
+}
+
+.card.front.party,
+.card.front.secret {
+  transform: rotateY(180deg);
+}
+
+/****************************************************************
+CARDS FLIP STYLES
+****************************************************************/
+.card-flip-wrap {
+  width: 20rem;
+  height: 26rem;
+  perspective: 60rem;
+}
+
+.card-flip-wrap:first-child {
+  margin-right: 5rem;
+}
+
+.card-flip {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.card-face {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.card-face.party.front {
+  transform: rotateY(180deg);
+}
+
+.card-face.secret.front {
+  transform: rotateY(-180deg);
+}
+
+.card-flip.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/****************************************************************
+VOTE COMPONENT
+****************************************************************/
 .vote {
   justify-content: space-evenly;
 }
+
 .vote-results {
   font-size: 30px;
   border-collapse: collapse;
@@ -421,6 +535,10 @@ body {
   color: #3333ff;
 }
 
+.vote-cards .yes {
+  margin-right: 5rem;
+}
+
 th {
   width: 150px;
 }
@@ -429,10 +547,12 @@ td {
   text-align: center;
 }
 
-/* vip-menu */
+/****************************************************************
+VIP-MENU COMPONENT
+****************************************************************/
 .vip-menu {
-  height: 100%;
-  justify-content: space-evenly;
+  /* height: 100%; */
+  justify-content: center;
 }
 
 .disabled-btn,
@@ -444,22 +564,23 @@ td {
 }
 
 .end-btn {
-  color: red;
-  border-color: red;
+  color: var(--end);
+  border-color: var(--end);
 }
 
 .end-btn:hover {
-  background: red;
+  background: var(--end);
   color: var(--light);
 }
 
-/* gov  */
+/****************************************************************
+GOVERNMENT COMPONENT
+****************************************************************/
 .gov {
   background: #333;
   color: var(--light);
   padding: 2rem 4rem;
   border-radius: 2rem;
-  margin-bottom: 2rem;
 }
 
 .gov-text {
@@ -467,15 +588,19 @@ td {
 }
 
 .gov-select {
-  padding: 5px;
-  width: 180px;
+  padding: 1rem;
+  width: 18rem;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
 }
 
 .gov-select:not(:last-child) {
   margin-bottom: 10px;
 }
 
-/* loading spinner */
+/****************************************************************
+LOADING SPINNER
+****************************************************************/
 .loading:empty {
   position: absolute;
   top: calc(50% - 4em);
@@ -497,10 +622,50 @@ td {
   }
 }
 
+/****************************************************************
+MEDIA QUERIES
+****************************************************************/
 @media only screen and (max-device-width: 430px) and (pointer: coarse),
   only screen and (max-width: 510px) {
-  .wrap {
-    width: 95vw;
-    height: 95vh;
+  .header {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+  }
+
+  .header-name {
+    margin: 1rem 0;
+  }
+
+  .signout-btn {
+    margin: 1rem 0 1rem 0;
+  }
+
+  .gr {
+    height: auto;
+    padding-bottom: 15rem;
+  }
+
+  .cards-board {
+    flex-direction: column;
+  }
+
+  /* .card-flip-wrap:first-child {
+    margin: 5rem 0;
+  } */
+
+  .vote p,
+  .vote-selected,
+  .vote-enter-btn {
+    margin: 3rem 0;
+  }
+
+  .vote-cards {
+    flex-direction: column;
+  }
+
+  .vote-cards .yes {
+    margin: 0 0 5rem 0;
   }
 }
