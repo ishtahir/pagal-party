@@ -5,7 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
-const Vote = ({ vip, prez, chance, name }) => {
+const Vote = ({ vip, prez, chance, name, isVip, players }) => {
   const {
     db,
     addDocumentToCollection,
@@ -47,18 +47,28 @@ const Vote = ({ vip, prez, chance, name }) => {
   };
 
   const closeVote = () => {
-    updateSettings('voteTime', false);
-    updateSettings('president', null);
-    updateSettings('chancellor', null);
-
-    deleteEntireCollection('votes');
+    if (votes.length < players) {
+      alert(
+        `You can't close voting until everyone has voted. ${
+          players - votes.length
+        } people still have to vote.`
+      );
+    } else {
+      updateSettings('voteTime', false);
+      updateSettings('president', null);
+      updateSettings('chancellor', null);
+      deleteEntireCollection('votes');
+    }
   };
 
   return (
-    <div className='flex col center container vote'>
-      <p>
-        You are voting for
-        <br />
+    <div className='flex col center vote'>
+      {vip && user && vip.uid === user.uid && (
+        <button className='btn vote-end-btn m5-y' onClick={closeVote}>
+          Close Voting
+        </button>
+      )}
+      <p className={isVip ? 'vote-govt m5-b' : 'vote-govt m5-y'}>
         President: <span className='vote-gov vote-prez'>{prez.name}</span>
         <br />
         Chancellor: <span className='vote-gov vote-chance'>{chance.name}</span>
@@ -79,17 +89,12 @@ const Vote = ({ vip, prez, chance, name }) => {
           }}
         />
       </div>
-      <h2 className='vote-selected'>
+      <h2 className='vote-selected m5-y'>
         You {entered ? 'voted' : 'have selected'}: {selected}!
       </h2>
       {!entered && (
         <button className='btn vote-enter-btn' onClick={enterVote}>
           Submit my Vote
-        </button>
-      )}
-      {vip && user && vip.uid === user.uid && (
-        <button className='btn vote-end-btn' onClick={closeVote}>
-          Close Voting
         </button>
       )}
       {entered ? (
