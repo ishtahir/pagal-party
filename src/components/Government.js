@@ -7,7 +7,7 @@ const Government = ({ players }) => {
   const [prez, setPrez] = useState(null);
 
   return (
-    <div className='gov flex col center'>
+    <div className='gov flex col center m5-b'>
       <h2 className='gov-text'>
         Choose the president and chancellor for this round
       </h2>
