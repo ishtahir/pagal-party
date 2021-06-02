@@ -13,7 +13,6 @@ const VIPMenu = ({ players, setShowVIPmenu }) => {
   const settingsRef = db.collection('settings');
   const [gameSettings] = useCollectionData(settingsRef, { idField: 'id' });
 
-  // const vote = gameSettings && gameSettings[0].voteTime;
   const prez = gameSettings && gameSettings[0].president;
   const chance = gameSettings && gameSettings[0].chancellor;
 
@@ -50,7 +49,7 @@ const VIPMenu = ({ players, setShowVIPmenu }) => {
       >
         Open Voting
       </button>
-      <button className='btn end-btn' onClick={endGame}>
+      <button className='btn end-btn m5-y' onClick={endGame}>
         End Game
       </button>
     </div>
