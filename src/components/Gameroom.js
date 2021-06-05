@@ -61,9 +61,11 @@ const Gameroom = () => {
   };
 
   const startGame = () => {
-    if (players.length < 5 || players.length > 10)
+    // if (players.length < 5 || players.length > 10)
+    if (players.length < 3 || players.length > 3)
       return alert(
-        `There can only be between 5 and 10 players. Currently there are ${players.length} players.`
+        // `There can only be between 5 and 10 players. Currently there are ${players.length} players.`
+        `TEST MODE: There can only be 3 players. Currently there are ${players.length} players.`
       );
 
     const envelopes = createHitler(players.length);
