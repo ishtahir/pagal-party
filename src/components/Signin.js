@@ -19,7 +19,6 @@ const Signin = () => {
         <div className='loading'></div>
       ) : !user ? (
         <div className='wrap col'>
-          <h1 className='signin-title'>Welcome to Playper</h1>
           <div className='flex col center signin-img-wrap'>
             <div
               className='signin-btn flex center google-btn'
