@@ -184,10 +184,6 @@ SIGNIN COMPONENT
   border-top-right-radius: 0.7rem;
 }
 
-.signin-img-wrap {
-  height: 50vh;
-}
-
 /****************************************************************
 SIGNOUT COMPONENT
 ****************************************************************/
@@ -275,7 +271,6 @@ GAMEROOM COMPONENT
   border-radius: 0.5rem;
   border: 1px solid var(--dark);
   margin-right: 0.5rem;
-  margin-top: 2rem;
 }
 
 .vip::before,
@@ -596,6 +591,13 @@ GOVERNMENT COMPONENT
 
 .gov-select:not(:last-child) {
   margin-bottom: 10px;
+}
+
+/****************************************************************
+ROOMS COMPONENT
+****************************************************************/
+.rooms-title {
+  padding-bottom: 2rem;
 }
 
 /****************************************************************
