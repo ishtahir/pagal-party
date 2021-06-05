@@ -211,6 +211,7 @@ HEADER COMPONENT
   background: linear-gradient(to right, #fc3939, #ff00ff);
   color: var(--dark);
   padding: 1.5rem 0;
+  width: 100%;
 }
 
 .header-logo {
@@ -234,7 +235,6 @@ GAMEROOM COMPONENT
 
 .gr-join {
   margin-top: 5rem;
-  padding: 3rem 0;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 1rem;
   width: 50%;
@@ -647,13 +647,22 @@ MEDIA QUERIES
     padding-bottom: 15rem;
   }
 
+  .gr-join {
+    width: 95%;
+  }
+
   .cards-board {
     flex-direction: column;
   }
 
-  /* .card-flip-wrap:first-child {
-    margin: 5rem 0;
-  } */
+  .card-flip-wrap:first-child {
+    margin-right: 0;
+    margin-bottom: 5rem;
+  }
+
+  .card-flip-wrap {
+    margin: 0;
+  }
 
   .vote p,
   .vote-selected,
