@@ -114,7 +114,7 @@ const Vote = ({ vip, prez, chance, name, isVip, players }) => {
         </table>
       ) : null}
       {entered ? (
-        <table className='vote-details'>
+        <table className='vote-details m5-b'>
           <thead>
             <tr>
               <th>Name</th>
