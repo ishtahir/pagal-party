@@ -56,7 +56,7 @@ const Signin = () => {
           </div>
         </div>
       ) : (
-        <Redirect to='/gameroom' />
+        <Redirect to='/games' />
       )}
     </>
   );
