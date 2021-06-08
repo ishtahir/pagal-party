@@ -7,7 +7,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
-import Signout from './Signout';
+import Header from './Header';
 import Join from './Join';
 
 const Gameroom = () => {
@@ -19,23 +19,24 @@ const Gameroom = () => {
   const [rooms, loadRooms] = useCollectionData(roomsRef, { idField: 'id' });
   const room = rooms && rooms.filter((room) => room.id === roomid)[0];
 
-  return (
+  return user ? (
     <div className='flex col center'>
-      {user ? <Signout roomid={roomid} /> : null}
+      <Header roomid={roomid} />
       {loadRooms ? (
         <div className='loading'></div>
       ) : room ? (
-        <>
-          <h1>
-            Room: <span className='gr-roomname'>{roomid}</span>
-          </h1>
-          <h2>{room && room.game}</h2>
+        <div className='m5-y flex col center'>
+          <h1>Room</h1>
+          <div className='gr-roomname'>{roomid}</div>
+          <h2 className='m5-y gr-game'>{room && room.game}</h2>
           <Join roomid={roomid} />
-        </>
+        </div>
       ) : (
         <Redirect to='/' />
       )}
     </div>
+  ) : (
+    <Redirect to='/' />
   );
 };
 
