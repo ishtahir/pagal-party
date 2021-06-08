@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Marko+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mate+SC&display=swap');
 
 /****************************************************************
 VARIABLES
@@ -185,6 +186,15 @@ GAMEROOM COMPONENT
   font-family: 'Bungee Shade', cursive;
   font-size: 5rem;
   color: var(--dark);
+}
+
+.gr-game {
+  font-family: 'Mate SC', serif;
+  font-size: 3.5rem;
+  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+  background: #bfdaf0;
+  padding: 1.5rem 3rem;
+  border-radius: 2rem;
 }
 
 .input-wrap {
