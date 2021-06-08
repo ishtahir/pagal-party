@@ -56,7 +56,7 @@ const Signin = () => {
           </div>
         </div>
       ) : (
-        <Redirect to='/games' />
+        <Redirect push to='/rooms' />
       )}
     </>
   );
