@@ -23,14 +23,17 @@ const Home = () => {
       return alert(
         'Room names must be 4 characters long, please enter correct room name.'
       );
-
-    const room = rooms.filter((room) => room.id === roomToJoin)[0];
-    room
-      ? setConnectToRoom(true)
-      : alert(
-          `Room ${roomToJoin} does not exist, please enter correct room name.`
-        );
-    setRoomToJoin('');
+    console.log({ rooms });
+    const myRoom =
+      rooms && rooms.length && rooms.filter((room) => room.id === roomToJoin);
+    console.log({ myRoom });
+    if (myRoom.length) {
+      setConnectToRoom(true);
+    } else {
+      alert(
+        `Room ${roomToJoin} does not exist, please enter correct room name.`
+      );
+    }
   };
 
   return (
