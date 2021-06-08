@@ -72,3 +72,5 @@ export const createRoomName = () => {
   }
   return room.toUpperCase();
 };
+
+export const getDate = () => new Date().toISOString();
