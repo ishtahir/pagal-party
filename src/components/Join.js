@@ -1,12 +1,22 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
+import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
 import firebase from 'firebase/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
+import { getDate } from '../utils/functions';
+
 const Join = ({ roomid }) => {
   const { db, addDocumentToCollection } = useContext(FirebaseContext);
+  const { user } = useContext(AuthContext);
+  let uid;
+  if (user) {
+    uid = user.uid;
+  } else {
+    uid = '';
+  }
 
   const [rooms] = useCollectionData(
     db.collection('rooms').orderBy('createdAt'),
@@ -19,59 +29,48 @@ const Join = ({ roomid }) => {
   const roomPlayers = () => {
     if (rooms && rooms.length) {
       const myRoom = rooms.filter((room) => room.id === roomid)[0];
-      return myRoom.hasOwnProperty('players') ? myRoom.players : undefined;
+      return myRoom.players;
     }
+    return [];
   };
 
   const [chosenName, setChosenName] = useState('');
-  const [localName, setLocalName] = useState('');
 
-  useEffect(() => {
-    const nameChosen = localStorage.getItem('chosenName');
-    const idRoom = localStorage.getItem('roomid');
-
-    if (nameChosen && idRoom === roomid) {
-      setLocalName(nameChosen);
+  const playerJoined = (uid) => {
+    if (players && players.length) {
+      const playersInRoom = players.filter((player) => player.uid === uid);
+      return playersInRoom.length > 0;
     }
-  }, []); // eslint-disable-line
-
-  const checkNameInPlayers = (name) =>
-    players &&
-    players.length &&
-    players.filter((player) => player.name === name).length > 0;
-
-  const playerJoined = (name) => {
-    const players = roomPlayers();
-    if (players)
-      return players.filter((player) => player === name).length === 1;
+    return false;
   };
 
   const addPlayerJoinRoom = async () => {
-    if (checkNameInPlayers(chosenName)) {
-      return alert(
-        'This name is already taken, please choose a different name'
+    let confirm;
+    if (chosenName.length === 0) {
+      confirm = window.confirm(
+        `You didn't enter a name, would you like to go with ${user.displayName}?`
       );
     }
     const player = {
-      name: chosenName,
+      name: confirm ? user.displayName : chosenName,
       room: roomid,
-      createdAt: new Date().toISOString(),
+      uid,
+      createdAt: getDate(),
     };
     await addDocumentToCollection('players', player);
     await db
       .collection('rooms')
       .doc(roomid)
       .update({
-        players: firebase.firestore.FieldValue.arrayUnion(chosenName),
+        players: firebase.firestore.FieldValue.arrayUnion(uid),
       });
-    localStorage.setItem('chosenName', chosenName);
-    localStorage.setItem('roomid', roomid);
+
     setChosenName('');
   };
 
   return (
     <div className='flex center col join-wrap'>
-      {!playerJoined(localName) && (
+      {uid && !playerJoined(uid) ? (
         <>
           <p className='m2-y'>
             If you would like to choose a custom name, type below and press
@@ -85,28 +84,31 @@ const Join = ({ roomid }) => {
             onChange={(e) => setChosenName(e.target.value)}
           />
         </>
-      )}
+      ) : null}
       <p className='gr-text'>Players already joined:</p>
-      {roomPlayers() &&
-        roomPlayers().length &&
-        roomPlayers().map((player, i) => (
-          <p
-            key={`player${i}`}
-            className={i === 0 ? 'gr-player-name vip' : 'gr-player-name'}
-          >
-            {player}
-          </p>
-        ))}
-      {playerJoined(localName) ? null : (
+      {players && players.length
+        ? players
+            .filter((player) => player.room === roomid)
+            .map((player, i) => (
+              <p
+                key={player.uid}
+                className={i === 0 ? 'gr-player-name vip' : 'gr-player-name'}
+              >
+                {player.name}
+              </p>
+            ))
+        : null}
+      {uid && !playerJoined(uid) ? (
         <button className='btn' onClick={addPlayerJoinRoom}>
           Join Game
         </button>
-      )}
-      {roomPlayers() &&
-        roomPlayers().length &&
-        roomPlayers()[0] === localName && (
-          <button className='btn start-btn'>Start Game</button>
-        )}
+      ) : null}
+      {uid &&
+      roomPlayers() &&
+      roomPlayers().length &&
+      roomPlayers()[0] === uid ? (
+        <button className='btn start-btn'>Start Game</button>
+      ) : null}
     </div>
   );
 };
