@@ -9,9 +9,6 @@ VARIABLES
 :root {
   --light: #f5f5f5;
   --dark: #333;
-  --google: #4285f4;
-  --twitter: #1da1f2;
-  --facebook: #1877f2;
   --start: #2afd69;
   --end: #ff0000;
 }
@@ -40,72 +37,6 @@ SIGNIN COMPONENT
 ****************************************************************/
 .signin-title {
   text-align: center;
-}
-
-.signin-btn {
-  border: 3px solid;
-  width: 31rem;
-  height: 6rem;
-  border-radius: 1rem;
-  cursor: pointer;
-  margin-bottom: 3rem;
-}
-
-.signin-btn-img {
-  width: 3rem;
-  margin: 1.5rem;
-}
-
-.signin-btn-text {
-  font-weight: bold;
-  font-size: 2rem;
-  padding: 1rem;
-}
-
-.google-btn.signin-btn {
-  border-color: var(--google);
-}
-
-.google-btn .signin-btn-text {
-  color: var(--light);
-  background: var(--google);
-  padding: 1.5rem 3.72rem;
-  border-bottom-right-radius: 0.7rem;
-  border-top-right-radius: 0.7rem;
-}
-
-.twitter-btn.signin-btn {
-  border-color: var(--twitter);
-}
-
-.twitter-btn .signin-btn-img {
-  width: 4rem;
-  margin: 1rem;
-}
-
-.twitter-btn .signin-btn-text {
-  color: var(--light);
-  background: var(--twitter);
-  padding: 1.5rem 3.58rem;
-  border-bottom-right-radius: 0.7rem;
-  border-top-right-radius: 0.7rem;
-}
-
-.facebook-btn.signin-btn {
-  border-color: var(--facebook);
-}
-
-.facebook-btn .signin-btn-img {
-  width: 3.5rem;
-  margin: 1.25rem;
-}
-
-.facebook-btn .signin-btn-text {
-  color: var(--light);
-  background: var(--facebook);
-  padding: 1.6rem 2.6rem;
-  border-bottom-right-radius: 0.7rem;
-  border-top-right-radius: 0.7rem;
 }
 
 /****************************************************************
@@ -537,6 +468,13 @@ ROOMS COMPONENT
 ****************************************************************/
 .rooms-title {
   padding-bottom: 2rem;
+}
+
+/****************************************************************
+HOME COMPONENT
+****************************************************************/
+.home-title {
+  margin-bottom: 5rem;
 }
 
 /****************************************************************
