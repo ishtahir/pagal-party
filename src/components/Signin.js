@@ -1,17 +1,33 @@
-import { useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
-import google from '../assets/google.svg';
-import twitter from '../assets/twitter.svg';
-import facebook from '../assets/facebook.svg';
+import firebase from 'firebase';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 const Signin = () => {
-  const { googleSignIn, twitterSignIn, facebookSignIn } =
-    useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
+  const [signedIn, setSignedIn] = useState(false);
+
+  useEffect(() => {
+    const unregisterAuthObserver = firebase
+      .auth()
+      .onAuthStateChanged((user) => {
+        setSignedIn(!!user);
+      });
+    return () => unregisterAuthObserver();
+  }, []);
+
+  const uiConfig = {
+    signInFlow: 'popup',
+    signInOptions: [
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    ],
+  };
 
   return (
     <>
@@ -19,41 +35,10 @@ const Signin = () => {
         <div className='loading'></div>
       ) : !user ? (
         <div className='wrap col'>
-          <div className='flex col center signin-img-wrap'>
-            <div
-              className='signin-btn flex center google-btn'
-              onClick={googleSignIn}
-            >
-              <img
-                className='signin-btn-img'
-                src={google}
-                alt='Google signin button'
-              />
-              <span className='signin-btn-text'>Sign in with Google</span>
-            </div>
-            <div
-              className='signin-btn flex center twitter-btn'
-              onClick={twitterSignIn}
-            >
-              <img
-                className='signin-btn-img'
-                src={twitter}
-                alt='Twitter signin button'
-              />
-              <span className='signin-btn-text'>Sign in with Twitter</span>
-            </div>
-            <div
-              className='signin-btn flex center facebook-btn'
-              onClick={facebookSignIn}
-            >
-              <img
-                className='signin-btn-img'
-                src={facebook}
-                alt='Facebook signin button'
-              />
-              <span className='signin-btn-text'>Sign in with Facebook</span>
-            </div>
-          </div>
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
         </div>
       ) : (
         <Redirect push to='/rooms' />
