@@ -8,7 +8,6 @@ class Firebase {
   constructor() {
     this.app = firebase.initializeApp(firebaseConfig);
     this.db = firebase.firestore();
-    this.settingsId = '3Fd2IrMcifnJjBYJfcJc';
   }
 
   googleSignIn = () => {
@@ -45,16 +44,12 @@ class Firebase {
   };
 
   // this will delete the field given from every document in the collection given
-  deleteFieldFromDocument = (collection, field) => {
+  deleteFieldFromDocument = (collection, docId, field) => {
     this.db
       .collection(collection)
-      .get()
-      .then((data) => {
-        data.forEach((doc) => {
-          doc.ref.update({
-            [field]: this.app.firebase_.firestore.FieldValue.delete(),
-          });
-        });
+      .doc(docId)
+      .update({
+        [field]: firebase.firestore.FieldValue.delete(),
       });
   };
 
@@ -66,17 +61,17 @@ class Firebase {
   };
 
   // this will update a single field with the given value
-  updateSettings = (field, value) => {
+  updateDocument = (collection, docId, field, value) => {
     this.db
-      .collection('settings')
-      .doc(this.settingsId)
+      .collection(collection)
+      .doc(docId)
       .update({
         [field]: value,
       });
   };
 
-  gameOver = () => {
-    this.db.collection('settings').doc(this.settingsId).update({
+  gameOver = (collection, docId) => {
+    this.db.collection(collection).doc(docId).update({
       gameStarted: false,
       voteTime: false,
       president: null,
