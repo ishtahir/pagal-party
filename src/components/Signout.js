@@ -1,25 +1,30 @@
 import { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useLocation } from 'react-router-dom';
 
 import firebase from 'firebase/app';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
-const Signout = ({ roomid }) => {
+const Signout = () => {
   const { db, signOutFromApp, deleteDocumentFromCollection } =
     useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
+  const roomid = useLocation().pathname.split('/')[2];
 
-  const [rooms] = useCollectionData(db.collection('rooms'), { idField: 'id' });
-  const roomExists =
-    rooms && rooms.length && rooms.filter((room) => room.id === roomid);
-  const owner =
-    user && roomExists && roomExists.length && roomExists[0].owner === user.uid;
+  const [room] = useDocumentData(db.doc(`rooms/${roomid}`), { idField: 'id' });
+
+  const owner = user && room && room.owner === user.uid;
+  const gameStarted = room && room.gameStarted;
 
   const handleClick = async () => {
     const { uid } = user;
+
+    if (gameStarted)
+      return alert(
+        '❌ Please notify the VIP to end the game so you can log out! ❌'
+      );
 
     if (roomid) {
       if (owner) {
@@ -34,8 +39,8 @@ const Signout = ({ roomid }) => {
             players: firebase.firestore.FieldValue.arrayRemove(uid),
           });
       }
-      await signOutFromApp();
     }
+    await signOutFromApp();
   };
 
   return user ? (
