@@ -9,7 +9,7 @@ import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
 import Join from './Join';
 import SecretHitler from './games/secret-hitler/SecretHitler';
-import GameOfThings from './games/game-of-things/GameOfThings';
+// import GameOfThings from './games/game-of-things/GameOfThings';
 
 const Gameroom = () => {
   const { roomid } = useParams();
@@ -27,9 +27,9 @@ const Gameroom = () => {
   const showGame = (game) => {
     if (game === 'Secret Hitler') {
       return <SecretHitler roomData={room} />;
-    } else if (game === 'The Game of Things') {
-      return <GameOfThings roomData={room} />;
-    }
+    } // else if (game === 'The Game of Things') {
+    // return <GameOfThings roomData={room} />;
+    // }
   };
 
   return loading ? (
