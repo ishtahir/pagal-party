@@ -3,7 +3,7 @@ import Signin from './Signin';
 const Home = () => {
   return (
     <div className='flex col center'>
-      <h2 className='rooms-title m5-t'>To start playing, please sign in</h2>
+      <h2 className='home-title m5-t'>Welcome to Playper!</h2>
       <Signin />
     </div>
   );
