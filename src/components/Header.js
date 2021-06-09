@@ -4,13 +4,13 @@ import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
 import Signout from './Signout';
 
-const Header = ({ roomid }) => {
+const Header = () => {
   const { user } = useContext(AuthContext);
 
   return (
     <header className='header flex center'>
       <h1 className='header-logo'>Playper</h1>
-      {user && <Signout roomid={roomid} />}
+      {user && <Signout />}
     </header>
   );
 };
