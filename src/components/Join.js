@@ -18,21 +18,10 @@ const Join = ({ roomid }) => {
     uid = '';
   }
 
-  const [rooms] = useCollectionData(
-    db.collection('rooms').orderBy('createdAt'),
-    { idField: 'id' }
-  );
   const [players] = useCollectionData(
     db.collection('players').orderBy('createdAt'),
     { idField: 'id' }
   );
-  const roomPlayers = () => {
-    if (rooms && rooms.length) {
-      const myRoom = rooms.filter((room) => room.id === roomid)[0];
-      return myRoom.players;
-    }
-    return [];
-  };
 
   const [chosenName, setChosenName] = useState('');
 
@@ -45,14 +34,11 @@ const Join = ({ roomid }) => {
   };
 
   const addPlayerJoinRoom = async () => {
-    let confirm;
     if (chosenName.length === 0) {
-      confirm = window.confirm(
-        `You didn't enter a name, would you like to go with ${user.displayName}?`
-      );
+      return alert('Please enter your name, then join the game.');
     }
     const player = {
-      name: confirm ? user.displayName : chosenName,
+      name: chosenName,
       room: roomid,
       uid,
       createdAt: getDate(),
@@ -102,12 +88,6 @@ const Join = ({ roomid }) => {
         <button className='btn' onClick={addPlayerJoinRoom}>
           Join Game
         </button>
-      ) : null}
-      {uid &&
-      roomPlayers() &&
-      roomPlayers().length &&
-      roomPlayers()[0] === uid ? (
-        <button className='btn start-btn'>Start Game</button>
       ) : null}
     </div>
   );
