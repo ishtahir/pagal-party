@@ -74,3 +74,11 @@ export const createRoomName = () => {
 };
 
 export const getDate = () => new Date().toISOString();
+
+export const secretHitlerSettings = () => ({
+  game: 'Secret Hitler',
+  gameStarted: false,
+  voteTime: false,
+  president: null,
+  chancellor: null,
+});
