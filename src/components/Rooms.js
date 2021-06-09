@@ -10,10 +10,10 @@ import { Redirect } from 'react-router-dom';
 
 const Rooms = () => {
   const { db } = useContext(FirebaseContext);
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   const roomsRef = db.collection('rooms');
-  const [rooms] = useCollectionData(roomsRef, {
+  const [rooms, loadRooms] = useCollectionData(roomsRef, {
     idField: 'id',
   });
 
@@ -31,6 +31,11 @@ const Rooms = () => {
       rooms && rooms.length && rooms.filter((room) => room.id === roomToJoin);
 
     if (myRoom.length) {
+      if (myRoom[0].gameStarted) {
+        return alert(
+          `Room ${roomToJoin} already has a game in progress, please join or create another room.`
+        );
+      }
       setConnectToRoom(true);
     } else {
       alert(
@@ -63,31 +68,37 @@ const Rooms = () => {
 
   return (
     <div className='flex col center'>
-      {!connectToRoom ? (
-        <>
-          <h1 className='m5-t m2-b'>Create a room</h1>
-          <button className='btn' onClick={createRoom}>
-            Create Room
-          </button>
-          <h1 className='m5-y m2-b'>Join a room</h1>
-          <input
-            type='text'
-            className='input m2-b'
-            placeholder='Enter room name'
-            maxLength='4'
-            value={roomToJoin}
-            onChange={(e) => setRoomToJoin(e.target.value.toUpperCase())}
-            onKeyDown={(e) => e.key === 'Enter' && joinRoom()}
+      {loadRooms || loading ? (
+        <div className='loading' />
+      ) : user ? (
+        !connectToRoom ? (
+          <>
+            <h1 className='m5-t m2-b'>Create a room</h1>
+            <button className='btn' onClick={createRoom}>
+              Create Room
+            </button>
+            <h1 className='m5-y m2-b'>Join a room</h1>
+            <input
+              type='text'
+              className='input m2-b'
+              placeholder='Enter room name'
+              maxLength='4'
+              value={roomToJoin}
+              onChange={(e) => setRoomToJoin(e.target.value.toUpperCase())}
+              onKeyDown={(e) => e.key === 'Enter' && joinRoom()}
+            />
+            <button className='btn' onClick={joinRoom}>
+              Join Room
+            </button>
+          </>
+        ) : (
+          <Redirect
+            push
+            to={`/rooms/${roomToJoin ? roomToJoin : roomCreated}/games`}
           />
-          <button className='btn' onClick={joinRoom}>
-            Join Room
-          </button>
-        </>
+        )
       ) : (
-        <Redirect
-          push
-          to={`/rooms/${roomToJoin ? roomToJoin : roomCreated}/games`}
-        />
+        <Redirect to='/' />
       )}
     </div>
   );
