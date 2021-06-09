@@ -74,7 +74,7 @@ const SecretHitler = ({ roomData }) => {
   };
 
   return (
-    <div>
+    <div className='flex col center'>
       {!gameStarted ? (
         vip && user && vip.uid === user.uid ? (
           <button className='btn start-btn' onClick={assignRoles}>
