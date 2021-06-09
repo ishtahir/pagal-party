@@ -2,34 +2,49 @@ import { useContext } from 'react';
 
 import { Redirect, useParams } from 'react-router-dom';
 
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
-import Header from './Header';
 import Join from './Join';
+import SecretHitler from './games/secret-hitler/SecretHitler';
+import GameOfThings from './games/game-of-things/GameOfThings';
 
 const Gameroom = () => {
   const { roomid } = useParams();
   const { db } = useContext(FirebaseContext);
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
-  const roomsRef = db.collection('rooms');
-  const [rooms, loadRooms] = useCollectionData(roomsRef, { idField: 'id' });
-  const room = rooms && rooms.filter((room) => room.id === roomid)[0];
+  const roomRef = db.doc(`rooms/${roomid}`);
+  const [room, loadRoom] = useDocumentData(roomRef, {
+    idField: 'id',
+  });
 
-  return user ? (
+  const game = room && room.game;
+  const gameStarted = room && room.gameStarted;
+
+  const showGame = (game) => {
+    if (game === 'Secret Hitler') {
+      return <SecretHitler roomData={room} />;
+    } else if (game === 'The Game of Things') {
+      return <GameOfThings roomData={room} />;
+    }
+  };
+
+  return loading ? (
+    <div className='loading'></div>
+  ) : user ? (
     <div className='flex col center'>
-      <Header roomid={roomid} />
-      {loadRooms ? (
+      {loadRoom ? (
         <div className='loading'></div>
       ) : room ? (
         <div className='m5-y flex col center'>
           <h1>Room</h1>
           <div className='gr-roomname'>{roomid}</div>
           <h2 className='m5-y gr-game'>{room && room.game}</h2>
-          <Join roomid={roomid} />
+          {!gameStarted ? <Join roomid={roomid} /> : null}
+          {showGame(game)}
         </div>
       ) : (
         <Redirect to='/' />
