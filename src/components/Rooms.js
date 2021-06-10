@@ -31,7 +31,7 @@ const Rooms = () => {
       rooms && rooms.length && rooms.filter((room) => room.id === roomToJoin);
 
     if (myRoom.length) {
-      if (myRoom[0].gameStarted) {
+      if (myRoom[0].gameStarted && !myRoom[0].players.includes(user.uid)) {
         return alert(
           `Room ${roomToJoin} already has a game in progress, please join or create another room.`
         );
