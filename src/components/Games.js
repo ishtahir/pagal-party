@@ -6,7 +6,7 @@ import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 
 import { Redirect, useParams } from 'react-router-dom';
 
-import { secretHitlerSettings } from '../utils/functions';
+import { secretHitlerSettings, gameOfThingsSettings } from '../utils/functions';
 
 const Games = (props) => {
   const { db } = useContext(FirebaseContext);
@@ -28,7 +28,9 @@ const Games = (props) => {
     const game = e.target.textContent;
     if (game === 'Secret Hitler') {
       await db.collection('rooms').doc(roomid).update(secretHitlerSettings());
-    }
+    } //else if (game === 'The Game of Things') {
+    //   await db.collection('rooms').doc(roomid).update(gameOfThingsSettings());
+    // }
   };
 
   return (
