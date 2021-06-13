@@ -4,12 +4,16 @@ import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
 import firebase from 'firebase/app';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
+import {
+  useCollectionData,
+  useDocumentData,
+} from 'react-firebase-hooks/firestore';
 
 import { getDate } from '../utils/functions';
+import { Redirect } from 'react-router';
 
 const Join = ({ roomid }) => {
-  const { db, addDocumentToCollection } = useContext(FirebaseContext);
+  const { db } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
   let uid;
   if (user) {
@@ -23,14 +27,17 @@ const Join = ({ roomid }) => {
     { idField: 'id' }
   );
 
+  const [room, loadRoom] = useDocumentData(db.collection('rooms').doc(roomid), {
+    idField: 'id',
+  });
+
   const [chosenName, setChosenName] = useState('');
+  const [leaveRoom, setLeaveRoom] = useState(false);
 
   const playerJoined = (uid) => {
-    if (players && players.length) {
-      const playersInRoom = players.filter((player) => player.uid === uid);
-      return playersInRoom.length > 0;
+    if (!loadRoom) {
+      return room.players.includes(uid);
     }
-    return false;
   };
 
   const addPlayerJoinRoom = async () => {
@@ -40,10 +47,9 @@ const Join = ({ roomid }) => {
     const player = {
       name: chosenName,
       room: roomid,
-      uid,
       createdAt: getDate(),
     };
-    await addDocumentToCollection('players', player);
+    await db.collection('players').doc(uid).set(player);
     await db
       .collection('rooms')
       .doc(roomid)
@@ -52,6 +58,18 @@ const Join = ({ roomid }) => {
       });
 
     setChosenName('');
+  };
+
+  const leaveThisRoom = async () => {
+    await db.collection('players').doc(user.uid).update({ room: null });
+    await db
+      .collection('rooms')
+      .doc(roomid)
+      .update({
+        players: firebase.firestore.FieldValue.arrayRemove(uid),
+      });
+
+    setLeaveRoom(true);
   };
 
   return (
@@ -89,6 +107,13 @@ const Join = ({ roomid }) => {
           Join Game
         </button>
       ) : null}
+      {leaveRoom ? (
+        <Redirect to='/rooms' />
+      ) : (
+        <button className='btn m5-t' onClick={leaveThisRoom}>
+          Leave Room
+        </button>
+      )}
     </div>
   );
 };
