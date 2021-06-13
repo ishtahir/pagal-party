@@ -39,11 +39,9 @@ const SecretHitler = ({ roomData }) => {
   const vip = gamePlayers && gamePlayers.length ? gamePlayers[0] : null;
   const gameStarted = roomData && roomData.gameStarted;
   const getName = () => {
-    if (user && gamePlayers && gamePlayers.length && loading) {
-      const player = gamePlayers.filter((player) => player.uid === user.uid)[0];
-      return player && player.hasOwnProperty('name') ? player.name : '';
+    if (!loading && !loadPlayers) {
+      return players.filter((player) => player.uid === user.uid)[0].name;
     }
-    return '';
   };
   const vote = roomData && roomData.voteTime;
   const prez = roomData && roomData.president;
@@ -72,6 +70,8 @@ const SecretHitler = ({ roomData }) => {
       updateDocument('rooms', roomid, 'gameStarted', true);
     }
   };
+
+  console.log('name', getName());
 
   return (
     <div className='flex col center'>
