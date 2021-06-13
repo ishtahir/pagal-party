@@ -20,7 +20,7 @@ export const createHitler = (players) => {
   if (players < 3 || players > 3)
     return 'Please enter correct amount of players.';
 
-  const chars = {
+  const rolesToCreate = {
     3: [2, 0], // remove this
     5: [3, 1],
     6: [4, 1],
@@ -39,12 +39,12 @@ export const createHitler = (players) => {
 
   const result = [];
 
-  for (let i = 0; i < chars[players][0]; i++) {
+  for (let i = 0; i < rolesToCreate[players][0]; i++) {
     const role = 'liberal';
     result.push(envelope(role, role));
   }
 
-  for (let i = 0; i < chars[players][1]; i++) {
+  for (let i = 0; i < rolesToCreate[players][1]; i++) {
     const role = 'fascist';
     result.push(envelope(role, role));
   }
