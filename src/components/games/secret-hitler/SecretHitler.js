@@ -31,23 +31,23 @@ const SecretHitler = ({ roomData }) => {
     roomData.players.length &&
     roomData.players.map(
       (uid) =>
-        players &&
-        players.length &&
-        players.find((player) => player.uid === uid)
+        players && players.length && players.find((player) => player.id === uid)
     );
 
   const vip = gamePlayers && gamePlayers.length ? gamePlayers[0] : null;
+
   const gameStarted = roomData && roomData.gameStarted;
-  const getName = () => {
-    if (!loading && !loadPlayers) {
-      return players.filter((player) => player.uid === user.uid)[0].name;
-    }
-  };
   const vote = roomData && roomData.voteTime;
   const prez = roomData && roomData.president;
   const chance = roomData && roomData.chancellor;
 
-  const assignRoles = () => {
+  const getName = () => {
+    if (!loading && !loadPlayers) {
+      return players.filter((player) => player.id === user.uid)[0].name;
+    }
+  };
+
+  const assignRoles = async () => {
     // if (gamePlayers.length < 5 || gamePlayers.length > 10)
     if (gamePlayers.length !== 3)
       return alert(
@@ -58,32 +58,25 @@ const SecretHitler = ({ roomData }) => {
     const envelopes = createHitler(gamePlayers.length);
 
     for (let player of gamePlayers) {
-      db.collection('players')
-        .where('uid', '==', player.uid)
-        .get()
-        .then((snap) =>
-          snap.forEach((doc) => doc.ref.update(envelopes.shift()))
-        )
-        .catch(console.error);
+      await db.collection('players').doc(player.id).update(envelopes.shift());
     }
+
     if (!gameStarted) {
-      updateDocument('rooms', roomid, 'gameStarted', true);
+      await updateDocument('rooms', roomid, 'gameStarted', true);
     }
   };
-
-  console.log('name', getName());
 
   return (
     <div className='flex col center'>
       {!gameStarted ? (
-        vip && user && vip.uid === user.uid ? (
+        vip && user && vip.id === user.uid ? (
           <button className='btn start-btn' onClick={assignRoles}>
             Start Game
           </button>
         ) : null
       ) : (
         <>
-          {vip && user && vip.uid === user.uid && !vote && (
+          {vip && user && vip.id === user.uid && !vote && (
             <button
               className='btn gr-show-vip-btn m5-y'
               onClick={() => setShowVIPmenu(!showVIPmenu)}
@@ -97,13 +90,13 @@ const SecretHitler = ({ roomData }) => {
               prez={prez}
               chance={chance}
               name={getName()}
-              isVip={vip && user && vip.uid === user.uid}
+              isVip={vip && user && vip.id === user.uid}
               players={gamePlayers.length}
               roomid={roomid}
             />
           ) : (
             <>
-              {vip && user && vip.uid === user.uid && showVIPmenu ? (
+              {vip && user && vip.id === user.uid && showVIPmenu ? (
                 <VIPMenu
                   players={gamePlayers}
                   setShowVIPmenu={setShowVIPmenu}
@@ -118,9 +111,9 @@ const SecretHitler = ({ roomData }) => {
                     user &&
                     gamePlayers &&
                     gamePlayers.length &&
-                    gamePlayers.filter((player) => player.uid === user.uid)[0]
+                    gamePlayers.filter((player) => player.id === user.uid)[0]
                   }
-                  isVip={vip && user && vip.uid === user.uid}
+                  isVip={vip && user && vip.id === user.uid}
                 />
               )}
             </>
