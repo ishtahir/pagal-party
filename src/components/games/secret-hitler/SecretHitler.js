@@ -13,6 +13,8 @@ import Cards from '../secret-hitler/Cards';
 import Vote from '../secret-hitler/Vote';
 import VIPMenu from '../secret-hitler/VIPMenu';
 
+import Button from '../../elements/Button';
+
 const SecretHitler = ({ roomData }) => {
   const { db, updateDocument } = useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
@@ -70,9 +72,11 @@ const SecretHitler = ({ roomData }) => {
     <div className='flex col center'>
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
-          <button className='btn start-btn' onClick={assignRoles}>
-            Start Game
-          </button>
+          <Button
+            className='bg-green-400 hover:text-green-400'
+            text='Start Game'
+            handler={assignRoles}
+          />
         ) : null
       ) : (
         <>
