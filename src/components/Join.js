@@ -109,9 +109,15 @@ const Join = ({ roomid }) => {
                 key={player.id}
                 className={`border border-black py-2 min-w-full mb-1 rounded ${
                   i === 0 ? 'vip' : ''
-                }`}
+                } ${user.uid === player.id ? 'text-red-500 font-bold' : ''}`}
                 type='p'
-                text={player.name}
+                text={
+                  user.uid === player.id ? (
+                    <span className='you'>{player.name}</span>
+                  ) : (
+                    player.name
+                  )
+                }
               />
             ))
         : 'NONE'}
