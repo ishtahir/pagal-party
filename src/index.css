@@ -63,69 +63,12 @@ HEADER COMPONENT
 /****************************************************************
 GAMEROOM COMPONENT
 ****************************************************************/
-.gr {
-  height: calc(100vh - 85px);
-  font-size: 2rem;
-  padding-bottom: 5rem;
-}
-
-.gr-join {
-  margin-top: 5rem;
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 1rem;
-  width: 50%;
-}
-
-.gr-text {
-  margin-bottom: 2rem;
-  background: rgb(245, 192, 192);
-  padding: 1rem 1.5rem;
-  border-radius: 2rem;
-}
-
-.gr-player-name {
-  text-align: center;
-  width: 100%;
-  padding: 1rem;
-  border-radius: 1rem;
-}
-
-.gr-player-name:nth-child(odd) {
-  background: #e2e2e2;
-}
-
-.gr-player-name:nth-child(even) {
-  background: #a8a8a8;
-}
-
 .gr-roomname {
   font-family: 'Bungee Shade', cursive;
-  font-size: 5rem;
-  color: var(--dark);
 }
 
 .gr-game {
   font-family: 'Mate SC', serif;
-  font-size: 3.5rem;
-  text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
-  background: #bfdaf0;
-  padding: 1.5rem 3rem;
-  border-radius: 2rem;
-}
-
-.input-wrap {
-  margin-bottom: 2rem;
-}
-
-.input-wrap p {
-  width: 70%;
-}
-
-.input {
-  padding: 0.8rem 1.6rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--dark);
-  margin-right: 0.5rem;
 }
 
 .vip::before,
@@ -133,23 +76,11 @@ GAMEROOM COMPONENT
   content: 'VIP';
   background: gold;
   color: var(--dark);
-  padding: 0.2rem 1rem;
-  margin: 0 1rem;
+  padding: 3px 15px;
+  margin: 0 10px;
   border-radius: 2rem;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   font-weight: bold;
-}
-
-.start-btn {
-  border-color: var(--start);
-  color: var(--start);
-  background: var(--dark);
-  margin-top: 3rem;
-}
-
-.start-btn:hover {
-  background: var(--start);
-  color: var(--dark);
 }
 
 /****************************************************************
