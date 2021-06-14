@@ -12,6 +12,10 @@ import {
 import { getDate } from '../utils/functions';
 import { Redirect } from 'react-router';
 
+import Button from './elements/Button';
+import Input from './elements/Input';
+import Text from './elements/Text';
+
 const Join = ({ roomid }) => {
   const { db } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
@@ -61,6 +65,8 @@ const Join = ({ roomid }) => {
   };
 
   const leaveThisRoom = async () => {
+    console.log({ room });
+
     await db.collection('players').doc(user.uid).update({ room: null });
     await db
       .collection('rooms')
@@ -70,49 +76,52 @@ const Join = ({ roomid }) => {
       });
 
     setLeaveRoom(true);
+
+    if (room.players.length <= 1) {
+      await db
+        .collection('rooms')
+        .doc(roomid)
+        .delete()
+        .then(() => console.log(`Room ${roomid} deleted successfully`))
+        .catch((err) => console.error(err));
+    }
   };
 
   return (
-    <div className='flex center col join-wrap'>
+    <div className='flex flex-col justify-center items-center'>
       {uid && !playerJoined(uid) ? (
         <>
-          <p className='m2-y'>
-            If you would like to choose a custom name, type below and press
-            'Join Game'.
-          </p>
-          <input
-            className='input m2-b'
-            type='text'
+          <Text type='p' text='Please enter your name then join the game' />
+          <Input
+            className='my-2'
             placeholder='Enter your name'
             value={chosenName}
             onChange={(e) => setChosenName(e.target.value)}
           />
         </>
       ) : null}
-      <p className='gr-text'>Players already joined:</p>
+      <Text className='my-5' type='h2' text='Players already joined:' />
       {players && players.length
         ? players
             .filter((player) => player.room === roomid)
             .map((player, i) => (
-              <p
-                key={player.uid}
-                className={i === 0 ? 'gr-player-name vip' : 'gr-player-name'}
-              >
-                {player.name}
-              </p>
+              <Text
+                key={player.id}
+                className={`border border-black py-2 min-w-full mb-1 rounded ${
+                  i === 0 ? 'vip' : ''
+                }`}
+                type='p'
+                text={player.name}
+              />
             ))
-        : null}
+        : 'NONE'}
       {uid && !playerJoined(uid) ? (
-        <button className='btn' onClick={addPlayerJoinRoom}>
-          Join Game
-        </button>
+        <Button className='my-5' text='Join Game' handler={addPlayerJoinRoom} />
       ) : null}
       {leaveRoom ? (
         <Redirect to='/rooms' />
       ) : (
-        <button className='btn m5-t' onClick={leaveThisRoom}>
-          Leave Room
-        </button>
+        <Button className='my-5' text='Leave Room' handler={leaveThisRoom} />
       )}
     </div>
   );
