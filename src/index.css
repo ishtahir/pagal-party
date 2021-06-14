@@ -103,8 +103,6 @@ GAMEROOM COMPONENT
 ROLE CARDS STYLES
 ****************************************************************/
 .card {
-  width: 20rem;
-  height: 26rem;
   border: 1px solid #888;
   border-radius: 1rem;
   display: flex;
@@ -116,13 +114,9 @@ ROLE CARDS STYLES
   text-align: center;
 }
 
-.card.party.front,
-.card.secret.front {
-  align-items: flex-end;
-}
-
 .party.front,
 .secret.front {
+  align-items: flex-end;
   cursor: not-allowed;
 }
 
@@ -130,7 +124,7 @@ ROLE CARDS STYLES
 .secret.front::before {
   position: absolute;
   top: 0;
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   text-transform: uppercase;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
@@ -143,7 +137,7 @@ ROLE CARDS STYLES
 /* PARTY MEMEBERSHIP CARD */
 .party.back {
   background: linear-gradient(#ffff00, #ffe600);
-  font-size: 2.5rem;
+  font-size: 30px;
 }
 
 .party.back::after {
@@ -157,10 +151,7 @@ ROLE CARDS STYLES
 
 .party.front.liberal {
   background: url(../src/assets/liberal.svg), #fbff00;
-  background-repeat: no-repeat;
-  background-size: 12rem;
-  background-position: center;
-  font-size: 3rem;
+  background-size: 150px;
   color: #13e953;
 }
 
@@ -171,10 +162,7 @@ ROLE CARDS STYLES
 
 .party.front.fascist {
   background: url(../src/assets/fascist.svg), #fbff00;
-  background-repeat: no-repeat;
-  background-size: 14rem;
-  background-position: center;
-  font-size: 3rem;
+  background-size: 170px;
   color: #ff7f00;
 }
 
@@ -183,10 +171,17 @@ ROLE CARDS STYLES
   text-transform: uppercase;
 }
 
+.party.front.liberal,
+.party.front.fascist {
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 40px;
+}
+
 /* SECRET ROLE CARD */
 .secret.back {
   background: linear-gradient(#f5f5f5, #cfcfcf);
-  font-size: 4rem;
+  font-size: 50px;
 }
 
 .secret.back::after {
@@ -200,10 +195,6 @@ ROLE CARDS STYLES
 
 .secret.front.liberal {
   background: url(../src/assets/seclib.svg), #ffe2e2;
-  background-repeat: no-repeat;
-  background-size: 12rem;
-  background-position: center;
-  font-size: 3rem;
   color: #8f8f8f;
 }
 
@@ -214,10 +205,6 @@ ROLE CARDS STYLES
 
 .secret.front.fascist {
   background: url(../src/assets/secfas.svg), #ffe2e2;
-  background-repeat: no-repeat;
-  background-size: 12rem;
-  background-position: center;
-  font-size: 3rem;
   color: #8f8f8f;
 }
 
@@ -228,16 +215,21 @@ ROLE CARDS STYLES
 
 .secret.front.hitler {
   background: url(../src/assets/sechitler.svg), #ffe2e2;
-  background-repeat: no-repeat;
-  background-size: 12rem;
-  background-position: center;
-  font-size: 3rem;
   color: #000;
 }
 
 .secret.front.hitler::after {
   content: 'Hitler';
   text-transform: uppercase;
+}
+
+.secret.front.liberal,
+.secret.front.hitler,
+.secret.front.fascist {
+  background-repeat: no-repeat;
+  background-size: 140px;
+  background-position: center;
+  font-size: 40px;
 }
 
 /* YES/NO CARDS */
@@ -274,13 +266,9 @@ ROLE CARDS STYLES
 CARDS FLIP STYLES
 ****************************************************************/
 .card-flip-wrap {
-  width: 20rem;
-  height: 26rem;
+  /* width: 20rem; */
+  /* height: 26rem; */
   perspective: 60rem;
-}
-
-.card-flip-wrap:first-child {
-  margin-right: 5rem;
 }
 
 .card-flip {
