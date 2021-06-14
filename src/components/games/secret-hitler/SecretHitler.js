@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 
 import { createHitler } from '../../../utils/functions';
 
-import Cards from '../secret-hitler/Cards';
+import Envelope from './Envelope';
 import Vote from '../secret-hitler/Vote';
 import VIPMenu from '../secret-hitler/VIPMenu';
 
@@ -110,7 +110,7 @@ const SecretHitler = ({ roomData }) => {
               ) : loadPlayers ? (
                 <div className='loading'></div>
               ) : (
-                <Cards
+                <Envelope
                   player={
                     user &&
                     gamePlayers &&
