@@ -8,6 +8,10 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { createRoomName, getDate } from '../utils/functions';
 import { Redirect } from 'react-router-dom';
 
+import Text from './elements/Text';
+import Button from './elements/Button';
+import Input from './elements/Input';
+
 const Rooms = () => {
   const { db } = useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
@@ -67,29 +71,24 @@ const Rooms = () => {
   };
 
   return (
-    <div className='flex col center'>
+    <div className='flex flex-col justify-center items-center'>
       {loadRooms || loading ? (
         <div className='loading' />
       ) : user ? (
         !connectToRoom ? (
           <>
-            <h1 className='m5-t m2-b'>Create a room</h1>
-            <button className='btn' onClick={createRoom}>
-              Create Room
-            </button>
-            <h1 className='m5-y m2-b'>Join a room</h1>
-            <input
-              type='text'
-              className='input m2-b'
-              placeholder='Enter room name'
-              maxLength='4'
+            <Text className='my-5' type='h2' text='Create a room' />
+            <Button className='mb-10' text='Create Room' handler={createRoom} />
+            <Text className='my-5' type='h2' text='Join a room' />
+            <Input
+              className='w-40 mb-2 text-center font-bold tracking-wide'
+              placeholder='Enter code'
               value={roomToJoin}
               onChange={(e) => setRoomToJoin(e.target.value.toUpperCase())}
               onKeyDown={(e) => e.key === 'Enter' && joinRoom()}
+              rest={{ maxLength: '4' }}
             />
-            <button className='btn' onClick={joinRoom}>
-              Join Room
-            </button>
+            <Button className='mb-10' text='Join Room' handler={joinRoom} />
           </>
         ) : (
           <Redirect
