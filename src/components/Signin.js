@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
@@ -8,16 +8,6 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 const Signin = () => {
   const { user, loading } = useContext(AuthContext);
-  const [signedIn, setSignedIn] = useState(false);
-
-  useEffect(() => {
-    const unregisterAuthObserver = firebase
-      .auth()
-      .onAuthStateChanged((user) => {
-        setSignedIn(!!user);
-      });
-    return () => unregisterAuthObserver();
-  }, []);
 
   const uiConfig = {
     signInFlow: 'popup',
@@ -34,7 +24,7 @@ const Signin = () => {
       {loading ? (
         <div className='loading'></div>
       ) : !user ? (
-        <div className='wrap col'>
+        <div>
           <StyledFirebaseAuth
             uiConfig={uiConfig}
             firebaseAuth={firebase.auth()}
