@@ -4,6 +4,7 @@ const Text = ({ className, type, text }) => {
   const stylesH1 = 'text-4xl font-bold text-center';
   const stylesH2 = 'text-2xl font-bold text-center';
   const stylesH3 = 'text-lg font-bold text-center';
+  const stylesP = 'text-md text-center';
 
   return (
     <>
@@ -15,10 +16,14 @@ const Text = ({ className, type, text }) => {
         <h2 className={className ? `${className} ${stylesH2}` : stylesH2}>
           {text}
         </h2>
-      ) : (
+      ) : type === 'h3' ? (
         <h3 className={className ? `${className} ${stylesH3}` : stylesH3}>
           {text}
         </h3>
+      ) : (
+        <p className={className ? `${className} ${stylesP}` : stylesP}>
+          {text}
+        </p>
       )}
     </>
   );
