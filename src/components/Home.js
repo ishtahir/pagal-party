@@ -2,8 +2,10 @@ import Signin from './Signin';
 
 const Home = () => {
   return (
-    <div className='flex col center'>
-      <h2 className='home-title m5-t'>Welcome to Playper!</h2>
+    <div className='flex flex-col justify-center'>
+      <h2 className='text-center text-xl font-bold my-5'>
+        Welcome to Playper!
+      </h2>
       <Signin />
     </div>
   );
