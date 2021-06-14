@@ -7,6 +7,8 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
+import Button from './elements/Button';
+
 const Signout = () => {
   const { db, signOutFromApp, deleteDocumentFromCollection } =
     useContext(FirebaseContext);
@@ -44,9 +46,7 @@ const Signout = () => {
   };
 
   return user ? (
-    <button className='btn signout-btn' onClick={handleClick}>
-      Sign out
-    </button>
+    <Button className='mr-5' text='Sign out' handler={handleClick} />
   ) : (
     <Redirect push to='/' />
   );
