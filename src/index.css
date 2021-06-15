@@ -232,42 +232,40 @@ ROLE CARDS STYLES
   font-size: 40px;
 }
 
-/* YES/NO CARDS */
-.yes.front.selected,
-.no.front.selected {
-  border: 5px solid #fdb519;
-}
-
-.yes.front {
-  background: #ffe5ca;
-  font-size: 6rem;
-}
-
-.yes.front::after {
-  content: 'Ja!';
-}
-
-.no.front {
-  background: #333;
-  color: #ffe5ca;
-  font-size: 6rem;
-}
-
-.no.front::after {
-  content: 'Nein!';
-}
-
 .card.front.party,
 .card.front.secret {
   transform: rotateY(180deg);
+}
+
+/* YES/NO CARDS */
+.yes.selected,
+.no.selected {
+  border: 5px solid #fdb519;
+}
+
+.yes {
+  background: #ffe5ca;
+}
+
+.yes::after {
+  content: 'Ja!';
+}
+
+.no {
+  background: #333;
+  color: #ffe5ca;
+}
+
+.no::after {
+  content: 'Nein!';
 }
 
 /****************************************************************
 CARDS FLIP STYLES
 ****************************************************************/
 .card-flip-wrap {
-  /* width: 20rem; */
-  /* height: 26rem; */
+  width: 15rem;
+  height: 20rem;
   perspective: 60rem;
 }
 
@@ -301,100 +299,9 @@ CARDS FLIP STYLES
 /****************************************************************
 VOTE COMPONENT
 ****************************************************************/
-.vote {
-  justify-content: space-evenly;
-}
-
-.vote-results {
-  font-size: 30px;
+.vote-results,
+.vote-details {
   border-collapse: collapse;
-  margin-bottom: 25px;
-}
-
-.vote-gov {
-  font-weight: bold;
-  color: #ff3333;
-}
-
-.vote-chance {
-  color: #3333ff;
-}
-
-.vote-cards .yes {
-  margin-right: 5rem;
-}
-
-th {
-  width: 150px;
-}
-
-td {
-  text-align: center;
-}
-
-/****************************************************************
-VIP-MENU COMPONENT
-****************************************************************/
-.vip-menu {
-  /* height: 100%; */
-  justify-content: center;
-}
-
-.disabled-btn,
-.disabled-btn:hover {
-  cursor: not-allowed;
-  background: #ddd;
-  color: #333;
-  border: none;
-}
-
-.end-btn {
-  color: var(--end);
-  border-color: var(--end);
-}
-
-.end-btn:hover {
-  background: var(--end);
-  color: var(--light);
-}
-
-/****************************************************************
-GOVERNMENT COMPONENT
-****************************************************************/
-.gov {
-  background: #333;
-  color: var(--light);
-  padding: 2rem 4rem;
-  border-radius: 2rem;
-}
-
-.gov-text {
-  margin-bottom: 2rem;
-}
-
-.gov-select {
-  padding: 1rem;
-  width: 18rem;
-  border-radius: 1rem;
-  margin-top: 0.5rem;
-}
-
-.gov-select:not(:last-child) {
-  margin-bottom: 10px;
-}
-
-/****************************************************************
-ROOMS COMPONENT
-****************************************************************/
-.rooms-title {
-  padding-bottom: 2rem;
-}
-
-/****************************************************************
-HOME COMPONENT
-****************************************************************/
-.home-title {
-  margin-bottom: 5rem;
 }
 
 /****************************************************************
