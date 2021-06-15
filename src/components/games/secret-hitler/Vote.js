@@ -7,6 +7,8 @@ import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 
 import { getDate } from '../../../utils/functions';
 
+import Button from '../../elements/Button';
+
 const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
   const {
     db,
@@ -64,59 +66,90 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
     }
   };
 
+  const yesNoCardStyles = 'w-56 h-32 card text-7xl m-5';
+  const thStyles =
+    'px-5 py-2 text-center w-28 first:rounded-tl last:rounded-tr';
+  const tdStyles =
+    'py-3 text-center font-bold text-white first:rounded-bl last:rounded-br';
+  const govDivStyles = 'px-20 py-2 text-xl rounded';
+  const govRoleStyles = 'font-bold';
+
   return (
-    <div className='flex col center vote'>
-      {vip && user && vip.uid === user.uid && (
-        <button className='btn vote-end-btn m5-y' onClick={closeVote}>
-          Close Voting
-        </button>
+    <div className='flex flex-col justify-center items-center my-5 vote'>
+      {vip && user && vip.id === user.uid && (
+        <Button
+          className='bg-yellow-300 text-gray-500 hover:bg-yellow-400 hover:text-gray-500'
+          text='Close Voting'
+          handler={closeVote}
+        />
       )}
-      <p className={isVip ? 'vote-govt m5-b' : 'vote-govt m5-y'}>
-        President: <span className='vote-gov vote-prez'>{prez.name}</span>
-        <br />
-        Chancellor: <span className='vote-gov vote-chance'>{chance.name}</span>
+      <p className='my-5 flex flex-col'>
+        <div className={`${govDivStyles} bg-red-200`}>
+          President:{' '}
+          <span className={`${govRoleStyles} text-red-700`}>{prez.name}</span>
+        </div>
+        <div className={`${govDivStyles} bg-blue-200`}>
+          Chancellor:{' '}
+          <span className={`${govRoleStyles} text-blue-700`}>
+            {chance.name}
+          </span>
+        </div>
       </p>
-      <div className='flex vote-cards'>
+      <div className='flex'>
         <div
-          className={`card yes front ${selected === 'Yes' ? 'selected' : ''}`}
+          className={`${yesNoCardStyles} yes ${
+            selected === 'Yes' ? 'selected' : ''
+          }`}
           id='yes-card'
           onClick={() => {
             if (!entered) setSelected('Yes');
           }}
         />
         <div
-          className={`card no front ${selected === 'No' ? 'selected' : ''}`}
+          className={`${yesNoCardStyles} no ${
+            selected === 'No' ? 'selected' : ''
+          }`}
           id='no-card'
           onClick={() => {
             if (!entered) setSelected('No');
           }}
         />
       </div>
-      <h2 className='vote-selected m5-y'>
+      <h2
+        className={`vote-selected my-5 text-xl font-bold ${
+          entered
+            ? 'text-gray-500'
+            : selected === 'Yes'
+            ? 'text-green-600'
+            : 'text-red-600'
+        }`}
+      >
         You {entered ? 'voted' : 'have selected'}: {selected}!
       </h2>
       {!entered && (
-        <button className='btn vote-enter-btn' onClick={enterVote}>
-          Submit my Vote
-        </button>
+        <Button
+          className='my-5 bg-green-500 hover:bg-gray-200 hover:text-green-500'
+          text='Submit my Vote'
+          handler={enterVote}
+        />
       )}
       {entered ? (
-        <table className='vote-results'>
+        <table className='vote-results text-4xl my-5'>
           <thead>
-            <tr>
-              <th>JA!</th>
-              <th>NEIN!</th>
+            <tr className=''>
+              <th className={`${thStyles} bg-green-200`}>Yes</th>
+              <th className={`${thStyles} bg-red-200`}>No</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>
+              <td className={`${tdStyles} bg-green-400`}>
                 {countVotes(
                   votes.filter((vote) => vote.room === roomid),
                   'Yes'
                 )}
               </td>
-              <td>
+              <td className={`${tdStyles} bg-red-400`}>
                 {countVotes(
                   votes.filter((vote) => vote.room === roomid),
                   'No'
@@ -127,11 +160,11 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
         </table>
       ) : null}
       {entered ? (
-        <table className='vote-details m5-b'>
+        <table className='vote-details my-5 mb-10'>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Vote</th>
+              <th className={`${thStyles} bg-blue-700 text-white`}>Name</th>
+              <th className={`${thStyles} bg-blue-700 text-white`}>Vote</th>
             </tr>
           </thead>
           <tbody>
@@ -139,9 +172,24 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
               votes
                 .filter((vote) => vote.room === roomid)
                 .map((vote) => (
-                  <tr key={vote.id}>
-                    <td>{vote.name}</td>
-                    <td>{vote.vote}</td>
+                  <tr
+                    key={vote.id}
+                    className='border-b border-blue-300 last:border-b-0'
+                  >
+                    <td
+                      className={`${tdStyles} ${
+                        vote.vote === 'Yes' ? 'bg-green-200' : 'bg-red-200'
+                      } text-black`}
+                    >
+                      {vote.name}
+                    </td>
+                    <td
+                      className={`${tdStyles} ${
+                        vote.vote === 'Yes' ? 'bg-green-200' : 'bg-red-200'
+                      } bg-gray-200 text-black`}
+                    >
+                      {vote.vote}
+                    </td>
                   </tr>
                 ))}
           </tbody>
