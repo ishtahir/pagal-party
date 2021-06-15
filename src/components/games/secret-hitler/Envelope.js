@@ -2,7 +2,7 @@ import Card from './Card';
 
 const Envelope = ({ player }) => {
   return (
-    <div>
+    <div className='flex'>
       <Card player={player} type='party' />
       <Card player={player} type='secret' />
     </div>
