@@ -97,6 +97,7 @@ const Join = ({ roomid }) => {
             placeholder='Enter your name'
             value={chosenName}
             onChange={(e) => setChosenName(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && addPlayerJoinRoom()}
           />
         </>
       ) : null}
@@ -127,7 +128,11 @@ const Join = ({ roomid }) => {
       {leaveRoom ? (
         <Redirect to='/rooms' />
       ) : (
-        <Button className='my-5' text='Leave Room' handler={leaveThisRoom} />
+        <Button
+          className='my-5 bg-gray-200 text-purple-500 hover:bg-purple-500 hover:text-gray-200'
+          text='Leave Room'
+          handler={leaveThisRoom}
+        />
       )}
     </div>
   );
