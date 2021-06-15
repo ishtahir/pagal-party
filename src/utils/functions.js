@@ -64,16 +64,20 @@ export const getDocId = (arr, key, val) => {
 
 export const createRoomName = () => {
   let room = '';
-  const chars = 'abcdefghijklmnopqrstuvwxyz';
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
   for (let i = 0; i < 4; i++) {
     const ind = Math.floor(Math.random() * chars.length);
     room += chars[ind];
   }
-  return room.toUpperCase();
+  return room;
 };
 
 export const getDate = () => new Date().toISOString();
+
+export const getName = (players, uid) => {
+  return players.filter((player) => player.id === uid)[0].name;
+};
 
 export const secretHitlerSettings = () => ({
   game: 'Secret Hitler',
@@ -82,3 +86,16 @@ export const secretHitlerSettings = () => ({
   president: null,
   chancellor: null,
 });
+
+export const scattergoriesSettings = () => ({
+  game: 'Scattergories',
+  gameStarted: false,
+  list: null,
+  letter: null,
+});
+
+export const scattergoriesLetterPicker = () => {
+  const chars = 'ABCDEFGHIJKLMNOPRSTU';
+  const ind = Math.floor(Math.random() * chars.length);
+  return chars[ind];
+};
