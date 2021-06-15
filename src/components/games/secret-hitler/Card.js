@@ -47,7 +47,7 @@ const Card = ({ player, type }) => {
   // const backStyles = 'back';
 
   return (
-    <div className='card-flip-wrap w-60 h-72'>
+    <div className='card-flip-wrap w-60 h-72 m-6'>
       <div className={side === 'back' ? 'card-flip' : 'card-flip is-flipped'}>
         <div
           className={`card-face card ${type} back`}
