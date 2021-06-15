@@ -4,6 +4,8 @@ import { FirebaseContext } from '../../../contexts/FirebaseContext/FirebaseConte
 
 import Government from './Government';
 
+import Button from '../../elements/Button';
+
 const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
   const { updateDocument, deleteFieldFromDocument, gameOver } =
     useContext(FirebaseContext);
@@ -38,19 +40,22 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
   };
 
   return (
-    <div className='vip-menu flex col center'>
+    <div className='vip-menu flex flex-col justify-center items-center w-8/12'>
       <Government players={players} roomid={roomid} />
-      <button
-        className={
-          !prez || !chance ? 'btn vote-btn disabled-btn' : 'btn vote-btn'
-        }
-        onClick={voteTime}
-      >
-        Open Voting
-      </button>
-      <button className='btn end-btn m5-y' onClick={endGame}>
-        End Game
-      </button>
+      <Button
+        className={`my-5 ${
+          !prez || !chance
+            ? 'cursor-not-allowed bg-gray-300 hover:bg-gray-300 text-black hover:text-black'
+            : 'bg-yellow-300 text-gray-500 hover:bg-yellow-400 hover:text-gray-500'
+        }`}
+        text='Open Voting'
+        handler={voteTime}
+      />
+      <Button
+        className='bg-red-400 text-red-50 mt-32 mb-20 hover:text-red-50 hover:bg-red-600'
+        text='End Game'
+        handler={endGame}
+      />
     </div>
   );
 };
