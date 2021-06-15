@@ -7,7 +7,7 @@ import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 
 import { useParams } from 'react-router-dom';
 
-import { createHitler } from '../../../utils/functions';
+import { createHitler, getName } from '../../../utils/functions';
 
 import Envelope from './Envelope';
 import Vote from '../secret-hitler/Vote';
@@ -43,12 +43,6 @@ const SecretHitler = ({ roomData }) => {
   const prez = roomData && roomData.president;
   const chance = roomData && roomData.chancellor;
 
-  const getName = () => {
-    if (!loading && !loadPlayers) {
-      return players.filter((player) => player.id === user.uid)[0].name;
-    }
-  };
-
   const assignRoles = async () => {
     // if (gamePlayers.length < 5 || gamePlayers.length > 10)
     if (gamePlayers.length !== 3)
@@ -69,7 +63,7 @@ const SecretHitler = ({ roomData }) => {
   };
 
   return (
-    <div className='flex col center'>
+    <div className='flex flex-col justify-center items-center w-10/12'>
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
           <Button
@@ -81,19 +75,18 @@ const SecretHitler = ({ roomData }) => {
       ) : (
         <>
           {vip && user && vip.id === user.uid && !vote && (
-            <button
-              className='btn gr-show-vip-btn m5-y'
-              onClick={() => setShowVIPmenu(!showVIPmenu)}
-            >
-              {showVIPmenu ? 'Hide' : 'Show'} VIP Menu
-            </button>
+            <Button
+              className='my-5 bg-indigo-600 hover:bg-indigo-400 hover:!text-white'
+              text={`${showVIPmenu ? 'Hide' : 'Show'} VIP Menu`}
+              handler={() => setShowVIPmenu(!showVIPmenu)}
+            />
           )}
           {vote && prez && chance ? (
             <Vote
               vip={vip}
               prez={prez}
               chance={chance}
-              name={getName()}
+              name={!loading && !loadPlayers && getName(players, user.uid)}
               isVip={vip && user && vip.id === user.uid}
               players={gamePlayers.length}
               roomid={roomid}
