@@ -6,15 +6,17 @@ const Government = ({ players, roomid }) => {
   const { updateDocument } = useContext(FirebaseContext);
   const [prez, setPrez] = useState(null);
 
+  const selectStyles = 'py-2 px-5 rounded text-black';
+
   return (
-    <div className='gov flex col center m5-b'>
-      <h2 className='gov-text'>
+    <div className='gov flex flex-col justify-center items-center w-full bg-gray-600 py-5 my-5 rounded-xl text-white'>
+      <h2 className='text-xl pb-5'>
         Choose the president and chancellor for this round
       </h2>
-      President:
+      <span className='py-2 text-red-300'>President:</span>
       <select
         name='president'
-        className='gov-select'
+        className={`${selectStyles}`}
         onChange={(e) => {
           const options = Array.from(e.target.options);
           const option = options.find((opt) => opt.selected);
@@ -32,16 +34,16 @@ const Government = ({ players, roomid }) => {
       >
         <option>PICK A PRESIDENT</option>
         {players.map((player) => (
-          <option key={player.id} value={player.name} id={player.uid}>
+          <option key={player.id} value={player.name} id={player.id}>
             {player.name}
           </option>
         ))}
       </select>
       <br />
-      Chancellor:
+      <span className='py-2 text-blue-300'>Chancellor:</span>
       <select
         name='chancellor'
-        className='gov-select'
+        className={`${selectStyles}`}
         onChange={(e) => {
           const options = Array.from(e.target.options);
           const option = options.find((opt) => opt.selected);
@@ -59,14 +61,14 @@ const Government = ({ players, roomid }) => {
         <option>PICK A CHANCELLOR</option>
         {prez ? (
           players
-            .filter((player) => prez.uid !== player.uid)
+            .filter((player) => prez.uid !== player.id)
             .map((player) => (
-              <option key={player.id} value={player.name} id={player.uid}>
+              <option key={player.id} value={player.name} id={player.id}>
                 {player.name}
               </option>
             ))
         ) : (
-          <option disabled>Please select President first</option>
+          <option disabled>Select President first</option>
         )}
       </select>
     </div>
