@@ -103,7 +103,8 @@ GAMEROOM COMPONENT
 ROLE CARDS STYLES
 ****************************************************************/
 .card {
-  border: 1px solid #888;
+  border: 1px solid #ddd;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
   display: flex;
   justify-content: center;
@@ -124,7 +125,7 @@ ROLE CARDS STYLES
 .secret.front::before {
   position: absolute;
   top: 0;
-  font-size: 1.4rem;
+  font-size: 18px;
   text-transform: uppercase;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
     'Lucida Sans', Arial, sans-serif;
@@ -137,7 +138,7 @@ ROLE CARDS STYLES
 /* PARTY MEMEBERSHIP CARD */
 .party.back {
   background: linear-gradient(#ffff00, #ffe600);
-  font-size: 30px;
+  font-size: 25px;
 }
 
 .party.back::after {
@@ -151,7 +152,7 @@ ROLE CARDS STYLES
 
 .party.front.liberal {
   background: url(../src/assets/liberal.svg), #fbff00;
-  background-size: 150px;
+  background-size: 130px;
   color: #13e953;
 }
 
@@ -162,7 +163,7 @@ ROLE CARDS STYLES
 
 .party.front.fascist {
   background: url(../src/assets/fascist.svg), #fbff00;
-  background-size: 170px;
+  background-size: 160px;
   color: #ff7f00;
 }
 
@@ -175,13 +176,13 @@ ROLE CARDS STYLES
 .party.front.fascist {
   background-repeat: no-repeat;
   background-position: center;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 /* SECRET ROLE CARD */
 .secret.back {
   background: linear-gradient(#f5f5f5, #cfcfcf);
-  font-size: 50px;
+  font-size: 40px;
 }
 
 .secret.back::after {
@@ -190,7 +191,7 @@ ROLE CARDS STYLES
 }
 
 .secret.front::before {
-  content: 'secret role';
+  content: 'Secret Role';
 }
 
 .secret.front.liberal {
@@ -229,7 +230,7 @@ ROLE CARDS STYLES
   background-repeat: no-repeat;
   background-size: 140px;
   background-position: center;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .card.front.party,
@@ -264,8 +265,8 @@ ROLE CARDS STYLES
 CARDS FLIP STYLES
 ****************************************************************/
 .card-flip-wrap {
-  width: 15rem;
-  height: 20rem;
+  width: 12rem;
+  height: 18rem;
   perspective: 60rem;
 }
 
