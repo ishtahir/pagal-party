@@ -3,7 +3,7 @@ import React from 'react';
 import Text from './Text';
 import Button from './Button';
 
-const Modal = ({ type, title, text }) => {
+const Modal = ({ type, title, text, hideModal, setModalConfirm }) => {
   const showButtons = () => {
     if (type === 'confirm') {
       return (
@@ -11,10 +11,12 @@ const Modal = ({ type, title, text }) => {
           <Button
             className='bg-white text-black font-normal mr-3 px-5 !shadow-none border border-gray-400 hover:text-black hover:bg-gray-100'
             text='Cancel'
+            handler={closeConfirm}
           />
           <Button
             className='bg-red-600 px-6 !shadow-none border border-red-800 hover:text-white hover:bg-red-800'
             text='Confirm'
+            handler={closeConfirm}
           />
         </>
       );
@@ -23,10 +25,18 @@ const Modal = ({ type, title, text }) => {
         <Button
           className='bg-blue-600 px-6 !shadow-none border border-blue-800 hover:text-white hover:bg-blue-800'
           text='Try Again'
+          handler={closeAlert}
         />
       );
     }
   };
+  const closeConfirm = (e) => {
+    const text = e.target.textContent;
+    hideModal();
+    return text === 'Confirm' ? setModalConfirm(true) : setModalConfirm(false);
+  };
+
+  const closeAlert = () => hideModal();
 
   return (
     <div className='modal-bg w-full h-full bg-black bg-opacity-70 fixed top-0 left-0 z-10 flex justify-center items-center'>
@@ -54,12 +64,12 @@ const Modal = ({ type, title, text }) => {
             <Text
               className='!text-xl font-normal mb-3'
               type='h3'
-              text='Deactivate account'
+              text={title}
             />
             <Text
               className='!text-left mb-3 text-md text-gray-600'
               type='p'
-              text='Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.'
+              text={text}
             />
           </div>
         </div>
