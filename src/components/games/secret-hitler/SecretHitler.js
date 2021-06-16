@@ -44,17 +44,17 @@ const SecretHitler = ({ roomData }) => {
   const chance = roomData && roomData.chancellor;
 
   const assignRoles = async () => {
-    // if (gamePlayers.length < 5 || gamePlayers.length > 10)
-    if (gamePlayers.length !== 3)
+    const min = 2;
+    const max = 3;
+    if (gamePlayers.length < min || gamePlayers.length > max)
       return alert(
-        // `There can only be between 5 and 10 players. Currently there are ${gamePlayers.length} players.`
-        `TEST MODE: There can only be 3 players. Currently there are ${gamePlayers.length} players.` // delete this
+        `There can only be between ${min} and ${max} players. Currently there are ${gamePlayers.length} players.`
       );
 
     const envelopes = createHitler(gamePlayers.length);
 
     for (let player of gamePlayers) {
-      await db.collection('players').doc(player.id).update(envelopes.shift());
+      await db.collection('players').doc(player.id).update(envelopes.pop());
     }
 
     if (!gameStarted) {
@@ -63,7 +63,7 @@ const SecretHitler = ({ roomData }) => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center w-10/12'>
+    <div className='secret-hitler flex flex-col justify-center items-center w-10/12'>
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
           <Button
