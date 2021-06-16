@@ -7,7 +7,7 @@ import Government from './Government';
 import Button from '../../elements/Button';
 
 const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
-  const { updateDocument, deleteFieldFromDocument, gameOver } =
+  const { updateDocument, deleteFieldFromDocument } =
     useContext(FirebaseContext);
 
   const prez = roomData && roomData.president;
@@ -29,7 +29,11 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
     );
 
     if (approved) {
-      await gameOver('rooms', roomid);
+      // await gameOver('rooms', roomid, 'Secret Hitler');
+      await updateDocument('rooms', roomid, 'gameStarted', false);
+      await updateDocument('rooms', roomid, 'voteTime', false);
+      await updateDocument('rooms', roomid, 'president', null);
+      await updateDocument('rooms', roomid, 'chancellor', null);
       players &&
         players.forEach(
           async (player) =>
