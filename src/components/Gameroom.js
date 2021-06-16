@@ -11,6 +11,7 @@ import Join from './Join';
 import SecretHitler from './games/secret-hitler/SecretHitler';
 
 import Text from './elements/Text';
+import Scattergories from './games/scattergories/Scattergories';
 
 const Gameroom = () => {
   const { roomid } = useParams();
@@ -28,6 +29,8 @@ const Gameroom = () => {
   const showGame = (game) => {
     if (game === 'Secret Hitler') {
       return <SecretHitler roomData={room} />;
+    } else if (game === 'Scattergories') {
+      return <Scattergories roomData={room} />;
     }
   };
 
