@@ -66,7 +66,7 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
     }
   };
 
-  const yesNoCardStyles = 'w-56 h-32 card text-7xl m-5';
+  const yesNoCardStyles = 'w-56 h-40 card text-7xl m-5';
   const thStyles =
     'px-5 py-2 text-center w-28 first:rounded-tl last:rounded-tr';
   const tdStyles =
