@@ -6,7 +6,10 @@ import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 
 import { Redirect, useParams } from 'react-router-dom';
 
-import { secretHitlerSettings } from '../utils/functions';
+import {
+  secretHitlerSettings,
+  scattergoriesSettings,
+} from '../utils/functions';
 
 import Button from './elements/Button';
 import Text from './elements/Text';
@@ -31,6 +34,8 @@ const Games = () => {
     const game = e.target.textContent;
     if (game === 'Secret Hitler') {
       await db.collection('rooms').doc(roomid).update(secretHitlerSettings());
+    } else if (game === 'Scattergories') {
+      await db.collection('rooms').doc(roomid).update(scattergoriesSettings());
     }
   };
 
@@ -41,7 +46,12 @@ const Games = () => {
           <Text className='my-5' type='h2' text='Select game to play' />
           {games &&
             games.map((game) => (
-              <Button key={game.id} text={game.name} handler={addGameToRoom} />
+              <Button
+                key={game.id}
+                className='my-5'
+                text={game.name}
+                handler={addGameToRoom}
+              />
             ))}
         </>
       ) : (
