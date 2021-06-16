@@ -13,7 +13,7 @@ const Government = ({ players, roomid }) => {
       <h2 className='text-xl pb-5'>
         Choose the president and chancellor for this round
       </h2>
-      <span className='py-2 text-red-300'>President:</span>
+      <span className='py-2 text-red-400 font-bold'>President:</span>
       <select
         name='president'
         className={`${selectStyles}`}
@@ -40,7 +40,7 @@ const Government = ({ players, roomid }) => {
         ))}
       </select>
       <br />
-      <span className='py-2 text-blue-300'>Chancellor:</span>
+      <span className='py-2 text-blue-400 font-bold'>Chancellor:</span>
       <select
         name='chancellor'
         className={`${selectStyles}`}
