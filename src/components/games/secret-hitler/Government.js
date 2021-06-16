@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 
 import { FirebaseContext } from '../../../contexts/FirebaseContext/FirebaseContext';
 
+import Text from '../../elements/Text';
+
 const Government = ({ players, roomid }) => {
   const { updateDocument } = useContext(FirebaseContext);
   const [prez, setPrez] = useState(null);
@@ -10,9 +12,11 @@ const Government = ({ players, roomid }) => {
 
   return (
     <div className='gov flex flex-col justify-center items-center w-full bg-gray-600 py-5 my-5 rounded-xl text-white'>
-      <h2 className='text-xl pb-5'>
-        Choose the president and chancellor for this round
-      </h2>
+      <Text
+        className='text-xl pb-5'
+        type='h2'
+        text='Choose the president and chancellor for this round'
+      />
       <span className='py-2 text-red-400 font-bold'>President:</span>
       <select
         name='president'
