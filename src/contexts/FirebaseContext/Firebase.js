@@ -69,15 +69,6 @@ class Firebase {
         [field]: value,
       });
   };
-
-  gameOver = (collection, docId) => {
-    this.db.collection(collection).doc(docId).update({
-      gameStarted: false,
-      voteTime: false,
-      president: null,
-      chancellor: null,
-    });
-  };
 }
 
 export default Firebase;

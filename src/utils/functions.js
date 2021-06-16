@@ -17,10 +17,11 @@ function shuffle(array) {
 
 export const createHitler = (players) => {
   // if (players < 5 || players > 10)
-  if (players < 3 || players > 3)
+  if (players < 2 || players > 3)
     return 'Please enter correct amount of players.';
 
   const rolesToCreate = {
+    2: [1, 0], // remove this
     3: [2, 0], // remove this
     5: [3, 1],
     6: [4, 1],
@@ -92,9 +93,10 @@ export const scattergoriesSettings = () => ({
   gameStarted: false,
   list: null,
   letter: null,
+  round: 1,
 });
 
-export const scattergoriesLetterPicker = () => {
+export const scattergoriesLetterGenerator = () => {
   const chars = 'ABCDEFGHIJKLMNOPRSTU';
   const ind = Math.floor(Math.random() * chars.length);
   return chars[ind];

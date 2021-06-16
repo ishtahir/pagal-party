@@ -7,13 +7,15 @@ import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
 
 import { useParams } from 'react-router-dom';
 
-// import { createHitler } from '../../../utils/functions';
+import Pad from './Pad';
+import VIPMenu from './VIPMenu';
 
-// import Button from '../../elements/Button';
+import Button from '../../elements/Button';
+import Text from '../../elements/Text';
 
 const Scattergories = ({ roomData }) => {
-  const { db } = useContext(FirebaseContext);
-  const { user, loading } = useContext(AuthContext);
+  const { db, updateDocument } = useContext(FirebaseContext);
+  const { user } = useContext(AuthContext);
   const { roomid } = useParams();
   const [players, loadPlayers] = useCollectionData(
     db.collection('players').orderBy('createdAt'),
@@ -35,8 +37,80 @@ const Scattergories = ({ roomData }) => {
   const vip = gamePlayers && gamePlayers.length ? gamePlayers[0] : null;
 
   const gameStarted = roomData && roomData.gameStarted;
+  const letter = roomData && roomData.letter;
+  const list = roomData && roomData.list;
+  const round = roomData && roomData.round;
 
-  return <div></div>;
+  const startGame = async () => {
+    const min = 2;
+    const max = 6;
+    if (gamePlayers.length < min || gamePlayers.length > max)
+      return alert(
+        `There can only be between ${min} and ${max} players. Currently there are ${gamePlayers.length} players.`
+      );
+
+    for (let player of gamePlayers) {
+      await db.collection('players').doc(player.id).update({
+        round1: [],
+        round2: [],
+        round3: [],
+      });
+    }
+
+    if (!gameStarted) {
+      await updateDocument('rooms', roomid, 'gameStarted', true);
+    }
+  };
+
+  return (
+    <div className='scattergories flex flex-col justify-center items-center w-10/12'>
+      {!gameStarted ? (
+        vip && user && vip.id === user.uid ? (
+          <Button
+            className='bg-green-400 hover:text-green-400'
+            text='Start Game'
+            handler={startGame}
+          />
+        ) : null
+      ) : (
+        <>
+          {vip && user && vip.id === user.uid && (
+            <Button
+              className='my-5 bg-indigo-600 hover:bg-indigo-400 hover:!text-white'
+              text={`${showVIPmenu ? 'Hide' : 'Show'} VIP Menu`}
+              handler={() => setShowVIPmenu(!showVIPmenu)}
+            />
+          )}
+          <>
+            {vip && user && vip.id === user.uid && showVIPmenu ? (
+              <VIPMenu
+                players={gamePlayers}
+                setShowVIPmenu={setShowVIPmenu}
+                roomData={roomData}
+                roomid={roomid}
+              />
+            ) : loadPlayers ? (
+              <div className='loading'></div>
+            ) : (
+              <>
+                <Text type='h2' text={`Round: ${round}`} />
+                <Text type='h2' text={`List: ${list ? list : 0}`} />
+                <Text
+                  className='text-6xl text-green-600'
+                  type='h2'
+                  text={letter}
+                />
+                <Pad
+                  round={round}
+                  player={players.filter((player) => player.id === user.uid)}
+                />
+              </>
+            )}
+          </>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default Scattergories;
