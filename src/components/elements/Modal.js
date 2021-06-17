@@ -4,6 +4,12 @@ import Text from './Text';
 import Button from './Button';
 
 const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
+  if (show) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = 'auto';
+  }
+
   const showButtons = () => {
     if (type === 'confirm') {
       return (
