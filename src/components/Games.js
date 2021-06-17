@@ -40,7 +40,7 @@ const Games = () => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div className='games flex flex-col justify-center items-center h-2/4'>
       {!gameSelected ? (
         <>
           <Text className='my-5' type='h2' text='Select game to play' />
