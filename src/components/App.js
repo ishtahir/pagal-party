@@ -13,12 +13,8 @@ const App = () => {
       <Header />
       <Route exact path='/' component={Home} />
       <Route exact path='/rooms' component={Rooms} />
-      <Route exact path='/rooms/:roomid/games' component={Games} />
-      <Route
-        exact
-        path='/rooms/:roomid/games/:game'
-        render={() => <Gameroom />}
-      />
+      <Route exact path='/games/selection' component={Games} />
+      <Route exact path='/rooms/:roomid/:gameid' render={() => <Gameroom />} />
       <Footer />
     </Router>
   );
