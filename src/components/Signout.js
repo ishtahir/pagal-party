@@ -51,7 +51,7 @@ const Signout = () => {
 
   return user ? (
     <Button
-      className='mr-5 !bg-blue-600 hover:!bg-white hover:!text-blue-600'
+      className='mr-0 md:mr-5 !bg-blue-600 hover:!bg-white hover:!text-blue-600'
       text='Sign out'
       handler={handleClick}
     />
