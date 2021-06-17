@@ -22,12 +22,7 @@ const Join = ({ roomid }) => {
   const { user } = useContext(AuthContext);
   const modal = useModal();
 
-  let uid;
-  if (user) {
-    uid = user.uid;
-  } else {
-    uid = '';
-  }
+  const uid = user ? user.uid : '';
 
   const [players] = useCollectionData(
     db.collection('players').orderBy('createdAt'),
@@ -71,8 +66,6 @@ const Join = ({ roomid }) => {
   };
 
   const leaveThisRoom = async () => {
-    console.log({ room });
-
     await db.collection('players').doc(user.uid).update({ room: null });
     await db
       .collection('rooms')
