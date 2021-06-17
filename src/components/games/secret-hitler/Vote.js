@@ -137,7 +137,7 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
         />
       )}
       {entered ? (
-        <table className='vote-results text-4xl my-5'>
+        <table className='vote-results text-4xl my-5 border-collapse'>
           <thead>
             <tr className=''>
               <th className={`${thStyles} bg-green-200`}>Yes</th>
@@ -163,7 +163,7 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
         </table>
       ) : null}
       {entered ? (
-        <table className='vote-details my-5 mb-10'>
+        <table className='vote-details my-5 mb-10 border-collapse'>
           <thead>
             <tr>
               <th className={`${thStyles} bg-blue-700 text-white`}>Name</th>
