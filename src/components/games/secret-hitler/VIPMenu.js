@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 
 import { FirebaseContext } from '../../../contexts/FirebaseContext/FirebaseContext';
+import { useModal } from '../../../contexts/ModalContext/ModalContext';
 
 import Government from './Government';
 
@@ -9,6 +10,7 @@ import Button from '../../elements/Button';
 const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
   const { updateDocument, deleteFieldFromDocument } =
     useContext(FirebaseContext);
+  const modal = useModal();
 
   const prez = roomData && roomData.president;
   const chance = roomData && roomData.chancellor;
@@ -17,30 +19,31 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
     if (prez && chance) {
       await updateDocument('rooms', roomid, 'voteTime', true);
     } else {
-      alert(
-        'You need to select a president and chancellor before you can vote.'
-      );
+      modal({
+        text: 'You need to select a president and chancellor before you can vote.',
+        title: 'Ineligible to vote',
+      });
     }
   };
 
-  const endGame = async () => {
-    const approved = window.confirm(
-      '⛔️ Are you sure you want to end this game for all players? ⛔️'
-    );
-
-    if (approved) {
-      // await gameOver('rooms', roomid, 'Secret Hitler');
+  const endGame = () => {
+    modal({
+      title: 'End Game?',
+      text: 'Are you sure you want to end this game for all players?',
+      type: 'confirm',
+    }).then(async () => {
       await updateDocument('rooms', roomid, 'gameStarted', false);
       await updateDocument('rooms', roomid, 'voteTime', false);
       await updateDocument('rooms', roomid, 'president', null);
       await updateDocument('rooms', roomid, 'chancellor', null);
+
       players &&
         players.forEach(
           async (player) =>
             await deleteFieldFromDocument('players', player.id, 'cards')
         );
       setShowVIPmenu(false);
-    }
+    });
   };
 
   return (

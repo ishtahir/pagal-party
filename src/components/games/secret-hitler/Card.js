@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 
+import { useModal } from '../../../contexts/ModalContext/ModalContext';
+
 const Card = ({ player, type }) => {
+  const modal = useModal();
+
   const [side, setSide] = useState('back');
 
   useEffect(() => {
@@ -31,12 +35,13 @@ const Card = ({ player, type }) => {
       }
     } else if (card === 'secret-card') {
       if (side === 'back') {
-        const approve = window.confirm(
-          'ARE YOU SURE YOU WANT TO FLIP OVER YOUR SECRET ROLE?'
-        );
-        if (approve) {
+        modal({
+          title: 'Reveal Secret Role?',
+          text: 'ARE YOU SURE YOU WANT TO FLIP OVER YOUR SECRET ROLE?',
+          type: 'confirm',
+        }).then(() => {
           setSide(role(card));
-        }
+        });
       }
     }
   };

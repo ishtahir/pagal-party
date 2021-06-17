@@ -4,6 +4,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { FirebaseContext } from '../../../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import { useModal } from '../../../contexts/ModalContext/ModalContext';
 
 import { getDate } from '../../../utils/functions';
 
@@ -17,6 +18,7 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
     deleteDocumentFromCollection,
   } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
+  const modal = useModal();
 
   const [selected, setSelected] = useState('Yes');
 
@@ -53,11 +55,12 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
 
   const closeVote = () => {
     if (votes.length < players) {
-      alert(
-        `You can't close voting until everyone has voted. ${
+      modal({
+        title: 'Voting still open',
+        text: `You can't close voting until everyone has voted. ${
           players - votes.length
-        } people still have to vote.`
-      );
+        } people still have to vote.`,
+      });
     } else {
       updateDocument('rooms', roomid, 'voteTime', false);
       updateDocument('rooms', roomid, 'president', null);
@@ -83,7 +86,7 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
           handler={closeVote}
         />
       )}
-      <p className='my-5 flex flex-col'>
+      <div className='my-5 flex flex-col'>
         <div className={`${govDivStyles} bg-red-200`}>
           President:{' '}
           <span className={`${govRoleStyles} text-red-700`}>{prez.name}</span>
@@ -94,7 +97,7 @@ const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
             {chance.name}
           </span>
         </div>
-      </p>
+      </div>
       <div className='flex'>
         <div
           className={`${yesNoCardStyles} yes ${
