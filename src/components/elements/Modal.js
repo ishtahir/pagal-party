@@ -3,7 +3,7 @@ import React from 'react';
 import Text from './Text';
 import Button from './Button';
 
-const Modal = ({ type, title, text, hideModal, setModalConfirm }) => {
+const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
   const showButtons = () => {
     if (type === 'confirm') {
       return (
@@ -11,12 +11,12 @@ const Modal = ({ type, title, text, hideModal, setModalConfirm }) => {
           <Button
             className='bg-white text-black font-normal mr-3 px-5 !shadow-none border border-gray-400 hover:text-black hover:bg-gray-100'
             text='Cancel'
-            handler={closeConfirm}
+            handler={onClose}
           />
           <Button
             className='bg-red-600 px-6 !shadow-none border border-red-800 hover:text-white hover:bg-red-800'
             text='Confirm'
-            handler={closeConfirm}
+            handler={onSubmit}
           />
         </>
       );
@@ -25,21 +25,18 @@ const Modal = ({ type, title, text, hideModal, setModalConfirm }) => {
         <Button
           className='bg-blue-600 px-6 !shadow-none border border-blue-800 hover:text-white hover:bg-blue-800'
           text='Try Again'
-          handler={closeAlert}
+          handler={onClose}
         />
       );
     }
   };
-  const closeConfirm = (e) => {
-    const text = e.target.textContent;
-    hideModal();
-    return text === 'Confirm' ? setModalConfirm(true) : setModalConfirm(false);
-  };
-
-  const closeAlert = () => hideModal();
 
   return (
-    <div className='modal-bg w-full h-full bg-black bg-opacity-70 fixed top-0 left-0 z-10 flex justify-center items-center'>
+    <div
+      className={`modal-bg w-full h-full bg-black bg-opacity-70 fixed top-0 left-0 z-10 flex justify-center items-center ${
+        show ? 'show' : 'hidden'
+      }`}
+    >
       <div className='modal-content w-11/12 lg:w-6/12 flex flex-col justify-center items-start bg-gray-100 max-h-96 relative p-5 rounded-lg'>
         <div className='flex justify-between items-start'>
           <div className='svg mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mr-5 sm:mx-0 sm:h-10 sm:w-10'>
