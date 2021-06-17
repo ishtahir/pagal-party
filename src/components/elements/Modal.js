@@ -37,7 +37,7 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
         show ? 'show' : 'hidden'
       }`}
     >
-      <div className='modal-content w-11/12 lg:w-6/12 flex flex-col justify-center items-start bg-gray-100 max-h-96 relative p-5 rounded-lg'>
+      <div className='modal-content w-11/12 md:w-9/12 lg:w-7/12 flex flex-col justify-center items-start bg-gray-100 max-h-96 relative p-5 rounded-lg'>
         <div className='flex justify-between items-start'>
           <div className='svg mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mr-5 sm:mx-0 sm:h-10 sm:w-10'>
             <svg
@@ -57,7 +57,7 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
               ></path>
             </svg>
           </div>
-          <div className='texts flex flex-col items-start lg:ml-3'>
+          <div className='texts flex flex-col items-start md:ml-4 lg:ml-3'>
             <Text
               className='!text-xl font-normal mb-3'
               type='h3'
