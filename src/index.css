@@ -26,6 +26,12 @@ RESET
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   font-family: 'Source Sans Pro', sans-serif;
   background: url(assets/double-bubble-outline.png), var(--light);
