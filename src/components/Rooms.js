@@ -6,7 +6,6 @@ import { useModal } from '../contexts/ModalContext/ModalContext';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-import { createRoomName, getDate } from '../utils/functions';
 import { Redirect } from 'react-router-dom';
 
 import Text from './elements/Text';
@@ -24,8 +23,7 @@ const Rooms = () => {
   });
 
   const [roomToJoin, setRoomToJoin] = useState('');
-  const [roomCreated, setRoomCreated] = useState('');
-  const [connectToRoom, setConnectToRoom] = useState(false);
+  const [roomChoice, setRoomChoice] = useState('');
 
   const joinRoom = () => {
     if (roomToJoin.length < 4) {
@@ -45,7 +43,7 @@ const Rooms = () => {
           text: `Room ${roomToJoin} already has a game in progress, please join or create another room.`,
         });
       }
-      setConnectToRoom(true);
+      setRoomChoice('join');
     } else {
       modal({
         title: 'Invalid Room',
@@ -54,26 +52,8 @@ const Rooms = () => {
     }
   };
 
-  const createRoom = async () => {
-    let newRoomName;
-    let roomExists;
-
-    do {
-      newRoomName = createRoomName();
-      roomExists =
-        rooms && rooms.filter((room) => room.id === newRoomName).length > 0; //eslint-disable-line
-    } while (roomExists);
-
-    setRoomCreated(newRoomName);
-
-    await db.collection('rooms').doc(newRoomName).set({
-      owner: user.uid,
-      game: null,
-      players: [],
-      createdAt: getDate(),
-    });
-
-    setConnectToRoom(true);
+  const handleRoomCreate = () => {
+    setRoomChoice('create');
   };
 
   return (
@@ -81,10 +61,14 @@ const Rooms = () => {
       {loadRooms || loading ? (
         <div className='loading' />
       ) : user ? (
-        !connectToRoom ? (
+        !roomChoice ? (
           <>
             <Text className='my-5' type='h2' text='Create a room' />
-            <Button className='mb-10' text='Create Room' handler={createRoom} />
+            <Button
+              className='mb-10'
+              text='Create Room'
+              handler={handleRoomCreate}
+            />
             <Text className='my-5' type='h2' text='Join a room' />
             <Input
               className='w-40 mb-2 text-center font-bold tracking-wide'
@@ -96,11 +80,10 @@ const Rooms = () => {
             />
             <Button className='mb-10' text='Join Room' handler={joinRoom} />
           </>
+        ) : roomChoice === 'join' ? (
+          <Redirect push to={`/rooms/${roomToJoin}/game`} />
         ) : (
-          <Redirect
-            push
-            to={`/rooms/${roomToJoin ? roomToJoin : roomCreated}/games`}
-          />
+          <Redirect push to='/games/selection' />
         )
       ) : (
         <Redirect to='/' />
