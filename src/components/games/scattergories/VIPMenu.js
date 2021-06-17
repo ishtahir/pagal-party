@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 
 import { FirebaseContext } from '../../../contexts/FirebaseContext/FirebaseContext';
+import { useModal } from '../../../contexts/ModalContext/ModalContext';
 
 import Button from '../../elements/Button';
 import Text from '../../elements/Text';
@@ -10,6 +11,7 @@ import { scattergoriesLetterGenerator } from '../../../utils/functions';
 const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
   const { updateDocument, deleteFieldFromDocument } =
     useContext(FirebaseContext);
+  const modal = useModal();
 
   const lists = new Array(16).fill(1).map((val, i) => val * i + 1);
 
@@ -28,17 +30,19 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
     if (round < 3) {
       await updateDocument('rooms', roomid, 'round', round + 1);
     } else {
-      return alert('You have played 3 rounds and the game is now over');
+      return modal({
+        text: 'You have played 3 rounds and the game is now over',
+        title: 'Game over',
+      });
     }
   };
 
   const endGame = async () => {
-    const approved = window.confirm(
-      '⛔️ Are you sure you want to end this game for all players? ⛔️'
-    );
-
-    if (approved) {
-      // await gameOver('rooms', roomid, 'Scattergories');
+    modal({
+      text: 'Are you sure you want to end this game for all players?',
+      title: 'End Game?',
+      type: 'confirm',
+    }).then(async () => {
       await updateDocument('rooms', roomid, 'gameStarted', false);
       await updateDocument('rooms', roomid, 'round', 1);
       await updateDocument('rooms', roomid, 'letter', null);
@@ -50,7 +54,7 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
           await deleteFieldFromDocument('players', player.id, 'round3');
         });
       setShowVIPmenu(false);
-    }
+    });
   };
 
   const selectStyles = 'py-2 px-5 rounded text-black';

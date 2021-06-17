@@ -4,6 +4,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import { FirebaseContext } from '../../../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../../../contexts/AuthContext/AuthContext';
+import { useModal } from '../../../contexts/ModalContext/ModalContext';
 
 import { useParams } from 'react-router-dom';
 
@@ -16,6 +17,8 @@ import Text from '../../elements/Text';
 const Scattergories = ({ roomData }) => {
   const { db, updateDocument } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
+  const modal = useModal();
+
   const { roomid } = useParams();
   const [players, loadPlayers] = useCollectionData(
     db.collection('players').orderBy('createdAt'),
@@ -45,9 +48,10 @@ const Scattergories = ({ roomData }) => {
     const min = 2;
     const max = 6;
     if (gamePlayers.length < min || gamePlayers.length > max)
-      return alert(
-        `There can only be between ${min} and ${max} players. Currently there are ${gamePlayers.length} players.`
-      );
+      return modal({
+        text: `There can only be between ${min} and ${max} players. Currently there are ${gamePlayers.length} players.`,
+        title: 'Invalid amount of players',
+      });
 
     for (let player of gamePlayers) {
       await db.collection('players').doc(player.id).update({
