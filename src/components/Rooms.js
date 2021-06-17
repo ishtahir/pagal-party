@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
+import { useModal } from '../contexts/ModalContext/ModalContext';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -15,6 +16,7 @@ import Input from './elements/Input';
 const Rooms = () => {
   const { db } = useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
+  const modal = useModal();
 
   const roomsRef = db.collection('rooms');
   const [rooms, loadRooms] = useCollectionData(roomsRef, {
@@ -26,25 +28,29 @@ const Rooms = () => {
   const [connectToRoom, setConnectToRoom] = useState(false);
 
   const joinRoom = () => {
-    if (roomToJoin.length < 4)
-      return alert(
-        'Room names must be 4 characters long, please enter correct room name.'
-      );
+    if (roomToJoin.length < 4) {
+      return modal({
+        title: 'Incorrect Room Code',
+        text: 'Room names must be 4 characters long, please enter correct room code.',
+      });
+    }
 
     const myRoom =
       rooms && rooms.length && rooms.filter((room) => room.id === roomToJoin);
 
     if (myRoom.length) {
       if (myRoom[0].gameStarted && !myRoom[0].players.includes(user.uid)) {
-        return alert(
-          `Room ${roomToJoin} already has a game in progress, please join or create another room.`
-        );
+        return modal({
+          title: 'Room Occupied',
+          text: `Room ${roomToJoin} already has a game in progress, please join or create another room.`,
+        });
       }
       setConnectToRoom(true);
     } else {
-      alert(
-        `Room ${roomToJoin} does not exist, please enter correct room name.`
-      );
+      modal({
+        title: 'Invalid Room',
+        text: `Room ${roomToJoin} does not exist, please enter correct room name.`,
+      });
     }
   };
 

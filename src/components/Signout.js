@@ -6,6 +6,7 @@ import { useDocumentData } from 'react-firebase-hooks/firestore';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
+import { useModal } from '../contexts/ModalContext/ModalContext';
 
 import Button from './elements/Button';
 
@@ -13,6 +14,8 @@ const Signout = () => {
   const { db, signOutFromApp, deleteDocumentFromCollection } =
     useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
+  const modal = useModal();
+
   const roomid = useLocation().pathname.split('/')[2];
 
   const [room] = useDocumentData(db.doc(`rooms/${roomid}`), { idField: 'id' });
@@ -24,9 +27,10 @@ const Signout = () => {
     const { uid } = user;
 
     if (gameStarted)
-      return alert(
-        '❌ Please notify the VIP to end the game so you can log out! ❌'
-      );
+      return modal({
+        title: 'Sign Out',
+        text: 'Please notify the VIP to end the game so you can sign out.',
+      });
 
     if (roomid) {
       if (owner) {

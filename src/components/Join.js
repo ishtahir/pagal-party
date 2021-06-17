@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
+import { useModal } from '../contexts/ModalContext/ModalContext';
 
 import firebase from 'firebase/app';
 import {
@@ -19,6 +20,8 @@ import Text from './elements/Text';
 const Join = ({ roomid }) => {
   const { db } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
+  const modal = useModal();
+
   let uid;
   if (user) {
     uid = user.uid;
@@ -46,7 +49,10 @@ const Join = ({ roomid }) => {
 
   const addPlayerJoinRoom = async () => {
     if (chosenName.length === 0) {
-      return alert('Please enter your name, then join the game.');
+      return modal({
+        text: 'Please enter your name, then join the game.',
+        title: 'No Name Provided',
+      });
     }
     const player = {
       name: chosenName,
