@@ -77,7 +77,7 @@ const Rooms = () => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div className='rooms flex flex-col justify-center items-center h-3/4'>
       {loadRooms || loading ? (
         <div className='loading' />
       ) : user ? (
