@@ -98,7 +98,7 @@ const Vote = ({ vip, prez, chance, name, players, roomid }) => {
           </span>
         </div>
       </div>
-      <div className='flex'>
+      <div className='flex flex-col md:flex-row'>
         <div
           className={`${yesNoCardStyles} yes ${
             selected === 'Yes' ? 'selected' : ''
