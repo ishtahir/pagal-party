@@ -41,7 +41,7 @@ const Gameroom = () => {
       {loadRoom ? (
         <div className='loading'></div>
       ) : room ? (
-        <div className='gameroom flex flex-col justify-center items-center h-3/4'>
+        <div className='gameroom flex flex-col justify-center items-center'>
           <Text type='h2' text='ROOM' />
           <Text
             className='gr-roomname !text-7xl my-5'
