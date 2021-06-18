@@ -17,7 +17,6 @@ import VIPMenu from '../secret-hitler/VIPMenu';
 import Button from '../../elements/Button';
 
 const SecretHitler = ({ roomData }) => {
-  console.log({ roomData });
   const { db, updateDocument } = useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
   const modal = useModal();
@@ -59,7 +58,6 @@ const SecretHitler = ({ roomData }) => {
     const envelopes = createHitler(gamePlayers.length);
 
     for (let player of gamePlayers) {
-      console.log({ player });
       await db.collection('players').doc(player.id).update(envelopes.pop());
     }
 
