@@ -67,11 +67,11 @@ const Scattergories = ({ roomData }) => {
   };
 
   return (
-    <div className='scattergories flex flex-col justify-center items-center w-10/12'>
+    <div className='scattergories flex flex-col justify-center items-center w-7/12 glass rounded-xl py-10 my-10'>
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
           <Button
-            className='bg-green-400 hover:text-green-400'
+            className='bg-green-400 !text-white hover:bg-green-600'
             text='Start Game'
             handler={startGame}
           />
