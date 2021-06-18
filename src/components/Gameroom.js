@@ -50,7 +50,7 @@ const Gameroom = () => {
           />
           <Text type='h3' text='is playing' />
           <Text
-            className='gr-game my-5 !text-4xl text-red-600 border-4 border-red-600 border-solid p-4 rounded-md'
+            className='gr-game my-5 !text-4xl text-red-600 border-4 border-red-600 border-solid p-4 rounded-md bg-white'
             type='h2'
             text={room && room.game}
           />
