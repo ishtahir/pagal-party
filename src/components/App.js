@@ -5,7 +5,7 @@ import Home from './Home';
 import Gameroom from './Gameroom';
 import Games from './Games';
 import Rooms from './Rooms';
-// import Footer from './Footer';
+import Footer from './Footer';
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
       <Route exact path='/rooms' component={Rooms} />
       <Route exact path='/games/selection' component={Games} />
       <Route exact path='/rooms/:roomid/:gameid' render={() => <Gameroom />} />
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 };
