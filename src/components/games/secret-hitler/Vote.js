@@ -10,7 +10,7 @@ import { getDate } from '../../../utils/functions';
 
 import Button from '../../elements/Button';
 
-const Vote = ({ vip, prez, chance, name, isVip, players, roomid }) => {
+const Vote = ({ vip, prez, chance, name, players, roomid }) => {
   const {
     db,
     addDocumentToCollection,
