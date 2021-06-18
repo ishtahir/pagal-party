@@ -38,9 +38,10 @@ const Rooms = () => {
 
     if (myRoom.length) {
       if (myRoom[0].gameStarted && !myRoom[0].players.includes(user.uid)) {
+        setRoomToJoin('');
         return modal({
           title: 'Room Occupied',
-          text: `Room ${roomToJoin} already has a game in progress, please join or create another room.`,
+          text: `Room ${roomToJoin} already has a game in progress, please wait for that game to finish, join another room or create a new room.`,
         });
       }
       setRoomChoice('join');
