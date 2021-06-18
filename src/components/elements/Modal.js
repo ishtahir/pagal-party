@@ -15,7 +15,7 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
       return (
         <>
           <Button
-            className='bg-white text-black font-normal mr-3 px-5 !shadow-none border border-gray-400 hover:text-black hover:bg-gray-100'
+            className='!bg-white text-black font-normal mr-3 px-5 !shadow-none border border-gray-400 hover:text-black hover:bg-gray-100'
             text='Cancel'
             handler={onClose}
           />
@@ -43,7 +43,10 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
         show ? 'show' : 'hidden'
       }`}
     >
-      <div className='modal-content w-11/12 md:w-9/12 lg:w-7/12 flex flex-col justify-center items-start bg-gray-100 max-h-96 relative p-5 rounded-lg'>
+      <div
+        style={{ maxWidth: 600 }}
+        className='modal-content w-11/12 md:w-9/12 lg:w-7/12 flex flex-col justify-center items-start bg-gray-100 max-h-96 relative p-5 rounded-lg'
+      >
         <div className='flex justify-between items-start'>
           <div className='svg mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 mr-5 sm:mx-0 sm:h-10 sm:w-10'>
             <svg
