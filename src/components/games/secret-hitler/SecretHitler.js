@@ -17,6 +17,7 @@ import VIPMenu from '../secret-hitler/VIPMenu';
 import Button from '../../elements/Button';
 
 const SecretHitler = ({ roomData }) => {
+  console.log({ roomData });
   const { db, updateDocument } = useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
   const modal = useModal();
@@ -48,7 +49,7 @@ const SecretHitler = ({ roomData }) => {
 
   const assignRoles = async () => {
     const min = 2;
-    const max = 3;
+    const max = 10;
     if (gamePlayers.length < min || gamePlayers.length > max)
       return modal({
         text: `There can only be between ${min} and ${max} players. Currently there are ${gamePlayers.length} players.`,
@@ -58,6 +59,7 @@ const SecretHitler = ({ roomData }) => {
     const envelopes = createHitler(gamePlayers.length);
 
     for (let player of gamePlayers) {
+      console.log({ player });
       await db.collection('players').doc(player.id).update(envelopes.pop());
     }
 
@@ -91,7 +93,6 @@ const SecretHitler = ({ roomData }) => {
               prez={prez}
               chance={chance}
               name={!loading && !loadPlayers && getName(players, user.uid)}
-              isVip={vip && user && vip.id === user.uid}
               players={gamePlayers.length}
               roomid={roomid}
             />
@@ -114,7 +115,6 @@ const SecretHitler = ({ roomData }) => {
                     gamePlayers.length &&
                     gamePlayers.filter((player) => player.id === user.uid)[0]
                   }
-                  isVip={vip && user && vip.id === user.uid}
                 />
               )}
             </>
