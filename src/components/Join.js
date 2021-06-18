@@ -87,7 +87,7 @@ const Join = ({ roomid }) => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center'>
+    <div className='flex flex-col justify-center items-center glass my-10 p-5 rounded-xl'>
       {uid && !playerJoined(uid) ? (
         <>
           <Text type='p' text='Please enter your name then join the game' />
@@ -128,7 +128,7 @@ const Join = ({ roomid }) => {
         <Redirect to='/rooms' />
       ) : (
         <Button
-          className='my-5 bg-gray-200 text-purple-500 hover:bg-purple-500 hover:text-gray-200'
+          className='my-5 bg-gray-200 !text-purple-500 hover:!bg-gray-300'
           text='Leave Room'
           handler={leaveThisRoom}
         />
