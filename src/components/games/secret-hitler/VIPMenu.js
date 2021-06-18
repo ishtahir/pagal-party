@@ -47,7 +47,7 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
   };
 
   return (
-    <div className='vip-menu flex flex-col justify-center items-center w-8/12'>
+    <div className='vip-menu flex flex-col justify-center items-center w-12/12 md:w-8/12'>
       <Government players={players} roomid={roomid} />
       <Button
         className={`my-5 ${
