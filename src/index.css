@@ -32,7 +32,13 @@ body,
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background: url(assets/double-bubble-outline.png), var(--light);
+  background: linear-gradient(
+      to right,
+      rgba(45, 24, 87, 0.8),
+      rgba(198, 108, 167, 0.7),
+      rgba(64, 18, 63, 0.8)
+    ),
+    url(assets/bg.svg) repeat-y center/cover;
 }
 
 /****************************************************************
@@ -57,7 +63,7 @@ UTILS
 HEADER COMPONENT
 ****************************************************************/
 .header {
-  background: linear-gradient(to right, #fc3939, #ff00ff);
+  /* background: linear-gradient(to right, #fc3939, #ff00ff); */
 }
 
 .header-logo {
@@ -299,6 +305,19 @@ CARDS FLIP STYLES
 
 .card-flip.is-flipped {
   transform: rotateY(180deg);
+}
+
+/****************************************************************
+GLASS EFFECT
+****************************************************************/
+.glass {
+  backdrop-filter: blur(35px);
+  background-color: rgba(190, 190, 190, 0.2);
+  box-shadow: 3px 3px 10px rgba(197, 125, 181, 0.5);
+}
+
+.stroke {
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
 }
 
 /****************************************************************
