@@ -67,7 +67,10 @@ const SecretHitler = ({ roomData }) => {
   };
 
   return (
-    <div className='secret-hitler flex flex-col justify-center items-center w-10/12'>
+    <div
+      style={{ backdropFilter: 'blur(35px)' }}
+      className='secret-hitler flex flex-col justify-center items-center w-7/12 glass rounded-xl py-10 my-10 mb-48'
+    >
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
           <Button
