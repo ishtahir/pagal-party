@@ -11,9 +11,9 @@ const Government = ({ players, roomid }) => {
   const selectStyles = 'py-2 px-5 rounded text-black';
 
   return (
-    <div className='gov flex flex-col justify-center items-center w-full bg-gray-600 py-5 my-5 rounded-xl text-white'>
+    <div className='gov flex flex-col justify-center items-center w-full bg-gray-600 p-5 my-5 rounded-xl text-white'>
       <Text
-        className='text-xl pb-5'
+        className='text-xl pb-5 md:w-8/12'
         type='h2'
         text='Choose the president and chancellor for this round'
       />
