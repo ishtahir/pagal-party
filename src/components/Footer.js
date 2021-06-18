@@ -5,7 +5,7 @@ const Footer = () => {
   const titleStyles = 'mb-5';
 
   return (
-    <footer className='mt-16 bg-pink-400 px-10 py-20 text-center text-gray-800 text-sm md:flex md:flex-col md:justify-around'>
+    <footer className='mt-16 bg-transparent px-10 py-20 text-center text-gray-800 text-sm md:flex md:flex-col md:justify-around'>
       {/* <div className='md:flex md:justify-around'>
         <Text
           className='header-logo mb-5 self-center'
