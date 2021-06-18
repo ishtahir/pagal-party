@@ -16,9 +16,7 @@ function shuffle(array) {
 }
 
 export const createHitler = (players) => {
-  // if (players < 5 || players > 10)
-  if (players < 2 || players > 3)
-    return 'Please enter correct amount of players.';
+  if (players === 4) return 'Incorrect number of players';
 
   const rolesToCreate = {
     2: [1, 0], // remove this
