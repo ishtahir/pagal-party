@@ -5,8 +5,8 @@ const Footer = () => {
   const titleStyles = 'mb-5';
 
   return (
-    <footer className='mt-12 bg-pink-400 p-10 text-center text-gray-800 text-sm md:flex md:flex-col md:justify-around'>
-      <div className='md:flex md:justify-around'>
+    <footer className='mt-16 bg-pink-400 px-10 py-20 text-center text-gray-800 text-sm md:flex md:flex-col md:justify-around'>
+      {/* <div className='md:flex md:justify-around'>
         <Text
           className='header-logo mb-5 self-center'
           type='h2'
@@ -49,7 +49,7 @@ const Footer = () => {
         className='font-semibold text-lg mt-5'
         type='p'
         text='&copy; 2021 Playper Inc. All Rights Reserved.'
-      />
+      /> */}
     </footer>
   );
 };
