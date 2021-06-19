@@ -1,5 +1,4 @@
 import Card from './Card';
-import { glassStyles } from '../../../utils/styles';
 
 const Envelope = ({ player }) => {
   return (
