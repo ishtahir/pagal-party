@@ -87,9 +87,11 @@ export const secretHitlerSettings = () => ({
 
 export const scattergoriesSettings = () => ({
   game: 'Scattergories',
-  list: null,
   letter: null,
-  round: 1,
+  startRound: false,
+  list: 0,
+  round: 0,
+  time: 0,
 });
 
 export const scattergoriesLetterGenerator = () => {
