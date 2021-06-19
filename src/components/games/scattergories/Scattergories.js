@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
@@ -28,6 +28,7 @@ const Scattergories = ({ roomData }) => {
     }
   );
   const [showVIPmenu, setShowVIPmenu] = useState(false);
+  const [timeDisplay, setTimeDisplay] = useState(null);
 
   const gamePlayers =
     roomData &&
@@ -44,6 +45,28 @@ const Scattergories = ({ roomData }) => {
   const letter = roomData && roomData.letter;
   const list = roomData && roomData.list;
   const round = roomData && roomData.round;
+  const time = roomData && roomData.time;
+  const startRound = roomData && roomData.startRound;
+
+  useEffect(() => {
+    const timer = setInterval(async () => {
+      if (startRound) {
+        let newVal = timeDisplay - 1;
+        setTimeDisplay(newVal);
+        if (timeDisplay <= 1) {
+          await updateDocument('rooms', roomid, 'startRound', false);
+          clearInterval(timer);
+        }
+      } else {
+        setTimeDisplay(time);
+      }
+    }, 1000);
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [timeDisplay, startRound]); //eslint-disable-line
 
   const startGame = async () => {
     const min = 2;
@@ -67,6 +90,7 @@ const Scattergories = ({ roomData }) => {
     }
   };
 
+  console.log({ startRound, timeDisplay, time });
   return (
     <div
       className={`scattergories flex flex-col justify-center items-center ${glassStyles} py-10 my-10`}
@@ -95,6 +119,7 @@ const Scattergories = ({ roomData }) => {
                 setShowVIPmenu={setShowVIPmenu}
                 roomData={roomData}
                 roomid={roomid}
+                setTimeDisplay={setTimeDisplay}
               />
             ) : loadPlayers ? (
               <div className='loading'></div>
@@ -102,15 +127,21 @@ const Scattergories = ({ roomData }) => {
               <>
                 <Text type='h2' text={`Round: ${round}`} />
                 <Text type='h2' text={`List: ${list ? list : 0}`} />
-                <Text
-                  className='text-6xl text-green-500'
-                  type='h2'
-                  text={letter}
-                />
-                <Pad
-                  round={round}
-                  player={players.filter((player) => player.id === user.uid)}
-                />
+                {startRound && (
+                  <>
+                    <Text
+                      className='text-6xl text-green-500'
+                      type='h2'
+                      text={letter}
+                    />
+                    <Text
+                      className='text-6xl text-gray-700'
+                      type='h2'
+                      text={`${timeDisplay} seconds left`}
+                    />
+                  </>
+                )}
+                <Pad round={round} roomData={roomData} vip={vip} />
               </>
             )}
           </>
