@@ -13,6 +13,7 @@ import VIPMenu from './VIPMenu';
 
 import Button from '../../elements/Button';
 import Text from '../../elements/Text';
+import { glassStyles } from '../../../utils/styles';
 
 const Scattergories = ({ roomData }) => {
   const { db, updateDocument } = useContext(FirebaseContext);
@@ -67,7 +68,9 @@ const Scattergories = ({ roomData }) => {
   };
 
   return (
-    <div className='scattergories flex flex-col justify-center items-center w-7/12 glass rounded-xl py-10 my-10'>
+    <div
+      className={`scattergories flex flex-col justify-center items-center ${glassStyles} py-10 my-10`}
+    >
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
           <Button
@@ -80,7 +83,7 @@ const Scattergories = ({ roomData }) => {
         <>
           {vip && user && vip.id === user.uid && (
             <Button
-              className='my-5 bg-indigo-600 hover:bg-indigo-400 hover:!text-white'
+              className='my-5 bg-indigo-500 hover:bg-indigo-600 !text-white'
               text={`${showVIPmenu ? 'Hide' : 'Show'} VIP Menu`}
               handler={() => setShowVIPmenu(!showVIPmenu)}
             />
@@ -100,7 +103,7 @@ const Scattergories = ({ roomData }) => {
                 <Text type='h2' text={`Round: ${round}`} />
                 <Text type='h2' text={`List: ${list ? list : 0}`} />
                 <Text
-                  className='text-6xl text-green-600'
+                  className='text-6xl text-green-500'
                   type='h2'
                   text={letter}
                 />
