@@ -80,7 +80,6 @@ export const getName = (players, uid) => {
 
 export const secretHitlerSettings = () => ({
   game: 'Secret Hitler',
-  gameStarted: false,
   voteTime: false,
   president: null,
   chancellor: null,
@@ -88,7 +87,6 @@ export const secretHitlerSettings = () => ({
 
 export const scattergoriesSettings = () => ({
   game: 'Scattergories',
-  gameStarted: false,
   list: null,
   letter: null,
   round: 1,
