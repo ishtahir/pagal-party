@@ -27,7 +27,7 @@ const Pad = ({ round, player }) => {
   // };
 
   return (
-    <ol className='border border-gray-400 p-5 my-5 mb-10 rounded flex flex-col justify-center items-center'>
+    <ol className='py-5 my-5 mb-10 rounded flex flex-col justify-center items-center'>
       {arr.map((_, i) => (
         <li key={`val${i}`}>
           <span className='font-bold w-8 inline-block'>{`${i + 1}`}</span>
@@ -42,7 +42,7 @@ const Pad = ({ round, player }) => {
         </li>
       ))}
       <Button
-        className='mx-2 bg-blue-500 w-full hover:text-blue-500 mt-5'
+        className='mx-2 bg-blue-400 !text-white w-full hover:bg-blue-500 mt-5'
         text='Save all'
         handler={saveAnswers}
       />
