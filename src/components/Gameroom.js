@@ -45,13 +45,9 @@ const Gameroom = () => {
 
   const showGame = (game) => {
     if (game === 'Secret Hitler') {
-      return (
-        <SecretHitler roomData={room} gamePlayers={gamePlayers} vip={vip} />
-      );
+      return <SecretHitler roomData={room} />;
     } else if (game === 'Scattergories') {
-      return (
-        <Scattergories roomData={room} gamePlayers={gamePlayers} vip={vip} />
-      );
+      return <Scattergories roomData={room} />;
     }
   };
 
