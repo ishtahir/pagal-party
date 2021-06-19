@@ -55,12 +55,12 @@ const Games = () => {
       createdAt: getDate(),
     });
 
-    if (gameSelected === 'Secret Hitler') {
+    if (game === 'Secret Hitler') {
       await db
         .collection('rooms')
         .doc(newRoomName)
         .update(secretHitlerSettings());
-    } else if (gameSelected === 'Scattergories') {
+    } else if (game === 'Scattergories') {
       await db
         .collection('rooms')
         .doc(newRoomName)
