@@ -51,6 +51,7 @@ const Games = () => {
     await db.collection('rooms').doc(newRoomName).set({
       game,
       players: [],
+      gameStarted: false,
       createdAt: getDate(),
     });
 
@@ -73,7 +74,11 @@ const Games = () => {
     <div className='games flex flex-col justify-center items-center h-2/4'>
       {!connectToRoom ? (
         <>
-          <Text className='my-5' type='h2' text='Select game to play' />
+          <Text
+            className='my-5 text-gray-50'
+            type='h2'
+            text='Select game to play'
+          />
           {games &&
             games.map((game) => (
               <Button

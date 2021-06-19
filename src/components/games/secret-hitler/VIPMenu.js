@@ -52,7 +52,7 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
       <Button
         className={`my-5 ${
           !prez || !chance
-            ? 'cursor-not-allowed bg-gray-300 hover:bg-gray-300 text-black hover:text-black'
+            ? 'cursor-not-allowed bg-gray-300 hover:bg-gray-300 !text-black hover:text-black'
             : 'bg-yellow-300 text-gray-500 hover:bg-yellow-400 hover:text-gray-500'
         }`}
         text='Open Voting'

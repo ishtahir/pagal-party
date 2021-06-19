@@ -58,7 +58,7 @@ const Rooms = () => {
   };
 
   return (
-    <div className='rooms flex flex-col justify-center items-center w-6/12 mx-auto glass'>
+    <div className='rooms flex flex-col justify-center items-center w-10/12 mx-auto glass rounded-xl'>
       {loadRooms || loading ? (
         <div className='loading' />
       ) : user ? (
@@ -70,7 +70,7 @@ const Rooms = () => {
               text='Create a room'
             />
             <Button
-              className='mb-10'
+              className='mb-10 w-44'
               text='Create Room'
               handler={handleRoomCreate}
             />
@@ -80,14 +80,18 @@ const Rooms = () => {
               text='Join a room'
             />
             <Input
-              className='w-40 mb-2 text-center font-bold tracking-wide'
+              className='w-44 mb-2 text-center font-bold tracking-wide'
               placeholder='Enter code'
               value={roomToJoin}
               onChange={(e) => setRoomToJoin(e.target.value.toUpperCase())}
               onKeyDown={(e) => e.key === 'Enter' && joinRoom()}
               rest={{ maxLength: '4' }}
             />
-            <Button className='mb-10' text='Join Room' handler={joinRoom} />
+            <Button
+              className='mb-10 w-44'
+              text='Join Room'
+              handler={joinRoom}
+            />
           </>
         ) : roomChoice === 'join' ? (
           <Redirect push to={`/rooms/${roomToJoin}/game`} />

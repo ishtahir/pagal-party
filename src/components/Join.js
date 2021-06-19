@@ -16,6 +16,7 @@ import { Redirect } from 'react-router';
 import Button from './elements/Button';
 import Input from './elements/Input';
 import Text from './elements/Text';
+import { glassStyles } from '../utils/styles';
 
 const Join = ({ roomid }) => {
   const { db } = useContext(FirebaseContext);
@@ -66,7 +67,10 @@ const Join = ({ roomid }) => {
   };
 
   const leaveThisRoom = async () => {
-    await db.collection('players').doc(user.uid).update({ room: null });
+    await db
+      .collection('players')
+      .doc(user.uid)
+      .update({ room: null, name: '' });
     await db
       .collection('rooms')
       .doc(roomid)
@@ -87,7 +91,9 @@ const Join = ({ roomid }) => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center glass my-10 p-5 rounded-xl'>
+    <div
+      className={`flex flex-col justify-center items-center my-10 p-5 ${glassStyles}`}
+    >
       {uid && !playerJoined(uid) ? (
         <>
           <Text type='p' text='Please enter your name then join the game' />
@@ -107,7 +113,7 @@ const Join = ({ roomid }) => {
             .map((player, i) => (
               <Text
                 key={player.id}
-                className={`border border-black py-2 min-w-full mb-1 rounded bg-white ${
+                className={`border border-black py-2 min-w-full mb-1 rounded bg-gray-50 text-black ${
                   i === 0 ? 'vip' : ''
                 } ${user.uid === player.id ? 'text-red-500 font-bold' : ''}`}
                 type='p'

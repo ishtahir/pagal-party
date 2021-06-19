@@ -2,16 +2,20 @@ import { useContext } from 'react';
 
 import { Redirect, useParams } from 'react-router-dom';
 
-import { useDocumentData } from 'react-firebase-hooks/firestore';
+import {
+  useDocumentData,
+  useCollectionData,
+} from 'react-firebase-hooks/firestore';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
 import Join from './Join';
-import SecretHitler from './games/secret-hitler/SecretHitler';
-
 import Text from './elements/Text';
+import SecretHitler from './games/secret-hitler/SecretHitler';
 import Scattergories from './games/scattergories/Scattergories';
+
+import { glassStyles } from '../utils/styles';
 
 const Gameroom = () => {
   const { roomid } = useParams();
@@ -22,15 +26,32 @@ const Gameroom = () => {
   const [room, loadRoom] = useDocumentData(roomRef, {
     idField: 'id',
   });
+  const [players, loadPlayers] = useCollectionData(
+    db.collection('players').orderBy('createdAt'),
+    {
+      idField: 'id',
+    }
+  );
+
+  const gamePlayers =
+    !loadPlayers &&
+    !loadRoom &&
+    players.filter((player) => player.room === room.id);
+
+  const vip = gamePlayers.length ? gamePlayers[0] : null;
 
   const game = room && room.game;
   const gameStarted = room && room.gameStarted;
 
   const showGame = (game) => {
     if (game === 'Secret Hitler') {
-      return <SecretHitler roomData={room} />;
+      return (
+        <SecretHitler roomData={room} gamePlayers={gamePlayers} vip={vip} />
+      );
     } else if (game === 'Scattergories') {
-      return <Scattergories roomData={room} />;
+      return (
+        <Scattergories roomData={room} gamePlayers={gamePlayers} vip={vip} />
+      );
     }
   };
 
@@ -41,8 +62,8 @@ const Gameroom = () => {
       {loadRoom ? (
         <div className='loading'></div>
       ) : room ? (
-        <div className='gameroom flex flex-col justify-center items-center my-10'>
-          <div className='glass rounded-xl p-10 text-gray-50'>
+        <div className={`gameroom flex flex-col justify-center items-center`}>
+          <div className={`${glassStyles} !text-gray-800`}>
             <Text type='h2' text='ROOM' />
             <Text
               className='gr-roomname !text-7xl my-5'
@@ -56,8 +77,11 @@ const Gameroom = () => {
               text={room && room.game}
             />
           </div>
-          {!gameStarted ? <Join roomid={roomid} /> : null}
-          {showGame(game)}
+          {!gameStarted ? <Join roomid={roomid} roomData={room} /> : null}
+          {!gameStarted && !loading && vip && vip.id === user.uid
+            ? showGame(game)
+            : null}
+          {gameStarted ? showGame(game) : null}
         </div>
       ) : (
         <Redirect to='/' />

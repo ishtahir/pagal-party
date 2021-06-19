@@ -9,6 +9,7 @@ import { useModal } from '../../../contexts/ModalContext/ModalContext';
 import { useParams } from 'react-router-dom';
 
 import { createHitler, getName } from '../../../utils/functions';
+import { glassStyles } from '../../../utils/styles';
 
 import Envelope from './Envelope';
 import Vote from '../secret-hitler/Vote';
@@ -16,7 +17,7 @@ import VIPMenu from '../secret-hitler/VIPMenu';
 
 import Button from '../../elements/Button';
 
-const SecretHitler = ({ roomData }) => {
+const SecretHitler = ({ roomData, gamePlayers, vip }) => {
   const { db, updateDocument } = useContext(FirebaseContext);
   const { user, loading } = useContext(AuthContext);
   const modal = useModal();
@@ -29,17 +30,6 @@ const SecretHitler = ({ roomData }) => {
     }
   );
   const [showVIPmenu, setShowVIPmenu] = useState(false);
-
-  const gamePlayers =
-    roomData &&
-    roomData.players &&
-    roomData.players.length &&
-    roomData.players.map(
-      (uid) =>
-        players && players.length && players.find((player) => player.id === uid)
-    );
-
-  const vip = gamePlayers && gamePlayers.length ? gamePlayers[0] : null;
 
   const gameStarted = roomData && roomData.gameStarted;
   const vote = roomData && roomData.voteTime;
@@ -66,10 +56,11 @@ const SecretHitler = ({ roomData }) => {
     }
   };
 
+  console.log({ vip });
+
   return (
     <div
-      style={{ backdropFilter: 'blur(35px)' }}
-      className='secret-hitler flex flex-col justify-center items-center w-7/12 glass rounded-xl py-10 my-10'
+      className={`secret-hitler flex flex-col justify-center items-center ${glassStyles} py-10 my-10`}
     >
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
@@ -83,7 +74,7 @@ const SecretHitler = ({ roomData }) => {
         <>
           {vip && user && vip.id === user.uid && !vote && (
             <Button
-              className='my-5 bg-indigo-600 hover:bg-indigo-400 hover:!text-white'
+              className='my-5 bg-indigo-500 hover:bg-indigo-600 !text-white'
               text={`${showVIPmenu ? 'Hide' : 'Show'} VIP Menu`}
               handler={() => setShowVIPmenu(!showVIPmenu)}
             />

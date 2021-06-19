@@ -74,7 +74,7 @@ const Vote = ({ vip, prez, chance, name, players, roomid }) => {
     'px-5 py-2 text-center w-28 first:rounded-tl last:rounded-tr';
   const tdStyles =
     'py-3 text-center font-bold text-white first:rounded-bl last:rounded-br';
-  const govDivStyles = 'px-20 py-2 text-xl rounded';
+  const govDivStyles = 'px-10 py-2 text-xl rounded';
   const govRoleStyles = 'font-bold';
 
   return (
@@ -87,11 +87,11 @@ const Vote = ({ vip, prez, chance, name, players, roomid }) => {
         />
       )}
       <div className='my-5 flex flex-col'>
-        <div className={`${govDivStyles} bg-red-200`}>
+        <div className={`${govDivStyles} bg-red-300`}>
           President:{' '}
           <span className={`${govRoleStyles} text-red-700`}>{prez.name}</span>
         </div>
-        <div className={`${govDivStyles} bg-blue-200`}>
+        <div className={`${govDivStyles} bg-blue-300`}>
           Chancellor:{' '}
           <span className={`${govRoleStyles} text-blue-700`}>
             {chance.name}
@@ -121,17 +121,17 @@ const Vote = ({ vip, prez, chance, name, players, roomid }) => {
       <h2
         className={`vote-selected my-5 text-xl font-bold ${
           entered
-            ? 'text-gray-500'
+            ? 'text-gray-300'
             : selected === 'Yes'
-            ? 'text-green-600'
-            : 'text-red-600'
+            ? 'text-green-400'
+            : 'text-red-400'
         }`}
       >
         You {entered ? 'voted' : 'have selected'}: {selected}!
       </h2>
       {!entered && (
         <Button
-          className='my-5 bg-green-500 hover:bg-gray-200 hover:text-green-500'
+          className='my-5 bg-green-400 !text-white hover:bg-green-500'
           text='Submit my Vote'
           handler={enterVote}
         />
@@ -140,8 +140,8 @@ const Vote = ({ vip, prez, chance, name, players, roomid }) => {
         <table className='vote-results text-4xl my-5 border-collapse'>
           <thead>
             <tr className=''>
-              <th className={`${thStyles} bg-green-200`}>Yes</th>
-              <th className={`${thStyles} bg-red-200`}>No</th>
+              <th className={`${thStyles} bg-green-200 text-gray-800`}>Yes</th>
+              <th className={`${thStyles} bg-red-200 text-gray-800`}>No</th>
             </tr>
           </thead>
           <tbody>

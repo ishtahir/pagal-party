@@ -15,12 +15,12 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
       return (
         <>
           <Button
-            className='!bg-white text-black font-normal mr-3 px-5 !shadow-none border border-gray-400 hover:text-black hover:bg-gray-100'
+            className='!bg-white !text-black font-normal mr-3 px-5 !shadow-none border border-gray-400 hover:text-black hover:bg-gray-100'
             text='Cancel'
             handler={onClose}
           />
           <Button
-            className='bg-red-600 px-6 !shadow-none border border-red-800 hover:text-white hover:bg-red-800'
+            className='bg-red-600 px-6 !shadow-none border border-red-800 !text-white hover:bg-red-800'
             text='Confirm'
             handler={onSubmit}
           />
@@ -29,7 +29,7 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
     } else if (type === 'alert') {
       return (
         <Button
-          className='bg-blue-600 px-6 !shadow-none border border-blue-800 hover:text-white hover:bg-blue-800'
+          className='bg-blue-600 px-6 !shadow-none border border-blue-800 !text-white hover:bg-blue-800'
           text='Try Again'
           handler={onClose}
         />
