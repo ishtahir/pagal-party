@@ -59,6 +59,13 @@ UTILS
   transform: translateY(1px);
 }
 
+.disabled,
+.disabled:active {
+  transform: none;
+  box-shadow: none;
+  transform: translate(0, 0) !important;
+}
+
 /****************************************************************
 HEADER COMPONENT
 ****************************************************************/
