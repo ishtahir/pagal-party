@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Input = ({
   className,
   placeholder,
@@ -8,7 +6,7 @@ const Input = ({
   onKeyDown,
   rest,
 }) => {
-  const styles = 'bg-red-100 px-10 py-2 rounded-md';
+  const styles = 'bg-red-100 px-10 py-2 rounded-md text-black';
 
   return (
     <input
