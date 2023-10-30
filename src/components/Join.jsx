@@ -16,7 +16,6 @@ import { Redirect } from 'react-router';
 import Button from './elements/Button';
 import Input from './elements/Input';
 import Text from './elements/Text';
-import { glassStyles } from '../utils/styles';
 
 const Join = ({ roomid }) => {
   const { db } = useContext(FirebaseContext);
@@ -53,6 +52,7 @@ const Join = ({ roomid }) => {
     const player = {
       name: chosenName,
       room: roomid,
+      uid,
       createdAt: getDate(),
     };
     await db.collection('players').doc(uid).set(player);
@@ -70,7 +70,7 @@ const Join = ({ roomid }) => {
     await db
       .collection('players')
       .doc(user.uid)
-      .update({ room: null, name: '' });
+      .update({ room: null, name: '', uid: null });
     await db
       .collection('rooms')
       .doc(roomid)
@@ -92,13 +92,13 @@ const Join = ({ roomid }) => {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center my-10 p-5 ${glassStyles}`}
+      className={`join flex flex-col justify-center items-center my-10 p-5`}
     >
       {uid && !playerJoined(uid) ? (
         <>
           <Text type='p' text='Please enter your name then join the game' />
           <Input
-            className='my-2'
+            className='my-2 '
             placeholder='Enter your name'
             value={chosenName}
             onChange={(e) => setChosenName(e.target.value)}
@@ -128,13 +128,13 @@ const Join = ({ roomid }) => {
             ))
         : 'NONE'}
       {uid && !playerJoined(uid) ? (
-        <Button className='my-5' text='Join Game' handler={addPlayerJoinRoom} />
+        <Button className='my-5 w-2/3 bg-pp-blue' text='Join Game' handler={addPlayerJoinRoom} />
       ) : null}
       {leaveRoom ? (
         <Redirect to='/rooms' />
       ) : (
         <Button
-          className='my-5 bg-gray-200 !text-purple-500 hover:!bg-gray-300'
+          className='my-5 bg-pp-pink hover:!bg-gray-300'
           text='Leave Room'
           handler={leaveThisRoom}
         />

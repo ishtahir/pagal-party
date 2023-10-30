@@ -16,11 +16,12 @@ function shuffle(array) {
 }
 
 export const createHitler = (players) => {
-  if (players === 4) return 'Incorrect number of players';
+  // if (players <= 4) return;
 
   const rolesToCreate = {
     2: [1, 0], // remove this
     3: [2, 0], // remove this
+    4: [3, 0], // remove this
     5: [3, 1],
     6: [4, 1],
     7: [4, 2],
@@ -50,7 +51,7 @@ export const createHitler = (players) => {
 
   result.push(envelope('fascist', 'hitler'));
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 50; i++) {
     shuffle(result);
   }
 

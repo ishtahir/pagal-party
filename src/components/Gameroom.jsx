@@ -13,9 +13,6 @@ import { AuthContext } from '../contexts/AuthContext/AuthContext';
 import Join from './Join';
 import Text from './elements/Text';
 import SecretHitler from './games/secret-hitler/SecretHitler';
-import Scattergories from './games/scattergories/Scattergories';
-
-import { glassStyles } from '../utils/styles';
 
 const Gameroom = () => {
   const { roomid } = useParams();
@@ -45,10 +42,13 @@ const Gameroom = () => {
 
   const showGame = (game) => {
     if (game === 'Secret Hitler') {
-      return <SecretHitler roomData={room} />;
-    } else if (game === 'Scattergories') {
-      return <Scattergories roomData={room} />;
-    }
+      return (
+        <SecretHitler roomData={room} vip={vip} gamePlayers={gamePlayers} />
+      );
+    } 
+    // else if (game === 'Scattergories') {
+    //   return <Scattergories roomData={room} />;
+    // }
   };
 
   return loading ? (
@@ -58,17 +58,17 @@ const Gameroom = () => {
       {loadRoom ? (
         <div className='loading'></div>
       ) : room ? (
-        <div className={`gameroom flex flex-col justify-center items-center`}>
-          <div className={`${glassStyles} !text-gray-800`}>
-            <Text type='h2' text='ROOM' />
+        <div className={`gameroom flex flex-col justify-center items-center h-5/6`}>
+          <div>
+            <Text className='text-pp-green text-4xl' type='h3' text='ROOM' />
             <Text
-              className='gr-roomname !text-7xl my-5'
+              className='gr-roomname text-8xl text-center my-5 text-pp-yellow'
               type='h1'
               text={roomid}
             />
-            <Text type='h3' text='is playing' />
+            <Text className='text-pp-green text-4xl' type='h3' text='is playing' />
             <Text
-              className='gr-game my-5 !text-4xl text-purple-800 border-4 border-purple-800 border-solid p-4 rounded-md text-shadow'
+              className='gr-game my-5 !text-4xl text-pp-orange border-4 border-pp-orange border-solid p-4 rounded-md text-shadow'
               type='h2'
               text={room && room.game}
             />

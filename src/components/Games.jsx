@@ -10,7 +10,7 @@ import {
   createRoomName,
   getDate,
   secretHitlerSettings,
-  scattergoriesSettings,
+  // scattergoriesSettings,
 } from '../utils/functions';
 
 import Button from './elements/Button';
@@ -60,22 +60,23 @@ const Games = () => {
         .collection('rooms')
         .doc(newRoomName)
         .update(secretHitlerSettings());
-    } else if (game === 'Scattergories') {
-      await db
-        .collection('rooms')
-        .doc(newRoomName)
-        .update(scattergoriesSettings());
-    }
+    } 
+    // else if (game === 'Scattergories') {
+    //   await db
+    //     .collection('rooms')
+    //     .doc(newRoomName)
+    //     .update(scattergoriesSettings());
+    // }
 
     setConnectToRoom(true);
   };
 
   return (
-    <div className='games flex flex-col justify-center items-center h-2/4'>
+    <div className='games flex flex-col justify-center items-center h-full'>
       {!connectToRoom ? (
         <>
           <Text
-            className='my-5 text-gray-50'
+            className='my-5 text-pp-green'
             type='h2'
             text='Select game to play'
           />
@@ -83,7 +84,7 @@ const Games = () => {
             games.map((game) => (
               <Button
                 key={game.id}
-                className='my-5'
+                className='my-5 bg-pp-orange'
                 text={game.name}
                 handler={createRoom}
               />

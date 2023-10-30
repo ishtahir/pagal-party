@@ -4,8 +4,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Sigmar+One&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Marko+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Mate+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Salsa&display=swap');
 
 /****************************************************************
 VARIABLES
@@ -28,25 +28,39 @@ html,
 body,
 #root {
   height: 100%;
+  width: 100%;
 }
 
 body {
+  background: url(./assets/pp-bg.png) no-repeat center center fixed;
+  background-size: cover;
+  background-color: #111;
+  color: white;
   font-family: 'Source Sans Pro', sans-serif;
-  background: linear-gradient(
-      to right,
-      rgba(45, 24, 87, 0.8),
-      rgba(198, 108, 167, 0.7),
-      rgba(64, 18, 63, 0.8)
-    ),
-    url(assets/bg.svg) repeat-y center/cover;
+  display: flex;
+  flex-direction: column;
+}
+
+.bg {
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 2;
+}
+
+.wrapper {
+  height: 100%;
 }
 
 /****************************************************************
 UTILS
 ****************************************************************/
 .btn {
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.4);
-  outline: none !important;
+  outline: none;
   transition: transform 0.2s;
 }
 
@@ -63,25 +77,14 @@ UTILS
 .disabled:active {
   transform: none;
   box-shadow: none;
-  transform: translate(0, 0) !important;
-}
-
-/****************************************************************
-HEADER COMPONENT
-****************************************************************/
-.header {
-  /* background: linear-gradient(to right, #fc3939, #ff00ff); */
-}
-
-.header-logo {
-  font-family: 'Sigmar One', cursive;
+  transform: translate(0, 0);
 }
 
 /****************************************************************
 GAMEROOM COMPONENT
 ****************************************************************/
 .gr-roomname {
-  font-family: 'Bungee Shade', cursive;
+  font-family: 'Salsa', cursive;
 }
 
 .gr-game {
@@ -156,7 +159,7 @@ ROLE CARDS STYLES
 /* PARTY MEMEBERSHIP CARD */
 .party.back {
   background: linear-gradient(#ffff00, #ffe600);
-  font-size: 25px;
+  font-size: 20px;
 }
 
 .party.back::after {
@@ -166,11 +169,12 @@ ROLE CARDS STYLES
 
 .party.front::before {
   content: 'Party Membership';
+  font-size: 16px;
 }
 
 .party.front.liberal {
   background: url(../src/assets/liberal.svg), #fbff00;
-  background-size: 130px;
+  background-size: 100px;
   color: #13e953;
 }
 
@@ -181,7 +185,7 @@ ROLE CARDS STYLES
 
 .party.front.fascist {
   background: url(../src/assets/fascist.svg), #fbff00;
-  background-size: 160px;
+  background-size: 140px;
   color: #ff7f00;
 }
 
@@ -200,7 +204,7 @@ ROLE CARDS STYLES
 /* SECRET ROLE CARD */
 .secret.back {
   background: linear-gradient(#f5f5f5, #cfcfcf);
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .secret.back::after {
@@ -283,14 +287,15 @@ ROLE CARDS STYLES
 CARDS FLIP STYLES
 ****************************************************************/
 .card-flip-wrap {
-  width: 12rem;
-  height: 18rem;
+  width: 10rem;
+  aspect-ratio: 2/3;
   perspective: 60rem;
 }
 
 .card-flip {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
+  aspect-ratio: 2/3;
   position: relative;
   transition: transform 1s;
   transform-style: preserve-3d;
@@ -298,8 +303,9 @@ CARDS FLIP STYLES
 
 .card-face {
   position: absolute;
-  height: 100%;
+  /* height: 100%; */
   width: 100%;
+  aspect-ratio: 2/3;
   backface-visibility: hidden;
 }
 
@@ -316,34 +322,21 @@ CARDS FLIP STYLES
 }
 
 /****************************************************************
-GLASS EFFECT
-****************************************************************/
-.glass {
-  backdrop-filter: blur(35px);
-  background-color: rgba(190, 190, 190, 0.2);
-  box-shadow: 3px 3px 10px rgba(197, 125, 181, 0.5);
-}
-
-.stroke {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
-}
-
-/****************************************************************
 LOADING SPINNER
 ****************************************************************/
 .loading:empty {
   position: absolute;
-  top: calc(50% - 4em);
-  left: calc(50% - 4em);
-  width: 6em;
-  height: 6em;
-  border: 1.1em solid rgba(0, 0, 0, 0.2);
-  border-left: 1.1em solid #000000;
+  top: 50%;
+  transform: translate(-50%);
+  width: 6rem;
+  height: 6rem;
+  border: 0.5rem solid rgba(0, 0, 0, 0.2);
+  border-left: 0.5rem solid #17db93;
   border-radius: 50%;
-  animation: load8 1.1s infinite linear;
+  animation: load-spinner 1s infinite linear;
 }
 
-@keyframes load8 {
+@keyframes load-spinner {
   0% {
     transform: rotate(0deg);
   }

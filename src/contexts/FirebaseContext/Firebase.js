@@ -15,15 +15,19 @@ class Firebase {
     firebase.auth().signInWithPopup(provider);
   };
 
-  twitterSignIn = () => {
-    const provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-  };
+  // twitterSignIn = () => {
+  //   const provider = new firebase.auth.TwitterAuthProvider();
+  //   firebase.auth().signInWithPopup(provider);
+  // };
 
-  facebookSignIn = () => {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithPopup(provider);
-  };
+  // facebookSignIn = () => {
+  //   const provider = new firebase.auth.FacebookAuthProvider();
+  //   firebase.auth().signInWithPopup(provider);
+  // };
+
+  anonymousSignIn = () => {
+    firebase.auth().signInAnonymously();
+  }
 
   signOutFromApp = () => {
     firebase.auth().signOut();

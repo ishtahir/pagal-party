@@ -9,11 +9,10 @@ import { useModal } from '../../../contexts/ModalContext/ModalContext';
 import { useParams } from 'react-router-dom';
 
 import { createHitler, getName } from '../../../utils/functions';
-import { glassStyles } from '../../../utils/styles';
 
 import Envelope from './Envelope';
-import Vote from '../secret-hitler/Vote';
-import VIPMenu from '../secret-hitler/VIPMenu';
+import Vote from './Vote';
+import VIPMenu from './VIPMenu';
 
 import Button from '../../elements/Button';
 
@@ -41,8 +40,8 @@ const SecretHitler = ({ roomData, gamePlayers, vip }) => {
     const max = 10;
     if (gamePlayers.length < min || gamePlayers.length > max)
       return modal({
-        text: `There can only be between ${min} and ${max} players. Currently there are ${gamePlayers.length} players.`,
-        title: 'Invalid amount of players',
+        text: `There must be between ${min} and ${max} players. Currently there ${gamePlayers.length === 1 ? "is" : "are"} ${gamePlayers.length} ${gamePlayers.length === 1 ? "player" : "players"}.`,
+        title: 'Invalid number of players',
       });
 
     const envelopes = createHitler(gamePlayers.length);
@@ -56,16 +55,14 @@ const SecretHitler = ({ roomData, gamePlayers, vip }) => {
     }
   };
 
-  console.log({ vip });
-
   return (
     <div
-      className={`secret-hitler flex flex-col justify-center items-center ${glassStyles} py-10 my-10`}
+      className={`secret-hitler flex flex-col justify-center items-center`}
     >
       {!gameStarted ? (
         vip && user && vip.id === user.uid ? (
           <Button
-            className='bg-green-400 !text-white hover:bg-green-600'
+            className='bg-pp-blue hover:bg-blue-600 mb-32'
             text='Start Game'
             handler={assignRoles}
           />
@@ -105,7 +102,7 @@ const SecretHitler = ({ roomData, gamePlayers, vip }) => {
                     user &&
                     gamePlayers &&
                     gamePlayers.length &&
-                    gamePlayers.filter((player) => player.id === user.uid)[0]
+                    gamePlayers.find((player) => player.id === user.uid)
                   }
                 />
               )}

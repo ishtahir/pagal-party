@@ -20,7 +20,7 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
             handler={onClose}
           />
           <Button
-            className='bg-red-600 px-6 !shadow-none border border-red-800 !text-white hover:bg-red-800'
+            className='bg-pp-pink px-6 !shadow-none border border-red-800 !text-white hover:bg-red-800'
             text='Confirm'
             handler={onSubmit}
           />
@@ -29,7 +29,7 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
     } else if (type === 'alert') {
       return (
         <Button
-          className='bg-blue-600 px-6 !shadow-none border border-blue-800 !text-white hover:bg-blue-800'
+          className='bg-pp-blue px-6 !shadow-none border border-blue-800 !text-white hover:bg-blue-800'
           text='Try Again'
           handler={onClose}
         />
@@ -68,7 +68,7 @@ const Modal = ({ show, type = 'alert', title, text, onClose, onSubmit }) => {
           </div>
           <div className='texts flex flex-col items-start md:ml-4 lg:ml-3'>
             <Text
-              className='!text-xl font-normal mb-3'
+              className='!text-xl font-normal mb-3 text-black'
               type='h3'
               text={title}
             />

@@ -4,7 +4,7 @@ import { Redirect, useLocation } from 'react-router-dom';
 import firebase from 'firebase/app';
 import {
   useDocumentData,
-  useCollectionData,
+  // useCollectionData,
 } from 'react-firebase-hooks/firestore';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
@@ -16,20 +16,21 @@ import Button from './elements/Button';
 const Signout = () => {
   const { db, signOutFromApp, deleteDocumentFromCollection } =
     useContext(FirebaseContext);
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const modal = useModal();
 
-  const [players, loadPlayers] = useCollectionData(db.collection('players'), {
-    idField: 'id',
-  });
+  // const [players, loadPlayers] = useCollectionData(db.collection('players'), {
+  //   idField: 'id',
+  // });
 
-  const currentPlayer =
-    !loading &&
-    !loadPlayers &&
-    players.filter((player) => player.id === user.uid);
+  // const currentPlayer =
+  //   !loading &&
+  //   !loadPlayers &&
+  //   players.filter((player) => player.id === user.uid);
 
-  const name =
-    !loading && currentPlayer.length ? currentPlayer[0].name : user.displayName;
+  // const name =
+  //   !loading && currentPlayer.length ? currentPlayer[0].name : user.displayName;
+  const name = user.displayName;
 
   const roomid = useLocation().pathname.split('/')[2];
 
@@ -37,9 +38,24 @@ const Signout = () => {
 
   const owner = user && room && room.owner === user.uid;
   const gameStarted = room && room.gameStarted;
+ 
+  const { uid } = user;
+
+
+  const leaveThisRoom = async () => {
+    await db
+      .collection('players')
+      .doc(user.uid)
+      .update({ room: null, name: '' });
+    await db
+      .collection('rooms')
+      .doc(roomid)
+      .update({
+        players: firebase.firestore.FieldValue.arrayRemove(uid),
+      });
+    }
 
   const handleClick = async () => {
-    const { uid } = user;
 
     if (gameStarted)
       return modal({
@@ -61,13 +77,14 @@ const Signout = () => {
           });
       }
     }
+    leaveThisRoom();
     await signOutFromApp();
   };
 
   return user ? (
     <Button
-      className='mr-0 md:mr-5 !bg-blue-500 !text-white hover:!bg-blue-600'
-      text={`Sign out, ${name}`}
+      className='mr-0 md:mr-5 bg-pp-pink'
+      text={name ? `Sign out, ${name}` : 'Sign out'}
       handler={handleClick}
     />
   ) : (

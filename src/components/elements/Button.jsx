@@ -2,7 +2,7 @@ import React from 'react';
 
 const Button = ({ className, text, handler, rest }) => {
   const styles =
-    'bg-white px-10 py-2 rounded uppercase text-sm text-pink-500 font-bold inline-block btn hover:bg-gray-200';
+    'px-6 py-2 rounded uppercase text-sm text-white font-bold inline-block btn hover:bg-gray-200 max-w-xs';
   return (
     <button
       className={className ? `${className} ${styles}` : styles}

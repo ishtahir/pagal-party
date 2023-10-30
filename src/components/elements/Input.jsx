@@ -6,7 +6,7 @@ const Input = ({
   onKeyDown,
   rest,
 }) => {
-  const styles = 'bg-red-100 px-10 py-2 rounded-md text-black';
+  const styles = 'bg-red-100 px-10 py-2 rounded-md text-black max-w-xs';
 
   return (
     <input

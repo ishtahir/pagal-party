@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Text = ({ className, type, text, rest }) => {
-  const stylesH1 = 'text-4xl font-bold text-center';
+  const stylesH1 = 'font-bold text-center';
   const stylesH2 = 'text-2xl font-bold text-center';
   const stylesH3 = 'text-lg font-bold text-center';
   const stylesP = 'text-md text-center';

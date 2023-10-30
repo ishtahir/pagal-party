@@ -4,14 +4,14 @@ import { AuthContext } from '../contexts/AuthContext/AuthContext';
 
 import Signout from './Signout';
 
+import pagalParty from '../assets/pagal-party.svg';
+
 const Header = () => {
   const { user } = useContext(AuthContext);
 
   return (
-    <header className='header flex flex-col justify-center items-center py-5 mx-5 mt-5 mb-10 md:flex-row md:justify-between glass rounded-xl'>
-      <h1 className='header-logo ml-0 mb-5 md:mb-0 md:ml-5 text-3xl text-white cursor-pointer'>
-        Playper
-      </h1>
+    <header className='header flex justify-between items-center bg-purple-600 w-full py-3 mb-12 px-6'>
+      <img src={pagalParty} alt="Pagal Party logo" className='w-20' />
       {user && <Signout />}
     </header>
   );

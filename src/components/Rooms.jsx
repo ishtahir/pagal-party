@@ -58,29 +58,29 @@ const Rooms = () => {
   };
 
   return (
-    <div className='rooms flex flex-col justify-center items-center w-10/12 mx-auto glass rounded-xl'>
+    <div className='rooms flex flex-col justify-center items-center w-10/12 mx-auto rounded-xl h-5/6'>
       {loadRooms || loading ? (
         <div className='loading' />
       ) : user ? (
         !roomChoice ? (
           <>
             <Text
-              className='my-5 text-purple-100'
+              className='my-5 text-pp-green'
               type='h2'
               text='Create a room'
             />
             <Button
-              className='mb-10 w-44'
+              className='mb-10 w-2/3 bg-pp-pink'
               text='Create Room'
               handler={handleRoomCreate}
             />
             <Text
-              className='my-5 text-purple-100'
+              className='my-5 text-pp-green'
               type='h2'
               text='Join a room'
             />
             <Input
-              className='w-44 mb-2 text-center font-bold tracking-wide'
+              className='w-2/3 mb-2 text-center font-bold tracking-wide'
               placeholder='Enter code'
               value={roomToJoin}
               onChange={(e) => setRoomToJoin(e.target.value.toUpperCase())}
@@ -88,7 +88,7 @@ const Rooms = () => {
               rest={{ maxLength: '4' }}
             />
             <Button
-              className='mb-10 w-44'
+              className='mb-10 w-2/3 bg-pp-blue'
               text='Join Room'
               handler={joinRoom}
             />
