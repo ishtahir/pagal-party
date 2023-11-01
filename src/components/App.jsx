@@ -5,6 +5,7 @@ import Home from './Home';
 import Gameroom from './Gameroom';
 import Games from './Games';
 import Rooms from './Rooms';
+import Footer from './Footer';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           render={() => <Gameroom />}
         />
       </Wrapper>
+      <Footer />
     </Router>
   );
 };

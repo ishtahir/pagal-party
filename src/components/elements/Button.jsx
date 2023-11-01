@@ -5,7 +5,7 @@ const Button = ({ className, text, handler, rest }) => {
     'px-6 py-2 rounded uppercase text-sm text-white font-bold inline-block btn hover:bg-gray-200 max-w-xs';
   return (
     <button
-      className={className ? `${className} ${styles}` : styles}
+      className={className ? `${styles} ${className}` : styles}
       onClick={handler}
       {...rest}
     >

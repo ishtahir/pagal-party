@@ -28,12 +28,14 @@ html,
 body,
 #root {
   height: 100%;
-  width: 100%;
 }
 
 body {
-  background: url(./assets/pp-bg.png) no-repeat center center fixed;
+  background-image: url(./assets/pp-bg.png);
   background-size: cover;
+  background-position: fixed;
+  background-repeat: repeat-y;
+  background-clip: border-box;
   background-color: #111;
   color: white;
   font-family: 'Source Sans Pro', sans-serif;
@@ -42,18 +44,21 @@ body {
 }
 
 .bg {
-  position: absolute;
-  width: 100%;
-  min-height: 100%;
-  top: 0;
-  left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
-  z-index: 2;
 }
 
 .wrapper {
-  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  margin-top: 1000px;
 }
 
 /****************************************************************

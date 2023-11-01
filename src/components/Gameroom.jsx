@@ -20,20 +20,20 @@ const Gameroom = () => {
   const { user, loading } = useContext(AuthContext);
 
   const roomRef = db.doc(`rooms/${roomid}`);
-  const [room, loadRoom] = useDocumentData(roomRef, {
+  const [room, roomLoading] = useDocumentData(roomRef, {
     idField: 'id',
   });
-  const [players, loadPlayers] = useCollectionData(
+  const [players, playersLoading] = useCollectionData(
     db.collection('players').orderBy('createdAt'),
     {
       idField: 'id',
-    }
+    },
   );
 
   const gamePlayers =
-    !loadPlayers &&
-    !loadRoom &&
-    players.filter((player) => player.room === room.id);
+    !playersLoading &&
+    !roomLoading &&
+    players.filter((player) => player?.room === room?.id);
 
   const vip = gamePlayers.length ? gamePlayers[0] : null;
 
@@ -45,7 +45,7 @@ const Gameroom = () => {
       return (
         <SecretHitler roomData={room} vip={vip} gamePlayers={gamePlayers} />
       );
-    } 
+    }
     // else if (game === 'Scattergories') {
     //   return <Scattergories roomData={room} />;
     // }
@@ -55,18 +55,22 @@ const Gameroom = () => {
     <div className='loading'></div>
   ) : user ? (
     <>
-      {loadRoom ? (
+      {roomLoading ? (
         <div className='loading'></div>
       ) : room ? (
-        <div className={`gameroom flex flex-col justify-center items-center h-5/6`}>
-          <div>
+        <div className={`gameroom flex flex-col justify-center items-center`}>
+          <div className='gameroom'>
             <Text className='text-pp-green text-4xl' type='h3' text='ROOM' />
             <Text
               className='gr-roomname text-8xl text-center my-5 text-pp-yellow'
               type='h1'
               text={roomid}
             />
-            <Text className='text-pp-green text-4xl' type='h3' text='is playing' />
+            <Text
+              className='text-pp-green text-4xl'
+              type='h3'
+              text='is playing'
+            />
             <Text
               className='gr-game my-5 !text-4xl text-pp-orange border-4 border-pp-orange border-solid p-4 rounded-md text-shadow'
               type='h2'

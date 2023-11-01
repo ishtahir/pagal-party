@@ -47,7 +47,7 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
   };
 
   return (
-    <div className='vip-menu flex flex-col justify-center items-center w-12/12 md:w-8/12'>
+    <div className='vip-menu flex flex-col justify-center items-center w-3/4'>
       <Government players={players} roomid={roomid} />
       <Button
         className={`my-5 ${
@@ -59,7 +59,7 @@ const VIPMenu = ({ players, setShowVIPmenu, roomData, roomid }) => {
         handler={voteTime}
       />
       <Button
-        className='bg-red-400 text-red-50 mt-32 mb-20 hover:text-red-50 hover:bg-red-600'
+        className='bg-red-400 text-red-50 mt-4 mb-32 hover:text-red-50 hover:bg-red-600'
         text='End Game'
         handler={endGame}
       />

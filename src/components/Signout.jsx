@@ -47,12 +47,15 @@ const Signout = () => {
       .collection('players')
       .doc(user.uid)
       .update({ room: null, name: '' });
+
     await db
       .collection('rooms')
       .doc(roomid)
       .update({
         players: firebase.firestore.FieldValue.arrayRemove(uid),
       });
+
+    deleteDocumentFromCollection('players', 'room', null);
     }
 
   const handleClick = async () => {

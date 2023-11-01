@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
@@ -17,7 +17,7 @@ import Button from './elements/Button';
 import Input from './elements/Input';
 import Text from './elements/Text';
 
-const Join = ({ roomid }) => {
+const Join = ({ roomid, roomData }) => {
   const { db } = useContext(FirebaseContext);
   const { user } = useContext(AuthContext);
   const modal = useModal();
@@ -26,7 +26,7 @@ const Join = ({ roomid }) => {
 
   const [players] = useCollectionData(
     db.collection('players').orderBy('createdAt'),
-    { idField: 'id' }
+    { idField: 'id' },
   );
 
   const [room, loadRoom] = useDocumentData(db.collection('rooms').doc(roomid), {
@@ -35,6 +35,19 @@ const Join = ({ roomid }) => {
 
   const [chosenName, setChosenName] = useState('');
   const [leaveRoom, setLeaveRoom] = useState(false);
+
+  useEffect(() => {
+    return async () => {
+      if (room?.players?.length === 0) {
+        await db
+          .collection('rooms')
+          .doc(roomid)
+          .delete()
+          .then(() => console.log(`Room ${roomid} deleted successfully`))
+          .catch((err) => console.error(err));
+      }
+    };
+  }, [db, roomid, room?.players]);
 
   const playerJoined = (uid) => {
     if (!loadRoom) {
@@ -67,33 +80,25 @@ const Join = ({ roomid }) => {
   };
 
   const leaveThisRoom = async () => {
-    await db
-      .collection('players')
-      .doc(user.uid)
-      .update({ room: null, name: '', uid: null });
-    await db
-      .collection('rooms')
-      .doc(roomid)
-      .update({
-        players: firebase.firestore.FieldValue.arrayRemove(uid),
-      });
+    if (uid && playerJoined(uid)) {
+      await db
+        .collection('players')
+        .doc(user.uid)
+        .update({ room: null, name: '' });
 
-    setLeaveRoom(true);
-
-    if (room.players.length <= 1) {
       await db
         .collection('rooms')
         .doc(roomid)
-        .delete()
-        .then(() => console.log(`Room ${roomid} deleted successfully`))
-        .catch((err) => console.error(err));
+        .update({
+          players: firebase.firestore.FieldValue.arrayRemove(uid),
+        });
     }
+
+    setLeaveRoom(true);
   };
 
   return (
-    <div
-      className={`join flex flex-col justify-center items-center my-10 p-5`}
-    >
+    <div className='join flex flex-col justify-center items-center my-10 p-5'>
       {uid && !playerJoined(uid) ? (
         <>
           <Text type='p' text='Please enter your name then join the game' />
@@ -128,11 +133,14 @@ const Join = ({ roomid }) => {
             ))
         : 'NONE'}
       {uid && !playerJoined(uid) ? (
-        <Button className='my-5 w-2/3 bg-pp-blue' text='Join Game' handler={addPlayerJoinRoom} />
+        <Button
+          className='my-5 bg-pp-blue'
+          text='Join Game'
+          handler={addPlayerJoinRoom}
+        />
       ) : null}
-      {leaveRoom ? (
-        <Redirect to='/rooms' />
-      ) : (
+      {leaveRoom && <Redirect to='/rooms' />}
+      {roomData.players.includes(uid) && (
         <Button
           className='my-5 bg-pp-pink hover:!bg-gray-300'
           text='Leave Room'
