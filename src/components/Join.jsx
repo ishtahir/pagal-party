@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { FirebaseContext } from '../contexts/FirebaseContext/FirebaseContext';
 import { AuthContext } from '../contexts/AuthContext/AuthContext';
@@ -35,19 +35,6 @@ const Join = ({ roomid, roomData }) => {
 
   const [chosenName, setChosenName] = useState('');
   const [leaveRoom, setLeaveRoom] = useState(false);
-
-  useEffect(() => {
-    return async () => {
-      if (room?.players?.length === 0) {
-        await db
-          .collection('rooms')
-          .doc(roomid)
-          .delete()
-          .then(() => console.log(`Room ${roomid} deleted successfully`))
-          .catch((err) => console.error(err));
-      }
-    };
-  }, [db, roomid, room?.players]);
 
   const playerJoined = (uid) => {
     if (!loadRoom) {
@@ -92,6 +79,15 @@ const Join = ({ roomid, roomData }) => {
         .update({
           players: firebase.firestore.FieldValue.arrayRemove(uid),
         });
+    }
+
+    if (room.players.length <= 1) {
+      await db
+        .collection('rooms')
+        .doc(roomid)
+        .delete()
+        .then(() => console.log(`Room ${roomid} deleted successfully`))
+        .catch((err) => console.error(err));
     }
 
     setLeaveRoom(true);
@@ -139,14 +135,14 @@ const Join = ({ roomid, roomData }) => {
           handler={addPlayerJoinRoom}
         />
       ) : null}
-      {leaveRoom && <Redirect to='/rooms' />}
-      {roomData.players.includes(uid) && (
-        <Button
+      {leaveRoom && (
+        <Redirect to='/rooms' />
+      )}
+      {roomData.players.includes(uid) && <Button
           className='my-5 bg-pp-pink hover:!bg-gray-300'
           text='Leave Room'
           handler={leaveThisRoom}
-        />
-      )}
+        />}
     </div>
   );
 };
